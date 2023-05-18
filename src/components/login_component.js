@@ -8,7 +8,7 @@ export default function Login() {
     e.preventDefault();
 
     console.log(email, password);
-    fetch("http://localhost:5000/login-user", {
+    fetch("http://192.168.131.212:5000/login-user", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -44,6 +44,7 @@ export default function Login() {
             <label>Email address</label>
             <input
               type="email"
+              required="true"
               className="form-control"
               placeholder="Enter email"
               onChange={(e) => setEmail(e.target.value)}
@@ -54,6 +55,7 @@ export default function Login() {
             <label>Password</label>
             <input
               type="password"
+              required="true"
               className="form-control"
               placeholder="Enter password"
               onChange={(e) => setPassword(e.target.value)}

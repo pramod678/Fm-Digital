@@ -9,14 +9,14 @@ export default function SignUp() {
   const [secretKey, setSecretKey] = useState("");
 
   const handleSubmit = (e) => {
-    if (userType == "Admin" && secretKey != "AdarshT") {
+    if (userType == "Admin" && secretKey != "Admin123") {
       e.preventDefault();
       alert("Invalid Admin");
     } else {
       e.preventDefault();
 
       console.log(fname, lname, email, password);
-      fetch("http://localhost:5000/register", {
+      fetch("http://192.168.131.212:5000/register", {
         method: "POST",
         crossDomain: true,
         headers: {
@@ -52,14 +52,18 @@ export default function SignUp() {
           <div>
             Register As
             <input
+              className="m-2"
               type="radio"
+              required="true"
               name="UserType"
               value="User"
               onChange={(e) => setUserType(e.target.value)}
             />
             User
             <input
+            className="m-2 mb-3"
               type="radio"
+              required="true"
               name="UserType"
               value="Admin"
               onChange={(e) => setUserType(e.target.value)}
@@ -71,6 +75,7 @@ export default function SignUp() {
               <label>Secret Key</label>
               <input
                 type="text"
+                required="true"
                 className="form-control"
                 placeholder="Secret Key"
                 onChange={(e) => setSecretKey(e.target.value)}
@@ -82,6 +87,7 @@ export default function SignUp() {
             <label>First name</label>
             <input
               type="text"
+              required="true"
               className="form-control"
               placeholder="First name"
               onChange={(e) => setFname(e.target.value)}
@@ -92,6 +98,7 @@ export default function SignUp() {
             <label>Last name</label>
             <input
               type="text"
+              required="true"
               className="form-control"
               placeholder="Last name"
               onChange={(e) => setLname(e.target.value)}
@@ -102,6 +109,7 @@ export default function SignUp() {
             <label>Email address</label>
             <input
               type="email"
+              required="true"
               className="form-control"
               placeholder="Enter email"
               onChange={(e) => setEmail(e.target.value)}
@@ -112,6 +120,7 @@ export default function SignUp() {
             <label>Password</label>
             <input
               type="password"
+              required="true"
               className="form-control"
               placeholder="Enter password"
               onChange={(e) => setPassword(e.target.value)}

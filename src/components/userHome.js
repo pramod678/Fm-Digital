@@ -1,5 +1,6 @@
 import React, { Component, useEffect, useState } from "react";
-
+import SideBar from "./Sidebar/SideBar";
+import MenuBar from "./Sidebar/SidebarMenu";
 export default function UserHome({ userData }) {
   const logOut = () => {
     window.localStorage.clear();
@@ -7,16 +8,19 @@ export default function UserHome({ userData }) {
   };
   return (
     <div className="auth-wrapper">
-      <div className="auth-inner">
-        <div>
-          Name<h1>{userData.fname}</h1>
-          Email <h1>{userData.email}</h1>
-          <br />
-          <button onClick={logOut} className="btn btn-primary">
-            Log Out
-          </button>
-        </div>
-      </div>
-    </div>
+      <SideBar />
+      {/* <div className="auth-inner"> */}
+      {/* <div> */}
+      <dev className="login-user">
+        <h5 className="user-nmae">{userData.fname}</h5>
+        <h5 className="user-email">{userData.email}</h5>
+
+        <button className="logout-button" onClick={logOut} className="btn btn-primary">
+          Log Out
+        </button>{" "}
+       </dev>
+    {/* </div> */}
+     </div>
+    // </div>
   );
 }
