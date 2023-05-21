@@ -1,0 +1,89 @@
+
+.optiontype{
+  height: 40px;
+  border: none;
+  overflow: hidden;
+}
+.optiontype::-moz-focus-inner {
+  border: 0;
+}
+.optiontype:focus {
+  outline: none;
+}
+.optiontype option{
+  width: 50px;
+  height: 50px;
+  font-size: 1.2em;
+  padding: 10px 0;
+  text-align: center;
+  margin-right: 20px;
+  display: inline-block;
+  text-emphasis-color: black;
+  cursor: pointer;
+  border:rgb(8, 6, 6) solid 1px;
+  border-radius: 5px;
+  color: black(249, 249, 242, 0.504);
+}
+  
+  .ReleaseType {
+    position: absolute;
+    border-radius: 30%;
+    padding:0%;
+    margin: 0%;
+ 
+  }
+ 
+.EP {
+  position: relative;
+  right: 0px;
+  /* top:130px; */
+  width:35px;
+  height:35px;
+  border-radius: 8%;
+  
+}
+.Single {
+  position: absolute;
+  left: 50px;
+  /* top:130px; */
+  width:60px;
+  height:35px;
+  border-radius: 8%;
+}
+.Album {
+  position: absolute;
+  left: 140px;
+  /* top:130px; */
+  width:70px;
+  height:35px;
+  border-radius: 8%;
+}
+.Component {
+  position: absolute;
+  left: 230px;
+  /* top:130px; */
+  width:100px;
+  height:35px;
+  border-radius: 8%;
+}
+.ReleaseTitle{
+    position: relative;
+    left: 500px;
+    top: 130px;
+    margin-top:1%;
+
+}
+/* app css includede */
+.container {
+  background-color: #f2f2f2;
+  padding: 140px 920px 15px 20px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+ 
+  
+}
+.icon-container {
+  margin-bottom: 20px;
+  padding: 7px 0;
+  font-size: 24px;
+}

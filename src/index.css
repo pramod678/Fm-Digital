@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 body {
-  background: #1c8ef9 !important;
+  background: white !important;
   min-height: 100vh;
   display: flex;
   font-weight: 400;
@@ -44,28 +44,41 @@ html,
   text-align: left;
 }
 .user-nmae{
+  position: absolute;
   text-align: right;
-  padding: 20px;
-  /* position:absolute; */
+  margin-top: 10px;
+  margin-left: -60px;
   
 }
-.user-email{
-  text-align: right;
 
-  /* position:absolute; */
-  
-}
 .logout-button{
-  /* text-align: right; */
-  position:absolute;
-  
+
+    position: absolute;
+    top:0%;
+    background-color:#7272f9;
+    color: #ffffff;
+    border:none; 
+    border-radius:10px; 
+    padding:10px;
+    min-height:0px; 
+    min-width: 100px;
+  }
+  .logout-button:hover {
+    background-color:#2549b5;
+    transition: 0.7s;
 }
+.logout-button:focus {
+  outline-color: transparent;
+  outline-style:solid;
+  box-shadow: 0 0 0 4px #5a01a7;
+}
+
 .login-user {
   /* text-align: center; */
   position:absolute;
   /* width: 1150px; */
-  top: 0px;
-  right:0px
+  top: 20px;
+  right:150px
   /* margin: auto; */
   /* background: #ffffff;  */
   /* box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);  */

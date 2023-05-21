@@ -1,10 +1,12 @@
 import { NavLink } from "react-router-dom";
-import { FaBars, FaHome, FaLock, FaMoneyBill, FaUser } from "react-icons/fa";
-import { MdMessage } from "react-icons/md";
-import { BiAnalyse, BiSearch } from "react-icons/bi";
-import { BiCog } from "react-icons/bi";
-import { AiFillHeart, AiTwotoneFileExclamation } from "react-icons/ai";
-import { BsCartCheck } from "react-icons/bs";
+import { FaBars, FaHome, FaQuora } from "react-icons/fa";
+import { FiLink, FiYoutube } from "react-icons/fi";
+import { BiSearch } from "react-icons/bi";
+import { MdOutlineLabel } from "react-icons/md";
+import { AiOutlinePlusCircle } from "react-icons/ai";
+import { TbTool } from "react-icons/tb";
+import { BsTicketPerforated } from "react-icons/bs";
+import { ImFileMusic } from "react-icons/im";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import SidebarMenu from "./SidebarMenu";
@@ -15,74 +17,48 @@ const routes = [
     icon: <FaHome />,
   },
   {
-    path: "/users",
-    name: "Users",
-    icon: <FaUser />,
+    path: "/CreateRelease",
+    name: "CreateRelease",
+    icon: <AiOutlinePlusCircle />,
   },
   {
-    path: "/messages",
-    name: "Messages",
-    icon: <MdMessage />,
+    path: "/Catalogs",
+    name: "Catalogs",
+    icon: <ImFileMusic />,
   },
+
   {
-    path: "/analytics",
-    name: "Analytics",
-    icon: <BiAnalyse />,
-  },
-  {
-    path: "/file-manager",
-    name: "File Manager",
-    icon: <AiTwotoneFileExclamation />,
-    subRoutes: [
-      {
-        path: "/settings/profile",
-        name: "Profile ",
-        icon: <FaUser />,
-      },
-      {
-        path: "/settings/2fa",
-        name: "2FA",
-        icon: <FaLock />,
-      },
-      {
-        path: "/settings/billing",
-        name: "Billing",
-        icon: <FaMoneyBill />,
-      },
-    ],
-  },
-  {
-    path: "/order",
-    name: "Order",
-    icon: <BsCartCheck />,
-  },
-  {
-    path: "/settings",
-    name: "Settings",
-    icon: <BiCog />,
+    path: "/Tools",
+    name: "Tools",
+    icon: <TbTool />,
     exact: true,
     subRoutes: [
       {
-        path: "/settings/profile",
-        name: "Profile ",
-        icon: <FaUser />,
+        path: "/Tools/2fa",
+        name: "Youtube Claims",
+        icon: <FiYoutube />,
       },
       {
-        path: "/settings/2fa",
-        name: "2FA",
-        icon: <FaLock />,
-      },
-      {
-        path: "/settings/billing",
-        name: "Billing",
-        icon: <FaMoneyBill />,
+        path: "/Tools/Profile",
+        name: "Profile Linking",
+        icon: <FiLink />,
       },
     ],
   },
   {
-    path: "/saved",
-    name: "Saved",
-    icon: <AiFillHeart />,
+    path: "/Label",
+    name: "Label",
+    icon: <MdOutlineLabel />,
+  },
+  {
+    path: "/Tickets",
+    name: "Tickets",
+    icon: <BsTicketPerforated />,
+  },
+  {
+    path: "/FAQ",
+    name: "FAQ",
+    icon: <FaQuora />,
   },
 ];
 
@@ -148,7 +124,7 @@ const SideBar = ({ children }) => {
                   exit="hidden"
                   className="logo"
                 >
-                  DoSomeCoding
+                  FM-Digital
                 </motion.h1>
               )}
             </AnimatePresence>
