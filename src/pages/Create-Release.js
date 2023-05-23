@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Create-Release.css";
+import Label from './Label';
 // const COLORS = ['white', 'red', 'blue', 'black', 'cream'];
 const CreateRelease = () => {
   // const [values, setValues] = useState({
@@ -13,162 +14,128 @@ const CreateRelease = () => {
   // };
 
   return (
-    <div className="row">
-    <div className="col-75">
-    <div className="container">
-        <form>
-        <div className="row">
-          <div className="col-50">
-            <label className="ta-3">Release Type*</label>
-            <div className="ReleaseType">
-              <select
-                className="optiontype"
-                name="work_days"
-                id="id_work_days"
-                multiple
-              >
-                <option value="1">EP</option>
-                <option value="2">Single</option>
-                <option value="3">Album</option>
-                <option value="4">Component</option>
-              </select>
-            </div>
-            </div>
-          </div>
-          
-          <div className="row">
-          <div className="col-50">
-          <h4>Release Info</h4>
-            <label >Release Title*</label>
-            <input
-              type="text"
-              required="true"
-              className="form-control"
-              placeholder="Release Title"
-              // onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          </div>
+    <div className="mai-nev">
+       <input className="button1" type='button'  value="Release Info"/>
+       <input className="button1" type='button'  value="Song Info"/>
+       <input className="button1" type='button'  value="Platform"/>
+       <input className="button1" type='button'  value="Submission"/>
 
-          <div className="row">
-          <div className="col-50">
-            <label>Primary Artist*</label>
-            <input
-              type="text"
-              required="true"
-              className="form-control"
-              placeholder="Primary Artist"
-              // onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          </div>
-          <div className="row">
-          <div className="col-50">
-            <label>Featuring Artist*</label>
-            <input
-              type="text"
-              required="true"
-              className="form-control"
-              placeholder="Featuring Artist"
-              // onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          </div>
-          <div className="row">
-          <div className="col-50">
-            <label>genre*</label>
-            <input
-              type="text"
-              required="true"
-              className="form-control"
-              placeholder="genre"
-              // onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          </div>
-          <div className="row">
-          <div className="col-50">
-            <label>Sub Genre*</label>
-            <input
-              type="text"
-              required="true"
-              className="form-control"
-              placeholder="Sub Genre"
-              // onChange={(e) => setPassword(e.target.value)}
-            />
-            </div>
-          </div>
-          <div className="row">
-          <div className="col-50">
-            <label>Label Name*</label>
-            <input
-              type="text"
-              required="true"
-              className="form-control"
-              placeholder="Label Name"
-              // onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          </div>
-          <div className="row">
-          <div className="col-50">
-            <label>Release Date*</label>
-            <input
-              type="text"
-              required="true"
-              className="form-control"
-              placeholder="Release Date"
-              // onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          </div>
-          <div className="row">
-          <div className="col-50">
-            <label>P line*</label>
-            <input
-              type="text"
-              required="true"
-              className="form-control"
-              placeholder="C line"
-              // onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          </div>
-          <div className="row">
-          <div className="col-50">
-            <label>C line*</label>
-            <input
-              type="text"
-              required="true"
-              className="form-control"
-              placeholder="C line"
-              // onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          </div>
-          <div className="row">
-          <div className="col-50 " >
-            <label>UPC/EAN</label>
-            <input
-              type="text"
-              required="true"
-              className="form-control"
-              placeholder="UPC/EAN"
-              // onChange={(e) => setPassword(e.target.value)}
-            />
-            
-            </div>
-          </div>
-          <br/>
-          <div className="row">
-          <div className="col-50">
-          
-            <button type="submit" className="btn btn-primary">
-              Save
-            </button>
-          </div>
-          </div>
-        </form>
+  
+    <div className="flex-container">
+      <div>
+        <div className="box">
+        <img src="pic_trulli.jpg" type='file' alt="Italian Trulli"></img>
+        </div>
+        <input style={{fontSize:'20px',marginTop:'10px'}} type='file'></input>
+        <h4 style={{color:'DarkTurquoise' ,textAlign:'center',marginTop:'10px'}}>ARTWORK GUIDELINES</h4>
+        {/* <input
+          type="file"
+          required="true"
+          className="form-control"
+          placeholder="Release Title"
+          // onChange={(e) => setEmail(e.target.value)}
+        /> */}
+      </div>
+      <div>
+      <label className="lable">Release Type*</label>
+        <div>
+          <select
+            className="optiontype"
+            name="work_days"
+            id="id_work_days"
+            multiple
+          >
+            <option  value="EP">EP</option>
+            <option value="Single">Single</option>
+            <option value="Album">Album</option>
+            <option value="Component">Component</option>
+          </select>
+        </div>
+
+        {/* <h4>Release Info</h4> */}
+        <label className="lable">Release Title*</label>
+        <input
+          type="text"
+          required="true"
+          className="form-control"
+          placeholder="Release Title"
+          // onChange={(e) => setEmail(e.target.value)}
+        />
+        <label className="lable">Primary Artist*</label>
+        <input
+          type="text"
+          required="true"
+          className="form-control"
+          placeholder="Primary Artist"
+          // onChange={(e) => setEmail(e.target.value)}
+        />
+        <label className="lable">Featuring Artist*</label>
+        <input
+          type="text"
+          required="true"
+          className="form-control"
+          placeholder="Featuring Artist"
+          // onChange={(e) => setEmail(e.target.value)}
+        />
+        <label className="lable">Genre*</label>
+        <input
+          type="text"
+          required="true"
+          className="form-control"
+          placeholder="Genre"
+          // onChange={(e) => setEmail(e.target.value)}
+        />
+        <label className="lable">Sub Genre*</label>
+        <input
+          type="text"
+          required="true"
+          className="form-control"
+          placeholder="Sub Genre"
+          // onChange={(e) => setEmail(e.target.value)}
+        />
+      </div>
+      <div className="label">
+        <label className="lable">Label Name*</label>
+        <input
+          type="text"
+          required="true"
+          className="form-control"
+          placeholder="Label Name"
+          // onChange={(e) => setPassword(e.target.value)}
+        />
+        <label className="lable">Release Date*</label>
+        <input
+          type="date"
+          required="true"
+          className="form-control"
+          placeholder="Release Date"
+          // onChange={(e) => setPassword(e.target.value)}
+        />
+        <label className="lable">Line*</label>
+        <input
+          type="text"
+          required="true"
+          className="form-control"
+          placeholder="P-Line"
+          // onChange={(e) => setEmail(e.target.value)}
+        />
+        <label className="lable">C Line*</label>
+        <input
+          type="text"
+          required="true"
+          className="form-control"
+          placeholder="C-Line"
+          // onChange={(e) => setEmail(e.target.value)}
+        />
+        <label className="lable">RUPC/EAN*</label>
+        <input
+          type="text"
+          required="true"
+          className="form-control"
+          placeholder="RUPC/EAN"
+          // onChange={(e) => setEmail(e.target.value)}
+        />
+        <button type="submit" className="btn btn-primary">Save</button>
       </div>
     </div>
     </div>

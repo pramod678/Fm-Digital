@@ -1,6 +1,35 @@
+/* nevtab-button */
+.mai-nev {
+  position: relative;
+  text-align: center;
+  /* height: 80px; */
+  /* width: 80px; */
+}
+.button1 {
+  background-color: transparent;
+  color: black;
+  padding: 15px 32px;
+  font-size: 16px;
+  margin: 4px 2px;
+  width: 350px;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 2px solid red;
+}
 
-.optiontype{
-  height: 40px;
+.button1:hover {
+  background-color: gray;
+  color: black;
+}
+.button1:active {
+  box-shadow: inset -2px -2px 5px rgba(255, 255, 255, 1.6),
+    inset 2px 2px 5px rgba(0, 0, 0, 1.6);
+}
+
+/* relesetype option */
+.optiontype {
+  height: 60px;
+  width: 500;
   border: none;
   overflow: hidden;
 }
@@ -10,68 +39,67 @@
 .optiontype:focus {
   outline: none;
 }
-.optiontype option{
-  width: 50px;
-  height: 50px;
-  font-size: 1.2em;
-  padding: 10px 0;
+.optiontype option {
+  width: auto;
+  /* margin-top: 0%; */
+  position: relative;
+  height: 45px;
+  font-size: 1em;
+  padding: 0px 0;
   text-align: center;
-  margin-right: 20px;
+  margin-right: 40px;
   display: inline-block;
   text-emphasis-color: black;
   cursor: pointer;
-  border:rgb(8, 6, 6) solid 1px;
+  border: rgb(8, 6, 6) solid 1px;
   border-radius: 5px;
   color: black(249, 249, 242, 0.504);
 }
-  
-  .ReleaseType {
-    position: absolute;
-    border-radius: 30%;
-    padding:0%;
-    margin: 0%;
- 
-  }
- 
+
+.ReleaseType {
+  position: absolute;
+  border-radius: 30%;
+  padding: 0%;
+  margin: 0%;
+}
+
 .EP {
   position: relative;
   right: 0px;
   /* top:130px; */
-  width:35px;
-  height:35px;
+  width: 35px;
+  height: 35px;
   border-radius: 8%;
-  
 }
 .Single {
   position: absolute;
   left: 50px;
   /* top:130px; */
-  width:60px;
-  height:35px;
+  width: 60px;
+  height: 35px;
   border-radius: 8%;
 }
 .Album {
   position: absolute;
   left: 140px;
   /* top:130px; */
-  width:70px;
-  height:35px;
+  width: 70px;
+  height: 35px;
   border-radius: 8%;
 }
 .Component {
   position: absolute;
   left: 230px;
   /* top:130px; */
-  width:100px;
-  height:35px;
+  width: 100px;
+  height: 35px;
   border-radius: 8%;
 }
-.ReleaseTitle{
-    position: relative;
-    left: 500px;
-    top: 130px;
-    margin-top:1%;
-
+.ReleaseTitle {
+  position: relative;
+  left: 500px;
+  top: 130px;
+  margin-top: 1%;
 }
 /* app css includede */
 .container {
@@ -79,11 +107,42 @@
   padding: 140px 920px 15px 20px;
   border: 1px solid lightgrey;
   border-radius: 3px;
- 
-  
+  display: flex;
+  flex-direction: row;
 }
 .icon-container {
   margin-bottom: 20px;
   padding: 7px 0;
   font-size: 24px;
+}
+.form-control1 {
+  right: 10px;
+}
+/* flexboxcss */
+.flex-container {
+  display: flex;
+  background-color: white;
+}
+
+.flex-container > div {
+  /* background-color: #f1f1f1; */
+  margin: 10px;
+  padding: 20px;
+  font-size: 30px;
+  text-align: left;
+}
+
+.label {
+  position: relative;
+  text-align: left;
+  width: 500px;
+}
+
+.lable {
+  font-size: 20px;
+}
+.box {
+  width: 300px;
+  height: 300px;
+  border: 3px solid #555;
 }
