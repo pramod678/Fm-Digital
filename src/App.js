@@ -16,6 +16,8 @@ import Label from "./pages/Label";
 import Tickets from "./pages/Tickets";
 import Tools from "./pages/Tools";
 import FAQ from "./pages/FAQ";
+import Songsinfo from "./pages/SongsInfo";
+import AddSongDeteals from "./pages/AddSongDeteals";
 function App() {
   const isLoggedIn = window.localStorage.getItem("loggedIn");
   return (
@@ -28,6 +30,8 @@ function App() {
             path="/"
             element={isLoggedIn === "true" ? <UserDetails /> : <Login />}
           />
+          <Route path="/AddSongDeteals" element={<AddSongDeteals />} />
+          <Route path="/Songsinfo" element={<Songsinfo />} />
           <Route path="/sign-in" element={<Login />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/userDetails" element={<UserDetails />} />
