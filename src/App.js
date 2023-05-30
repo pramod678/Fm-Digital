@@ -2,10 +2,11 @@ import React from "react";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
+import SideBar from "../src/components/Sidebar/SideBar";
 import Login from "./components/login_component";
 import SignUp from "./components/signup_component";
 import UserDetails from "./components/userDetails";
+
 // import ImageUpload from "./components/imageUpload.";
 
 //  SideBar Nev from ;
@@ -17,7 +18,9 @@ import Tickets from "./pages/Tickets";
 import Tools from "./pages/Tools";
 import FAQ from "./pages/FAQ";
 import Songsinfo from "./pages/SongsInfo";
-import AddSongDeteals from "./pages/AddSongDeteals";
+import Platform from "./pages/Platform";
+import Submission from "./pages/Submission";
+
 function App() {
   const isLoggedIn = window.localStorage.getItem("loggedIn");
   return (
@@ -30,7 +33,9 @@ function App() {
             path="/"
             element={isLoggedIn === "true" ? <UserDetails /> : <Login />}
           />
-          <Route path="/AddSongDeteals" element={<AddSongDeteals />} />
+          
+          <Route path="/Platform" element={<Platform />} />
+          <Route path="/Submission" element={<Submission />} />
           <Route path="/Songsinfo" element={<Songsinfo />} />
           <Route path="/sign-in" element={<Login />} />
           <Route path="/sign-up" element={<SignUp />} />

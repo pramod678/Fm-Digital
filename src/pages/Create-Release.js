@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Create-Release.css";
 import { Link } from "react-router-dom";
+import SideBar from "../components/Sidebar/SideBar";
 const CreateRelease = () => {
   const [UPCEAN, setUPCEAN] = useState(null);
   const [CLine, setCLine] = useState(null);
@@ -64,15 +65,20 @@ const CreateRelease = () => {
 
   return (
     <div className="mai-nev">
-    <Link className="button1" to="/CreateRelease">Release Info</Link>
-    <Link className="button1" to="/Songsinfo">Song Info</Link>
-    <Link className="button1" to="/Songsinfo">Platform</Link>
-    <Link className="button1" to="/Songsinfo">Submission</Link>
-      {/* <input className="button1" type="button" value="Release Info" />
-      <input className="button1" type="button" value="Song Info" />
-      <input className="button1" type="button" value="Platform" />
-      <input className="button1" type="button" value="Submission" /> */}
-
+      <Link  className= "button1" to="/CreateRelease">
+        Release Info
+      </Link>
+      <Link className="button1" to="/Songsinfo">
+        Song Info
+      </Link>
+      <Link className="button1" to="/Platform">
+        Platform
+      </Link>
+      <Link className="button1" to="/Songsinfo">
+        Submission
+      </Link>
+      <div>
+    <div style={{margin:'0px',marginTop:'-30px',position:'absolute'}}><SideBar/></div>
       <div className="flex-container">
         <div>
           <div className="box">
@@ -206,9 +212,9 @@ const CreateRelease = () => {
           >
             Save
           </button>
-          
         </div>
       </div>
+    </div>
     </div>
   );
 };

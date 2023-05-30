@@ -3,13 +3,12 @@
 .mai-nev {
   position: relative;
   text-align: center;
-  /* height: 80px; */
-  /* width: 80px; */
+
 }
 .button1 {
   background-color: transparent;
   color: black;
-  padding: 15px 52px;
+  padding: 15px 70px;
   font-size: 20px;
   margin: 5px 8px;
   width: 350px;
@@ -27,26 +26,22 @@
 :button1 {
   color: red;
 }
-button1.selected{
-  color:red;
+button1.selected {
+  color: red;
 }
 .file {
   font-size: 15px;
+  margin-left: 170px;
+  position: absolute;
 }
 .h4 {
+  position: absolute;
   color: DarkTurquoise;
-  margin-top: 10px;
+  margin-top: 40px;
+  margin-left: 170px;
   text-align: center;
   /* color:'DarkTurquoise' ,textAlign:'center',marginTop:'10px' */
 }
-/* .button1:hover {
-  background-color: gray;
-  color: black;
-} */
-/* .button1:active {
-  box-shadow: inset -2px -2px 5px rgba(255, 255, 255, 1.6),
-    inset 2px 2px 5px rgba(0, 0, 0, 1.6);
-} */
 
 /* relesetype option */
 .optiontype {
@@ -63,7 +58,6 @@ button1.selected{
 }
 .optiontype option {
   width: auto;
-  /* margin-top: 0%; */
   position: relative;
   height: 45px;
   font-size: 1em;
@@ -88,15 +82,12 @@ button1.selected{
 .EP {
   position: relative;
   right: 0px;
-  /* top:130px; */
   width: 35px;
   height: 35px;
   border-radius: 8%;
 }
 .Single {
   position: absolute;
-  left: 50px;
-  /* top:130px; */
   width: 60px;
   height: 35px;
   border-radius: 8%;
@@ -104,7 +95,6 @@ button1.selected{
 .Album {
   position: absolute;
   left: 140px;
-  /* top:130px; */
   width: 70px;
   height: 35px;
   border-radius: 8%;
@@ -112,7 +102,6 @@ button1.selected{
 .Component {
   position: absolute;
   left: 230px;
-  /* top:130px; */
   width: 100px;
   height: 35px;
   border-radius: 8%;
@@ -147,8 +136,8 @@ button1.selected{
 }
 
 .flex-container > div {
-  /* background-color: #f1f1f1; */
-  margin: 10px;
+  margin: 60px;
+  /* margin-right: 30px; */
   padding: 20px;
   font-size: 30px;
   text-align: left;
@@ -164,7 +153,71 @@ button1.selected{
   font-size: 20px;
 }
 .box {
-  width: 300px;
-  height: 300px;
+  margin-left: 170px;
+  margin-top: 50px;
+  width: 250px;
+  height: 250px;
   border: 3px solid #555;
+}
+
+/* popup form? */
+.formbutton {
+  margin-top: 175px;
+  position: absolute;
+  right: 35%;
+}
+.songuploging {
+  margin-top: 150px;
+  position: absolute;
+  left: 30%;
+}
+.button2 {
+  background-color: black;
+  color: white;
+  width: 150px;
+  height: 30px;
+}
+
+/* company list */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.company-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+.audio-list{
+  list-style-type: none;
+  padding: 0;
+  margin-top: 40px;
+  margin-right: 1100px;
+  font-size: 30px;
+
+}
+.audio-list li input {
+  margin-left:10px;
+}
+.company-list li {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  /* background-color: #f2f2f2; */
+  margin-bottom: 5px;
+}
+
+.company-list li label {
+  margin-left: 10px;
+}
+.company-list li input {
+  margin-left:380px;
 }

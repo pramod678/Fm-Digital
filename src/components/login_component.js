@@ -8,7 +8,7 @@ export default function Login() {
     e.preventDefault();
 
     console.log(email, password);
-    fetch("http://192.168.131.212:5000/login-user", {
+    fetch("http://192.168.31.212:5000/login-user", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -24,7 +24,7 @@ export default function Login() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data, "userRegister");
-        if (data.status == "ok") {
+        if (data.status =="ok") {
           alert("login successful");
           window.localStorage.setItem("token", data.data);
           window.localStorage.setItem("loggedIn", true);
