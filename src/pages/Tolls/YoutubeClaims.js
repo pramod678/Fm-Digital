@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import "./Create-Release.css";
+import "./../Create-Release.css";
 import { Link } from "react-router-dom";
-import SongsInfo from './SongsInfo';
+// import SongsInfo from './SongsInfo';
 import Button from 'react-bootstrap/Button';
-import SideBar from "../components/Sidebar/SideBar";
+import SideBar from "../../components/Sidebar/SideBar";
 
 const Submission = () => {
 //   const [platform, setPlatform] = useState("");

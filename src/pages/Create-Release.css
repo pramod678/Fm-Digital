@@ -1,5 +1,19 @@
 /* nevtab-button */
-
+.table{
+  position: absolute;
+  margin-top: 10%;
+  width: 90%;
+  margin-left: 5%;
+}
+.catalogs{
+  position:absolute;
+   margin-top:20px;
+   margin-left:150px;
+   text-align:left;
+   background-color:black;
+   color:white;
+   width:530px;
+}
 .mai-nev {
   position: relative;
   text-align: center;

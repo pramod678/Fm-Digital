@@ -10,16 +10,17 @@ import UserDetails from "./components/userDetails";
 // import ImageUpload from "./components/imageUpload.";
 
 //  SideBar Nev from ;
-import Dashboard from "./pages/Dashboard";
 import CreateRelease from "./pages/Create-Release";
 import Catalogs from "./pages/Catalogs";
 import Label from "./pages/Label";
 import Tickets from "./pages/Tickets";
-import Tools from "./pages/Tools";
+import YoutubeClaims from "./pages/Tolls/YoutubeClaims";
+import ProfileLinking from "./pages/Tolls/ProfileLinking";
 import FAQ from "./pages/FAQ";
 import Songsinfo from "./pages/SongsInfo";
 import Platform from "./pages/Platform";
 import Submission from "./pages/Submission";
+import { FiYoutube } from 'react-icons/fi';
 
 function App() {
   const isLoggedIn = window.localStorage.getItem("loggedIn");
@@ -41,12 +42,12 @@ function App() {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/userDetails" element={<UserDetails />} />
           {/* nev bar route */}
-          <Route path="/" element={<Dashboard />} />
           <Route path="/CreateRelease" element={<CreateRelease />} />
           <Route path="/Catalogs" element={<Catalogs />} />
           <Route path="/Label" element={<Label />} />
           <Route path="/Tickets" element={<Tickets />} />
-          <Route path="/Tools" element={<Tools />} />
+          <Route path="/Tools/YoutubeClaims" element={<YoutubeClaims />} />
+          <Route path="/Tools/ProfileLinking" element={<ProfileLinking />} />
           <Route path="/FAQ" element={<FAQ />} />
 
           <Route path="*" element={<> not found</>} />

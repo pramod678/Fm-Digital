@@ -34,12 +34,12 @@ const routes = [
     exact: true,
     subRoutes: [
       {
-        path: "/Tools/2fa",
+        path: "/Tools/YoutubeClaims",
         name: "Youtube Claims",
         icon: <FiYoutube />,
       },
       {
-        path: "/Tools/Profile",
+        path: "/Tools/ProfileLinking",
         name: "Profile Linking",
         icon: <FiLink />,
       },

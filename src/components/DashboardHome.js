@@ -1,5 +1,7 @@
 // import React, { Component, useEffect, useState } from "react";
 import SideBar from "./Sidebar/SideBar";
+import "../index.css";
+import { Link } from "react-router-dom";
 // import MenuBar from "./Sidebar/SidebarMenu";
 export default function UserHome({ userData }) {
   const logOut = () => {
@@ -7,8 +9,21 @@ export default function UserHome({ userData }) {
     window.location.href = "./sign-in";
   };
   return (
+    <div className="mai-nev">
+    <Link className="button1" to="/CreateRelease">
+        Release Info
+      </Link>
+      <Link className="button1" to="/Songsinfo">
+        Song Info
+      </Link>
+      <Link className="button1" to="/Platform">
+        Platform
+      </Link>
+      <Link className="button1" to="/Submission">
+        Submission
+      </Link>
     <div className="auth-wrapper">
-      <SideBar />
+    <div style={{position:'absolute',marginTop:'870px'}} ><SideBar/></div>
       {/* <div className="auth-inner"> */}
       {/* <div> */}
       <dev className="login-user">
@@ -21,6 +36,6 @@ export default function UserHome({ userData }) {
        </dev>
     {/* </div> */}
      </div>
-    // </div>
+    </div>
   );
 }

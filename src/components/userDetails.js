@@ -1,7 +1,7 @@
 import React, {  useEffect, useState } from "react";
 import AdminHome from "./adminHome";
 
-import UserHome from "./userHome";
+import Dashboard from "./DashboardHome";
 
 export default function UserDetails() {
   const [userData, setUserData] = useState("");
@@ -37,5 +37,5 @@ export default function UserDetails() {
       });
   }, []);
 
-  return admin ? <AdminHome /> : <UserHome userData={userData} />;
+  return admin ? <AdminHome /> : <Dashboard userData={userData} />;
 }
