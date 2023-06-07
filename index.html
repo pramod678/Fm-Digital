@@ -1,155 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Company List</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
 </head>
-<style>body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
-h1 {
-  text-align: center;
-  margin: 20px 0;
-}
-
-.company-list {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  text-align: center;
-}
-
-.company-list li {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  /* background-color: #f2f2f2; */
-  margin-bottom: 5px;
-}
-
-.company-list li label {
-  margin-left: 10px;
-}
-.company-list li input {
-  margin-left:280px;
-}
-
-</style>
 <body>
-  <h1>Company List</h1>
-<div>
-  <ul class="company-list">
-    <li>
-      <input type="checkbox" id="company1">
-      <label for="company1">Company A</label>
-      <input type="checkbox" id="company1">
-      <label for="company1">Company A</label>
-      <input type="checkbox" id="company1">
-      <label for="company1">Company A</label>
-    </li>
-    <li>
-      <input type="checkbox" id="company2">
-      <label for="company2">Company B</label>
-      <input type="checkbox" id="company2">
-      <label for="company2">Company B</label>
-      <input type="checkbox" id="company2">
-      <label for="company2">Company B</label>
-      
-    </li>
-    <li>
-      <input type="checkbox" id="company3">
-      <label for="company3">Company C</label>
-      <input type="checkbox" id="company2">
-      <label for="company2">Company B</label>
-      <input type="checkbox" id="company2">
-      <label for="company2">Company B</label>
-    </li>
-    <li>
-      <input type="checkbox" id="company4">
-      <label for="company4">Company D</label>
-      <input type="checkbox" id="company2">
-      <label for="company2">Company B</label>
-      <input type="checkbox" id="company2">
-      <label for="company2">Company B</label>
-    </li>
-    <li>
-      <input type="checkbox" id="company5">
-      <label for="company5">Company E</label>
-      <input type="checkbox" id="company2">
-      <label for="company2">Company B</label>
-      <input type="checkbox" id="company2">
-      <label for="company2">Company B</label>
-    </li>
-    <li>
-      <input type="checkbox" id="company1">
-      <label for="company1">Company A</label>
-      <input type="checkbox" id="company1">
-      <label for="company1">Company A</label>
-      <input type="checkbox" id="company1">
-      <label for="company1">Company A</label>
-    </li>
-    <li>
-      <input type="checkbox" id="company2">
-      <label for="company2">Company B</label>
-      <input type="checkbox" id="company2">
-      <label for="company2">Company B</label>
-      <input type="checkbox" id="company2">
-      <label for="company2">Company B</label>
-      
-    </li>
-    <li>
-      <input type="checkbox" id="company3">
-      <label for="company3">Company C</label>
-      <input type="checkbox" id="company2">
-      <label for="company2">Company B</label>
-      <input type="checkbox" id="company2">
-      <label for="company2">Company B</label>
-    </li>
-    <li>
-      <input type="checkbox" id="company4">
-      <label for="company4">Company D</label>
-      <input type="checkbox" id="company2">
-      <label for="company2">Company B</label>
-      <input type="checkbox" id="company2">
-      <label for="company2">Company B</label>
-    </li>
-    <li>
-      <input type="checkbox" id="company5">
-      <label for="company5">Company E</label>
-      <input type="checkbox" id="company2">
-      <label for="company2">Company B</label>
-      <input type="checkbox" id="company2">
-      <label for="company2">Company B</label>
-    </li>
-    <li>
-      <input type="checkbox" id="company3">
-      <label for="company3">Company C</label>
-      <input type="checkbox" id="company2">
-      <label for="company2">Company B</label>
-      <input type="checkbox" id="company2">
-      <label for="company2">Company B</label>
-    </li>
-    <li>
-      <input type="checkbox" id="company4">
-      <label for="company4">Company D</label>
-      <input type="checkbox" id="company2">
-      <label for="company2">Company B</label>
-      <input type="checkbox" id="company2">
-      <label for="company2">Company B</label>
-    </li>
-    <li>
-      <input type="checkbox" id="company5">
-      <label for="company5">Company E</label>
-      <input type="checkbox" id="company2">
-      <label for="company2">Company B</label>
-      <input type="checkbox" id="company2">
-      <label for="company2">Company B</label>
-    </li>
-  </ul>
-</div>
- 
+  <table>
+    <colgroup>
+      <col class="grey" />
+      <col class="red" span="3" />
+      <col class="blue" />
+    </colgroup>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th colspan="3">color 1</th>
+        <th>color 2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>1</th>
+        <td>red</td>
+        <td>red</td>
+        <td>red</td>
+        <td>blue</td>
+      </tr>
+      <tr>
+        <th>2</th>
+        <td>red</td>
+        <td>red</td>
+        <td>red</td>      
+        <td>blue</td>
+      </tr>
+    </tbody>
+  </table>
 </body>
+<style>
+/* .grey {
+  background-color: rgba(128,128,128,.25);
+}
+.red {
+  background-color: rgba(255,0,0,.25);
+}
+.blue {
+  background-color: rgba(0,0,255,.25);
+} */
+</style>
 </html>

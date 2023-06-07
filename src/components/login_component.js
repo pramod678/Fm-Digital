@@ -8,7 +8,7 @@ export default function Login() {
     e.preventDefault();
 
     console.log(email, password);
-    fetch("http://192.168.31.212:5000/login-user", {
+    fetch("http://192.168.150.212:5000/login-user", {
       method: "POST",
       crossDomain: true,
       headers: {

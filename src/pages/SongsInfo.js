@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import UserDetails from "./../components/userDetails";
+// import Dropdown from "react-bootstrap/Dropdown";
+// import DropdownButton from "react-bootstrap/DropdownButton";
+// import UserDetails from "./../components/userDetails";
 import SideBar from "../components/Sidebar/SideBar";
 
 const SongsInfo = () => {
@@ -115,33 +115,33 @@ const SongsInfo = () => {
                   name="flexRadioDefault"
                   id="flexRadioDefault1"
                 />
-                <label class="form-check-label" for="flexRadioDefault1">
+                &nbsp;&nbsp;<label class="form-check-label" for="flexRadioDefault1">
                   Original
-                </label>
+                </label>&nbsp;&nbsp;
                 <input
                   class="form-check-input"
                   type="radio"
                   name="flexRadioDefault"
                   id="flexRadioDefault2"
-                />
+                />&nbsp;&nbsp;
                 <label class="form-check-label" for="flexRadioDefault1">
                   karaoke
-                </label>
+                </label>&nbsp;&nbsp;
                 <input
                   class="form-check-input"
                   type="radio"
                   name="flexRadioDefault"
                   id="flexRadioDefault3"
-                />
+                />&nbsp;&nbsp;
                 <label class="form-check-label" for="flexRadioDefault1">
                   Melody
-                </label>
+                </label>&nbsp;&nbsp;
                 <input
                   class="form-check-input"
                   type="radio"
                   name="flexRadioDefault"
                   id="flexRadioDefault4"
-                />
+                />&nbsp;&nbsp;
                 <label class="form-check-label" for="flexRadioDefault1">
                   Cover
                 </label>
@@ -153,16 +153,16 @@ const SongsInfo = () => {
                   type="radio"
                   name="flexRadioDefault"
                   id="flexRadioDefault5"
-                />
+                />&nbsp;&nbsp;
                 <label class="form-check-label" for="flexRadioDefault1">
                   Yes
-                </label>
+                </label>&nbsp;&nbsp;
                 <input
                   class="form-check-input"
                   type="radio"
                   name="flexRadioDefault"
                   id="flexRadioDefault6"
-                />
+                />&nbsp;&nbsp;
                 <label class="form-check-label" for="flexRadioDefault1">
                   No
                 </label>
@@ -207,49 +207,34 @@ const SongsInfo = () => {
                   type="radio"
                   name="flexRadioDefault"
                   id="flexRadioDefault7"
-                />
+                />&nbsp;&nbsp;
                 <label class="form-check-label" for="flexRadioDefault1">
                   Yes
-                </label>
+                </label>&nbsp;&nbsp;
                 <input
                   class="form-check-input"
                   type="radio"
                   name="flexRadioDefault"
                   id="flexRadioDefault8"
-                />
+                />&nbsp;&nbsp;
                 <label class="form-check-label" for="flexRadioDefault1">
                   No
-                </label>
+                </label>&nbsp;&nbsp;
               </div>
               <Form.Group
                 className="mb-3"
                 controlId="exampleForm.ControlInput1"
               >
                 <Form.Label>Genre</Form.Label>
-                
-      <div className="mb-2">
-        {['down-Language'].map(
-          (direction) => (
-            <DropdownButton
-            //   as={ButtonGroup}
-              key={direction}
-              id={`dropdown-button-drop-${direction}`}
-              drop={direction}
-              variant="secondary"
-              title={` Drop ${direction} `}
-            >
-                  <Dropdown.Item href="#/action-1">Arabic</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">English</Dropdown.Item>
-                  <Dropdown.Item href="#/action-3">Estonian</Dropdown.Item>
-                  <Dropdown.Item href="#/action-1">Finnish</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">French</Dropdown.Item>
-                  <Dropdown.Item href="#/action-3">Hindi</Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item eventKey="4">Separated link</Dropdown.Item>
-            </DropdownButton>
-          ),
-        )}
-      </div>
+                <select
+            className="form-select"
+            // value={this.state.selectValue}
+            // onChange={this.handleChange}
+          >
+            <option value="Select">Select Genre</option>
+            <option value="Radish">A</option>
+            <option value="Cherry">B</option>
+          </select>
    
                 <Form.Label>Sub genre</Form.Label>
                 <Form.Control type="text" placeholder="Sub genre" autoFocus />
@@ -260,78 +245,50 @@ const SongsInfo = () => {
                     type="radio"
                     name="flexRadioDefault"
                     id="flexRadioDefault7"
-                  />
+                  />&nbsp;&nbsp;
                   <label class="form-check-label" for="flexRadioDefault1">
                     Yes
-                  </label>
+                  </label>&nbsp;&nbsp;
                   <input
                     class="form-check-input"
                     type="radio"
                     name="flexRadioDefault"
                     id="flexRadioDefault8"
-                  />
+                  />&nbsp;&nbsp;
                   <label class="form-check-label" for="flexRadioDefault1">
                     No
-                  </label>
+                  </label>&nbsp;&nbsp;
                   <input
                     class="form-check-input"
                     type="radio"
                     name="flexRadioDefault"
                     id="flexRadioDefault9"
-                  />
+                  />&nbsp;&nbsp;
                   <label class="form-check-label" for="flexRadioDefault1">
                     Cleaned
                   </label>
                 </div>
               </Form.Group>
               <Form.Label>Track Title Language</Form.Label>
-              <div className="mb-2">
-        {['down-Language'].map(
-          (direction) => (
-            <DropdownButton
-            //   as={ButtonGroup}
-              key={direction}
-              id={`dropdown-button-drop-${direction}`}
-              drop={direction}
-              variant="secondary"
-              title={` Drop ${direction} `}
-            >
-                  <Dropdown.Item href="#/action-1">Arabic</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">English</Dropdown.Item>
-                  <Dropdown.Item href="#/action-3">Estonian</Dropdown.Item>
-                  <Dropdown.Item href="#/action-1">Finnish</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">French</Dropdown.Item>
-                  <Dropdown.Item href="#/action-3">Hindi</Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item eventKey="4">Separated link</Dropdown.Item>
-            </DropdownButton>
-          ),
-        )}
-      </div>
+              <select
+            className="form-select"
+            // value={this.state.selectValue}
+            // onChange={this.handleChange}
+          >
+            <option value="Select">Select TrackT-itle Language</option>
+            <option value="Radish">Enlish</option>
+            <option value="Cherry">Hindi</option>
+          </select>
               <Form.Label>Lyrics Language</Form.Label>
-              <div className="mb-2">
-        {['down-Language'].map(
-          (direction) => (
-            <DropdownButton
-            //   as={ButtonGroup}
-              key={direction}
-              id={`dropdown-button-drop-${direction}`}
-              drop={direction}
-              variant="secondary"
-              title={` Drop ${direction} `}
-            >
-                  <Dropdown.Item href="#/action-1">Arabic</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">English</Dropdown.Item>
-                  <Dropdown.Item href="#/action-3">Estonian</Dropdown.Item>
-                  <Dropdown.Item href="#/action-1">Finnish</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">French</Dropdown.Item>
-                  <Dropdown.Item href="#/action-3">Hindi</Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item eventKey="4">Separated link</Dropdown.Item>
-            </DropdownButton>
-          ),
-        )}
-      </div>
+              <select
+            className="form-select"
+            // value={this.state.selectValue}
+            // onChange={this.handleChange}
+          >
+            <option value="Select">Select Lyrics Language</option>
+            <option value="Radish">A</option>
+            <option value="Cherry">B</option>
+          </select>
               <Form.Label>Featuring Artist</Form.Label>
               <Form.Control
                 type="text"
@@ -349,16 +306,16 @@ const SongsInfo = () => {
                   type="radio"
                   name="flexRadioDefault"
                   id="flexRadioDefault10"
-                />
+                />&nbsp;&nbsp;
                 <label class="form-check-label" for="flexRadioDefault1">
                   Yes
-                </label>
+                </label>&nbsp;&nbsp;
                 <input
                   class="form-check-input"
                   type="radio"
                   name="flexRadioDefault"
                   id="flexRadioDefault11"
-                />
+                />&nbsp;&nbsp;
                 <label class="form-check-label" for="flexRadioDefault1">
                   No
                 </label>

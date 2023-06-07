@@ -89,7 +89,7 @@ const CreateRelease = () => {
         </div>
         <div>
           <label className="lable">Release Type*</label>
-          <div>
+          <div style={{fontSize:'80%'}}>
             <select
               className="optiontype"
               name="work_days"

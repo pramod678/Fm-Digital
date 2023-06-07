@@ -16,7 +16,7 @@ export default function SignUp() {
       e.preventDefault();
 
       console.log(fname, lname, email, password);
-      fetch("http://192.168.31.212:5000/register", {
+      fetch("http://192.168.150.212:5000/register", {
         method: "POST",
         crossDomain: true,
         headers: {

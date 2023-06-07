@@ -3,7 +3,20 @@
   text-align: center;
 
 }
+.cantener{ 
+  position:relative;
+  margin-top:-30%;
+  margin-left:280px;
+  text-align:left;
+  background-color:black;
+  color:white;
+  width:780px;
+}
+  
+.newsLable{
+  text-align:left;
 
+}
 @import url("https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800");
 
 * {

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./Create-Release.css";
-import { Link } from "react-router-dom";
-import SongsInfo from "./SongsInfo";
-import Button from "react-bootstrap/Button";
+// import { Link } from "react-router-dom";
+// import Button from "react-bootstrap/Button";
 import SideBar from "../components/Sidebar/SideBar";
-import { Dropdown } from 'semantic-ui-react'
+// import { Dropdown } from 'semantic-ui-react'
 
-const Submission = () => {
+const Catalogs = () => {
   const data = [
     {
       id: 1,
@@ -61,17 +60,44 @@ const Submission = () => {
         <SideBar />
       </div>
       <h3 className="catalogs">Catalog</h3>
-      <div style={{position:'absolute',marginLeft:'10%', marginTop:'5%',fontSize:'150%'}}>
-      <input  type="text" placeholder="Search hear"></input>
-      <select style={{position:'absolute',marginLeft:'2%',fontSize:'130%'}}
+      <div style={{position:'absolute',marginLeft:'15%', marginTop:'5%',fontSize:'150%'}}>
+      {/* <input  type="text" placeholder="Search hear"></input> */}
+      {/* <select style={{position:'absolute',marginLeft:'2%',fontSize:'130%'}}
         // value={this.state.selectValue} 
         // onChange={this.handleChange} 
       >
        <option value="Orange">All</option>
         <option value="Radish">A</option>
         <option value="Cherry">B</option>
-      </select>
-      
+      </select> */}
+      <div className="mb-3">
+        <input
+          type="text"
+          className="form-control"
+          id="search"
+          placeholder="Search Title"
+          // value={searchTerm}
+          // onChange={(e) => {
+          //   setSearchTerm(e.target.value);
+          //   setCurrentPage(1);
+          // }}
+        />
+      </div>
+      <div style={{position:'absolute',marginLeft:'112%',top:'0%', width:'30%'}}>
+        <select
+          className="form-select"
+          // value={filterCompleted}
+          // onChange={(e) => {
+          //   setFilterCompleted(e.target.value);
+          //   setCurrentPage(1);
+          // }}
+        >
+          <option defaultValue="All">All</option>
+          <option value="true">true</option>
+          <option value="false">false</option>
+        </select>
+      </div>
+
       <h4 style={{position:'absolute',marginLeft:'400%',marginTop:'-12%',fontSize:'130%'}}>Total&nbsp;Releases:46</h4>
       {/* <p>{message}</p> */}
       
@@ -116,4 +142,4 @@ const Submission = () => {
   );
 };
 
-export default Submission;
+export default Catalogs;
