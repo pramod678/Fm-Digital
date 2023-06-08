@@ -98,7 +98,7 @@ const Catalogs = () => {
         </select>
       </div>
 
-      <h4 style={{position:'absolute',marginLeft:'400%',marginTop:'-12%',fontSize:'130%'}}>Total&nbsp;Releases:46</h4>
+      <h4 style={{position:'absolute',marginLeft:'500%',marginTop:'-12%',fontSize:'130%'}}>Total&nbsp;Releases:46</h4>
       {/* <p>{message}</p> */}
       
       </div>

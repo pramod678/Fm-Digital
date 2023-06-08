@@ -1,33 +1,75 @@
-import React, { useEffect, useState } from "react";
-import "./Create-Release.css";
-import { Link } from "react-router-dom";
-import SongsInfo from './SongsInfo';
-import Button from 'react-bootstrap/Button';
-import SideBar from "../components/Sidebar/SideBar";
+import { useState } from "react"
+function AddRemoveInputField(){
 
-const Submission = () => {
-//   const [platform, setPlatform] = useState("");
-  return (
-    <div className="mai-nev">
-      <Link className="button1" to="/CreateRelease">
-        Release Info
-      </Link>
-      <Link className="button1" to="/Songsinfo">
-        Song Info
-      </Link>
-      <Link className="button1" to="/Platform">
-        Platform
-      </Link>
-      <Link className="button1" to="/Submission">
-        Submission
-      </Link>
-      <div>
-      <div style={{position:'absolute',marginTop:'-30px'}} ><SideBar/></div>
-  
-      </div>
-    </div>
+    const [inputFields, setInputFields] = useState([{
+        fullName:'',
+
+    } ]);
+ 
+    const addInputField = ()=>{
+
+        setInputFields([...inputFields, {
+            fullName:'',
+        } ])
+      
+    }
+    const removeInputFields = (index)=>{
+        const rows = [...inputFields];
+        rows.splice(index, 1);
+        setInputFields(rows);
+   }
+   const handleChange = (index, evnt)=>{
     
-  );
-};
+    const { name, value } = evnt.target;
+    const list = [...inputFields];
+    list[index][name] = value;
+    setInputFields(list);
+    
+ 
+ 
+}
+    return(
+    
+        <div className="container">
+            <div className="row">
+                <div className="col-sm-8">
+                  {
+                      inputFields.map((data, index)=>{
+                          const {fullName, emailAddress, salary}= data;
+                          return(
+                            <div className="row my-3" key={index}>
+                    <div className="col">
+                    <div className="form-group">
+                    <input type="text" onChange={(evnt)=>handleChange(index, evnt)} value={fullName} name="fullName" className="form-control"  placeholder="Full Name" />
+                    </div>
+                    </div>
+                   
+                    <div className="col">
+                
 
-export default Submission;
+                
+                 {(inputFields.length!==1)? <button className="btn btn-outline-danger" onClick={removeInputFields}>x</button>:''}
+                  
+                 
+                    </div>
+                  </div>
+                          )
+                      })
+                  }
+     
+                <div className="row">
+                    <div className="col-sm-12">
+
+                    <button className="btn btn-outline-success " onClick={addInputField}>Add New</button>
+                    </div>
+                </div>
+                  </div>
+                </div>
+                <div className="col-sm-4">
+
+                </div>
+            </div>
+        
+    )
+}
+export default AddRemoveInputField
