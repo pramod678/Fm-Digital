@@ -93,8 +93,9 @@ const Catalogs = () => {
           // }}
         >
           <option defaultValue="All">All</option>
-          <option value="true">true</option>
-          <option value="false">false</option>
+          <option value="true">approved</option>
+          <option value="false">Draft</option>
+          <option value="false">corrections</option>
         </select>
       </div>
 

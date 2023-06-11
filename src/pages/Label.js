@@ -43,11 +43,12 @@ const Label = () => {
       <div className="flex-container1">
         <div className="youtube">
           <button
-            style={{ width: "40%", color: "red" }}
+          className="btn btn-default"
+            style={{ width: "40%", color: "red",borderRadius:"8px", borderColor:"black" }}
             type="submit"
             onClick={handleShow}
           >
-            +&nbsp;AddLabel
+            +&nbsp;Add Label
           </button>
         </div>
         <>

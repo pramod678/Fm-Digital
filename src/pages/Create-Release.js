@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Create-Release.css";
 import { Link } from "react-router-dom";
 import SideBar from "../components/Sidebar/SideBar";
+import { FileUploader } from "react-drag-drop-files";
 const CreateRelease = () => {
   const [UPCEAN, setUPCEAN] = useState(null);
   const [CLine, setCLine] = useState(null);
@@ -88,11 +89,15 @@ const CreateRelease = () => {
       },
     ]);
   };
-  const handleChange = (index, evnt) => {
+  const fileTypes = ["JPEG", "JPG"];
+  const [file, setFile] = useState(null);
+
+  const handleChange = (index, evnt, file) => {
     const { name, value } = evnt.target;
     const list = [...inputFields];
     list[index][name] = value;
     setInputFields(list);
+    setFile(file);
     const list2 = [...inputFields2];
     list[index][name] = value;
     setInputFields2(list2);
@@ -130,11 +135,35 @@ const CreateRelease = () => {
         <div className="flex-container">
           <div>
             <div className="box">
-              <img src="pic_trulli.jpg" type="file" alt="Italian Trulli"></img>
-            </div>
-            <input className="file" type="file"></input>
-            <h4 className="h4">ARTWORK GUIDELINES</h4>
+              <img src="pic_trulli.jpg" type="file" alt="Art Work"></img>
+              <div className="fileuploader">
+            <FileUploader
+              multiple={true}
+              handleChange={handleChange}
+              name="file"
+              types={fileTypes}
+            />
           </div>
+            </div>
+
+            {/* <p>{file ? `File name: ${file[0].name}` : "no files uploaded yet"}</p> */}
+
+            {/* <input className="file" type="file"></input> */}
+            {/* <h4 className="h4">ARTWORK GUIDELINES</h4> */}
+         
+         <div className="GUIDELINES" >
+         <ul style={{fontSize:'10px'}}>
+         {/* <h4>Use The lines in the box</h4> */}
+         <h6>Artwork Guidelines</h6>
+              <li>A minimum size of 3000 x 3000 pixels (a perfect square)</li>
+              <li>A minimum resolution of 72dpi (we recommend 300dpi)</li>
+              <li>RGB color mode (CMYK will not show up correctly)</li>
+              <li>JPEG file format</li>
+              <li>Do not send us thumbnails, .png files or images smaller than the requested size.”</li>
+            </ul>
+         </div>
+          </div>
+         
           <div>
             <label className="lable">Release Type*</label>
             <div style={{ fontSize: "80%" }}>
@@ -162,47 +191,48 @@ const CreateRelease = () => {
               onChange={(e) => handleInputChange(e)}
             />
             <label className="lable">Primary Artist*</label>
-            {/* <input
-            type="text"
-            required="true"
-            className="form-control"
-            placeholder="Primary Artist"
-            id="PrimaryArtist"
-            value={PrimaryArtist}
-            onChange={(e) => handleInputChange(e)}
-          /> */}
-          <select style={{position:'absolute',width:'420px',marginTop:'16px'}}
-                      type="text"
-                      className="form-select"
-                      placeholder="Primary Artist"
-                    >
-                    <option value="Select">Primary Artist</option>
-                    <option value="Select">A</option>
-                    <option value="Select">B</option>
-                    </select>
+       
+            <select
+              style={{
+                position: "absolute",
+                width: "297px",
+                marginTop: "16px",
+              }}
+              type="text"
+              className="form-select"
+              placeholder="Primary Artist"
+            >
+              <option value="Select">Primary Artist</option>
+              <option value="Select">A</option>
+              <option value="Select">B</option>
+            </select>
             {/* <div className="col-sm-8"> */}
             {inputFields.map((data, index) => {
               const { PrimaryArtist, emailAddress, salary } = data;
               return (
                 <div className="row my-3" key={index}>
-                  <div className="col-sm-11">
-               
-                    <input 
-                      // type="hidden"
+                  <div className="col-sm-8">
+                    <input
                       onChange={(evnt) => handleChange(index, evnt)}
                       value={PrimaryArtist}
                       name="PrimaryArtist"
                       className="form-control"
                       placeholder="Primary Artist"
                     />
-                <button style={{position:'absolute',marginTop:'-2%',marginLeft:'22%'}}
-                  className="btn btn-outline-success"
-                  onClick={addInputField}
-                >+
-                </button>
+                    <button
+                      style={{
+                        position: "absolute",
+                        marginTop: "-2%",
+                        marginLeft: "17%",
+                      }}
+                      className="btn btn-outline-success"
+                      onClick={addInputField}
+                    >
+                      +
+                    </button>
                   </div>
 
-                  <div className="col">
+                  <div className="Addclosebutton1">
                     {inputFields.length !== 1 ? (
                       <button
                         className="btn btn-outline-danger"
@@ -230,22 +260,26 @@ const CreateRelease = () => {
               value={FeaturingArtist}
               onChange={(e) => handleInputChange(e)}
             /> */}
-            <select style={{position:'absolute',width:'420px',marginTop:'16px'}}
-                      type="text"
-                      className="form-select"
-                      placeholder="Featuring Artist"
-                    >
-                    <option value="Select">Featuring Artist</option>
-                    <option value="Select">A</option>
-                    <option value="Select">B</option>
-                    </select>
-                {inputFields2.map((data, index) => {
+            <select
+              style={{
+                position: "absolute",
+                width: "297px",
+                marginTop: "16px",
+              }}
+              type="text"
+              className="form-select"
+              placeholder="Featuring Artist"
+            >
+              <option value="Select">Featuring Artist</option>
+              <option value="Select">A</option>
+              <option value="Select">B</option>
+            </select>
+            {inputFields2.map((data, index) => {
               const { FeaturingArtist, emailAddress, salary } = data;
               return (
                 <div className="row my-3" key={index}>
-                  <div className="col-sm-11">
-               
-                    <input 
+                  <div className="col-sm-8">
+                    <input
                       // type="hidden"
                       onChange={(evnt) => handleChange(index, evnt)}
                       value={FeaturingArtist}
@@ -253,14 +287,20 @@ const CreateRelease = () => {
                       className="form-control"
                       placeholder="FeaturingArtist"
                     />
-                <button style={{position:'absolute',marginTop:'-2%',marginLeft:'22%'}}
-                  className="btn btn-outline-success"
-                  onClick={addInputField2}
-                >+
-                </button>
+                    <button
+                      style={{
+                        position: "absolute",
+                        marginTop: "-2%",
+                        marginLeft: "17%",
+                      }}
+                      className="btn btn-outline-success"
+                      onClick={addInputField2}
+                    >
+                      +
+                    </button>
                   </div>
 
-                  <div className="col">
+                  <div className="Addclosebutton3">
                     {inputFields2.length !== 1 ? (
                       <button
                         className="btn btn-outline-danger"
@@ -276,15 +316,18 @@ const CreateRelease = () => {
               );
             })}
             <label className="lable">Genre*</label>
-            <input
+            <select
               type="text"
               required="true"
-              className="form-control"
+              className="form-select"
               placeholder="Genre"
               id="Genre"
               value={Genre}
               onChange={(e) => handleInputChange(e)}
-            />
+            >    <option value="Select">Genre</option>
+              <option value="Select">A</option>
+              <option value="Select">B</option>
+            </select>
             <label className="lable">Sub Genre*</label>
             <input
               type="text"
@@ -322,7 +365,7 @@ const CreateRelease = () => {
               type="text"
               required="true"
               className="form-control"
-              placeholder="P-Line"
+              placeholder="P line"
               id="PLine"
               value={PLine}
               onChange={(e) => handleInputChange(e)}
@@ -332,17 +375,17 @@ const CreateRelease = () => {
               type="text"
               required="true"
               className="form-control"
-              placeholder="C-Line"
+              placeholder="C line"
               id="CLine"
               value={CLine}
               onChange={(e) => handleInputChange(e)}
             />
-            <label className="lable">RUPC/EAN*</label>
+            <label className="lable">UPC/EAN*</label>
             <input
               type="text"
               required="true"
               className="form-control"
-              placeholder="UPC/EAN"
+              placeholder="000000000001"
               id="UPCEAN"
               value={UPCEAN}
               onChange={(e) => handleInputChange(e)}
