@@ -2,8 +2,8 @@
 const express = require('express')
 const router = express();
 const authRoute = require("./User/user.Router.js");
-require("./User/user.Model.js");
-// require("./imageDetails");
+const users = require("./User/user.Model.js");
 
-router.use("/auth", authRoute);
+
+router.use("/user", authRoute);
 module.exports = router;

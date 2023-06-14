@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const loginScehma = new mongoose.Schema(
+const usersScehma = new mongoose.Schema(
   {
     fname: String,
     lname: String,
@@ -9,8 +9,8 @@ const loginScehma = new mongoose.Schema(
     userType: String,
   },
   {
-    collection: "login",
+    collection: "Users",
   }
 );
 
-module.exports = mongoose.model("login", loginScehma);
+module.exports = mongoose.model("Users", usersScehma);

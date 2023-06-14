@@ -30,7 +30,7 @@ mongoose
 
 require("./userDetails");
 require("./imageDetails");
-require("./Api/User/user.Model.js");
+
 
 
 const User = mongoose.model("UserInfo");
