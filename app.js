@@ -10,12 +10,14 @@ app.use(express.urlencoded({ extended: false }));
 
 const jwt = require("jsonwebtoken");
 var nodemailer = require("nodemailer");
+var v1Routes =require("./Api/index.js")
+app.use("/api/v1",v1Routes)
 
 const JWT_SECRET =
   "hvdvay6ert72839289()aiyg8t87qt72393293883uhefiuh78ttq3ifi78272jbkj?[]]pou89ywe";
 
-const mongoUrl =
-  "mongodb+srv://adarsh:adarsh@cluster0.zllye.mongodb.net/?retryWrites=true&w=majority";
+const mongoUrl ="mongodb://0.0.0.0:27017";
+  // "mongodb+srv://adarsh:adarsh@cluster0.zllye.mongodb.net/?retryWrites=true&w=majority";
 
 mongoose
   .connect(mongoUrl, {
@@ -28,6 +30,8 @@ mongoose
 
 require("./userDetails");
 require("./imageDetails");
+require("./Api/User/user.Model.js");
+
 
 const User = mongoose.model("UserInfo");
 const Images = mongoose.model("ImageDetails");
@@ -63,7 +67,7 @@ app.post("/login-user", async (req, res) => {
   }
   if (await bcrypt.compare(password, user.password)) {
     const token = jwt.sign({ email: user.email }, JWT_SECRET, {
-      expiresIn: "15m",
+      expiresIn: "30m",
     });
 
     if (res.status(201)) {
@@ -100,9 +104,6 @@ app.post("/userData", async (req, res) => {
   } catch (error) { }
 });
 
-app.listen(5000, () => {
-  console.log("Server Started");
-});
 
 app.post("/forgot-password", async (req, res) => {
   const { email } = req.body;
@@ -259,3 +260,7 @@ app.get("/paginatedUsers", async (req, res) => {
   results.result = allUser.slice(startIndex, lastIndex);
   res.json(results)
 })
+
+app.listen(5000, () => {
+  console.log("Server Started 5000");
+});
