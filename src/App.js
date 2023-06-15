@@ -10,7 +10,7 @@ import UserDetails from "./components/userDetails";
 // import ImageUpload from "./components/imageUpload.";
 
 //  SideBar Nev from ;
-import CreateRelease from "./pages/Create-Release";
+import ReleseInfo from "./pages/ReleseInfo";
 import Catalogs from "./pages/Catalogs";
 import Label from "./pages/Label";
 import Tickets from "./pages/Tickets";
@@ -42,7 +42,7 @@ function App() {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/userDetails" element={<UserDetails />} />
           {/* nev bar route */}
-          <Route path="/CreateRelease" element={<CreateRelease />} />
+          <Route path="/ReleseInfo" element={<ReleseInfo />} />
           <Route path="/Catalogs" element={<Catalogs />} />
           <Route path="/Label" element={<Label />} />
           <Route path="/Tickets" element={<Tickets />} />

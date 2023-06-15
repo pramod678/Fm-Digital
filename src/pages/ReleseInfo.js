@@ -3,7 +3,7 @@ import "./Create-Release.css";
 import { Link } from "react-router-dom";
 import SideBar from "../components/Sidebar/SideBar";
 import { FileUploader } from "react-drag-drop-files";
-const CreateRelease = () => {
+const ReleseInfo = () => {
   const [UPCEAN, setUPCEAN] = useState(null);
   const [CLine, setCLine] = useState(null);
   const [PLine, setPLine] = useState(null);
@@ -114,7 +114,7 @@ const CreateRelease = () => {
   };
   return (
     <div className="mai-nev">
-      <Link className="button1" to="/CreateRelease">
+      <Link className="button1" to="/ReleseInfo">
         Release Info
       </Link>
       <Link className="button1" to="/Songsinfo">
@@ -360,7 +360,7 @@ const CreateRelease = () => {
               value={ReleaseDate}
               onChange={(e) => handleInputChange(e)}
             />
-            <label className="lable">Line*</label>
+            <label className="lable">PLine*</label>
             <input
               type="text"
               required="true"
@@ -404,4 +404,4 @@ const CreateRelease = () => {
   );
 };
 
-export default CreateRelease;
+export default ReleseInfo;

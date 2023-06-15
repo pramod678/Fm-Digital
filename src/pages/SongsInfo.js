@@ -98,7 +98,7 @@ const SongsInfo = () => {
 
   return (
     <div className="mai-nev">
-      <Link className="button1" to="/CreateRelease">
+      <Link className="button1" to="/ReleseInfo">
         Release Info
       </Link>
       <Link className="button1" to="/Songsinfo">

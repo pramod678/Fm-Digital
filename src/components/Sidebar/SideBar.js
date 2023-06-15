@@ -18,8 +18,8 @@ const routes = [
     icon: <FaHome />,
   },
   {
-    path: "/CreateRelease",
-    name: "CreateRelease",
+    path: "/ReleseInfo",
+    name: "CReleseInfo",
     icon: <AiOutlinePlusCircle />,
   },
   {
