@@ -14,6 +14,18 @@ const ReleseInfo = () => {
   const [FeaturingArtist, setFeaturingArtist] = useState(null);
   const [PrimaryArtist, setPrimaryArtist] = useState(null);
   const [ReleaseTitle, setReleaseTitle] = useState(null);
+  const [ReleaseType, setReleaseType] = useState(null);
+  const [ImageDocument, setImageDocument] = useState(null);
+  const [inputFields, setInputFields] = useState([
+    {
+      PrimaryArtist: "",
+    },
+  ]);
+  const [inputFields2, setInputFields2] = useState([
+    {
+      FeaturingArtist: "",
+    },
+  ]);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -47,32 +59,13 @@ const ReleseInfo = () => {
     if (id === "ReleaseTitle") {
       setReleaseTitle(value);
     }
+    if (id === "ReleaseType") {
+      setReleaseType(value);
+    }
+    if (id === "ImageDocument") {
+      setImageDocument(value);
+    }
   };
-
-  const handleSubmit = () => {
-    console.log(
-      UPCEAN,
-      CLine,
-      PLine,
-      ReleaseDate,
-      LabelName,
-      SubGenre,
-      Genre,
-      FeaturingArtist,
-      PrimaryArtist,
-      ReleaseTitle
-    );
-  };
-  const [inputFields, setInputFields] = useState([
-    {
-      PrimaryArtist: "",
-    },
-  ]);
-  const [inputFields2, setInputFields2] = useState([
-    {
-      FeaturingArtist: "",
-    },
-  ]);
   const addInputField = () => {
     setInputFields([
       ...inputFields,
@@ -98,10 +91,14 @@ const ReleseInfo = () => {
     list[index][name] = value;
     setInputFields(list);
     setFile(file);
+  };
+  const handleChange2 = (index, evnt, file) => {
+    const { name, value } = evnt.target;
     const list2 = [...inputFields2];
-    list[index][name] = value;
+    list2[index][name] = value;
     setInputFields2(list2);
   };
+  
   const removeInputFields = (index) => {
     const rows = [...inputFields];
     rows.splice(index, 1);
@@ -112,6 +109,56 @@ const ReleseInfo = () => {
     rows.splice(index, 1);
     setInputFields2(rows);
   };
+  const handleSubmit = (e) => {
+    console.log(
+      ReleaseType,
+      UPCEAN,
+      CLine,
+      PLine,
+      ReleaseDate,
+      LabelName,
+      SubGenre,
+      Genre,
+      FeaturingArtist,
+      PrimaryArtist,
+      ReleaseTitle,
+      ImageDocument
+    );
+    fetch("http://192.168.54.212:5000/api/v1/createRelease/releseInfoPost", {
+      method: "POST",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        ReleaseType,
+        ReleaseTitle,
+        PrimaryArtist,
+        FeaturingArtist,
+        Genre,
+        SubGenre,
+        LabelName,
+        ReleaseDate,
+        PLine,
+        CLine,
+        UPCEAN,
+        ImageDocument
+      }),
+    })
+    .then((res) => res.json())
+          .then((data) => {
+            console.log(data, "CreateSuccesfully");
+            if (data.status === "ok") {
+              alert("Create Successful");
+            } else {
+              alert("Something went wrong");
+            }
+          });
+  };
+
+  
   return (
     <div className="mai-nev">
       <Link className="button1" to="/ReleseInfo">
@@ -133,6 +180,7 @@ const ReleseInfo = () => {
           <SideBar />
         </div>
         <div className="flex-container">
+        
           <div>
             <div className="box">
               <img src="pic_trulli.jpg" type="file" alt="Art Work"></img>
@@ -140,17 +188,14 @@ const ReleseInfo = () => {
             <FileUploader
               multiple={true}
               handleChange={handleChange}
+              value={ImageDocument}
+              onChange={(e) => handleInputChange(e)}
               name="file"
               types={fileTypes}
             />
           </div>
             </div>
 
-            {/* <p>{file ? `File name: ${file[0].name}` : "no files uploaded yet"}</p> */}
-
-            {/* <input className="file" type="file"></input> */}
-            {/* <h4 className="h4">ARTWORK GUIDELINES</h4> */}
-         
          <div className="GUIDELINES" >
          <ul style={{fontSize:'10px'}}>
          {/* <h4>Use The lines in the box</h4> */}
@@ -171,6 +216,8 @@ const ReleseInfo = () => {
                 className="optiontype"
                 name="work_days"
                 id="id_work_days"
+                value={ReleaseType}
+                onChange={(e) => handleInputChange(e)}
                 multiple
               >
                 <option value="EP">EP</option>
@@ -206,7 +253,6 @@ const ReleseInfo = () => {
               <option value="Select">A</option>
               <option value="Select">B</option>
             </select>
-            {/* <div className="col-sm-8"> */}
             {inputFields.map((data, index) => {
               const { PrimaryArtist, emailAddress, salary } = data;
               return (
@@ -247,19 +293,7 @@ const ReleseInfo = () => {
                 </div>
               );
             })}
-
-            {/* </div> */}
-
             <label className="lable">Featuring Artist*</label>
-            {/* <input
-              type="text"
-              required="true"
-              className="form-control"
-              placeholder="Featuring Artist"
-              id="FeaturingArtist"
-              value={FeaturingArtist}
-              onChange={(e) => handleInputChange(e)}
-            /> */}
             <select
               style={{
                 position: "absolute",
@@ -281,7 +315,7 @@ const ReleseInfo = () => {
                   <div className="col-sm-8">
                     <input
                       // type="hidden"
-                      onChange={(evnt) => handleChange(index, evnt)}
+                      onChange={(evnt) => handleChange2(index, evnt)}
                       value={FeaturingArtist}
                       name="FeaturingArtist"
                       className="form-control"
