@@ -9,14 +9,14 @@ export default function SignUp() {
   const [secretKey, setSecretKey] = useState("");
 
   const handleSubmit = (e) => {
-    if (userType == "Admin" && secretKey != "Admin123") {
+    if (userType === "Admin" && secretKey !== "Admin123") {
       e.preventDefault();
       alert("Invalid Admin");
     } else {
       e.preventDefault();
 
       console.log(fname, lname, email, password);
-      fetch("http://192.168.150.212:5000/register", {
+      fetch("http://192.168.54.153:5000/register", {
         method: "POST",
         crossDomain: true,
         headers: {
@@ -70,7 +70,7 @@ export default function SignUp() {
             />
             Admin
           </div>
-          {userType == "Admin" ? (
+          {userType === "Admin" ? (
             <div className="mb-3">
               <label>Secret Key</label>
               <input

@@ -25,6 +25,7 @@ import { FiYoutube } from 'react-icons/fi';
 function App() {
   const isLoggedIn = window.localStorage.getItem("loggedIn");
   return (
+    
     <Router>
       <div className="App">
         {/* <SideBar> */}
@@ -56,6 +57,7 @@ function App() {
         {/* <ImageUpload/> */}
       </div>
     </Router>
+
   );
 }
 

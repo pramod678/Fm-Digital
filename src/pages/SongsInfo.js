@@ -97,8 +97,8 @@ const SongsInfo = () => {
   };
 
   return (
-    <div className="mai-nev">
-      <Link className="button1" to="/ReleseInfo">
+    <div className="mai-nevsongs">
+    <Link className="button1" to="/ReleseInfo">
         Release Info
       </Link>
       <Link className="button1" to="/Songsinfo">
@@ -110,33 +110,12 @@ const SongsInfo = () => {
       <Link className="button1" to="/Submission">
         Submission
       </Link>
+      <div style={{ position: "absolute", marginTop: "-30px" }}>
+        <SideBar />
+      </div>
 
       <div className="songuploging">
-        {/* <div className="fileuploader2">
-            <FileUploader
-              multiple={true}
-              handleChange={handleChange}
-              onChange={handleFileChange}
-              name="file"
-              types={fileTypes}
-            />
-          </div> */}
-        {/* <input type="file" multiple onChange={handleFileChange} /> */}
-        {/* <button
-          className="button2"
-          onClick={handleUpload}
-          disabled={uploading || selectedFiles.length === 0}
-        >
-          {uploading ? "Uploading..." : "Upload"}
-        </button> */}
-        {/* {uploading && (
-          <div>
-            <p>Progress: {uploadProgress}%</p>
-            <p>Speed: {uploadSpeed} KB/s</p>
-            <progress value={uploadProgress} max={100} />
-          </div>
-          
-        )} */}
+
         <div className="GUIDELINES2">
           <ul style={{ fontSize: "12px" }}>
             {/* <h4>Use The lines in the box</h4> */}
@@ -214,9 +193,7 @@ const SongsInfo = () => {
       {/* <Button className="formbutton" variant="primary" onClick={handleShow}>
         Add Song Details
       </Button> */}
-      <div style={{ position: "absolute", marginTop: "-30px" }}>
-        <SideBar />
-      </div>
+     
       <>
         <Modal.Title
           style={{
