@@ -1,34 +1,59 @@
-const releseInfoTable = require("./createRelease.Model");
-//  const releseInfo = async (req,res) =>{
-//     try {
+const releseInfoTable = require("../model/releseInfo.Model");
+const featuringArtistTable = require("../model/featuringArtist.Model");
+const primaryArtistTable = require("../model/primaryArtist.Model");
+const moment = require( "moment-timezone");
 
-//     } catch (error) {
-//         console.log(error);
-//     }
-//  }
 const releseInfoPost = async (req, res) => {
   const {ReleaseType,ReleaseTitle,PrimaryArtist,FeaturingArtist,Genre,SubGenre,LabelName,ReleaseDate,PLine,CLine,UPCEAN,ImageDocument} = req.body;
-
-  // const encryptedPassword = await bcrypt.hash(password, 10);
+  var currentDate = moment(new Date()).add(5.5, "h").toDate();
+  console.log("PrimaryArtist",PrimaryArtist);
   try {
-    //   const oldUser = await releseInfoTable.findOne({ email });
-
-    //   if (oldUser) {
-    //     return res.json({ error: "User Exists" });
-    //   }
     const Data=  await releseInfoTable.create({
-      ReleaseType,
-      ReleaseTitle,
-      PrimaryArtist,
-      FeaturingArtist,
-      Genre,
-      SubGenre,
-      LabelName,
-      ReleaseDate,
-      PLine,
-      CLine,
-      UPCEAN,
-      ImageDocument,
+      ReleaseType:ReleaseType,
+      ReleaseTitle:ReleaseTitle,
+      PrimaryArtist:PrimaryArtist,
+      FeaturingArtist:FeaturingArtist,
+      Genre:Genre,
+      SubGenre:SubGenre,
+      LabelName:LabelName,
+      ReleaseDate:ReleaseDate,
+      PLine:PLine,
+      CLine:CLine,
+      UPCEAN:UPCEAN,
+      ImageDocument:ImageDocument,
+      createdAt:currentDate
+    });
+    res.send({ status: "ok",Data });
+  } catch (error) {
+    res.send({ status: "error" });
+  }
+};
+const primaryArtistPost = async (req, res) => {
+  const {PrimaryArtist,FeaturingArtist} = req.body;
+  var currentDate = moment(new Date()).add(5.5, "h").toDate();
+  console.log("currentDate",currentDate);
+  try {
+ 
+    const Data=  await primaryArtistTable.create({
+      PrimaryArtist:PrimaryArtist,
+      createdAt: currentDate
+    });
+    res.send({ status: "ok",Data });
+  } catch (error) {
+    res.send({ status: "error" });
+  }
+};
+const featuringArtisttPost = async (req, res) => {
+  const {PrimaryArtist,FeaturingArtist} = req.body;
+
+  var currentDate = moment(new Date()).add(5.5, "h").toDate();
+  console.log("currentDate",currentDate);
+  try {
+ 
+    const Data=  await featuringArtistTable.create({
+      FeaturingArtist:FeaturingArtist,
+      createdAt:currentDate,
+      
     });
     res.send({ status: "ok",Data });
   } catch (error) {
@@ -44,4 +69,4 @@ const releseInfoGetAll= async (req, res) => {
       console.log(error);
     }
   };
-module.exports = { releseInfoPost,releseInfoGetAll };
+module.exports = { releseInfoPost,primaryArtistPost,featuringArtisttPost,releseInfoGetAll };

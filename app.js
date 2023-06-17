@@ -10,6 +10,7 @@ app.use(express.urlencoded({ extended: false }));
 
 const jwt = require("jsonwebtoken");
 var nodemailer = require("nodemailer");
+//new router added
 var v1Routes =require("./Api/index.js")
 app.use("/api/v1",v1Routes)
 
