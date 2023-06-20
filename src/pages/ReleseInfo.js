@@ -3,6 +3,8 @@ import "./Create-Release.css";
 import { Link } from "react-router-dom";
 import SideBar from "../components/Sidebar/SideBar";
 import { FileUploader } from "react-drag-drop-files";
+import axios from "axios";
+
 const ReleseInfo = () => {
   const [UPCEAN, setUPCEAN] = useState(null);
   const [CLine, setCLine] = useState(null);
@@ -11,18 +13,17 @@ const ReleseInfo = () => {
   const [LabelName, setLabelName] = useState(null);
   const [SubGenre, setSubGenre] = useState(null);
   const [Genre, setGenre] = useState(null);
-  const [FeaturingArtist, setFeaturingArtist] = useState([{ FeaturingArtist: "" }] );
+  const [FeaturingArtist, setFeaturingArtist] = useState([
+    { FeaturingArtist: "" },
+  ]);
   const [PrimaryArtist, setPrimaryArtist] = useState([{ PrimaryArtist: "" }]);
   const [ReleaseTitle, setReleaseTitle] = useState(null);
   const [ReleaseType, setReleaseType] = useState(null);
-  const [ImageDocument, setImageDocument] = useState(null);
-  // const [inputFields, setInputFields] = useState([{ PrimaryArtist: "" }]);
-  // const [inputFields2, setInputFields2] = useState([{ FeaturingArtist: "" }]);
-  // const [file, setFile] = useState(null);
+  const [ImageDocument, setImageDocument] = useState({ preview: "", data: "" });
 
   const fileTypes = ["JPEG", "JPG"];
   // alert(JSON.stringify(inputFields));
-  console.log("PrimaryArtist",PrimaryArtist);
+  // console.log("PrimaryArtist",PrimaryArtist);
 
   const addInputField = () => {
     setPrimaryArtist([
@@ -41,13 +42,11 @@ const ReleseInfo = () => {
     ]);
   };
 
-  const handleChange = (index, evnt, ImageDocument) => {
+  const handleChange = (index, evnt) => {
     const { name, value } = evnt.target;
     const list = [...PrimaryArtist];
     list[index][name] = value;
     setPrimaryArtist(list);
-    setImageDocument(ImageDocument)
-    // setFile(file);
   };
   const handleChange2 = (index, evnt) => {
     const { name, value } = evnt.target;
@@ -66,41 +65,51 @@ const ReleseInfo = () => {
     rows.splice(index, 1);
     setFeaturingArtist(rows);
   };
-  const handleSubmit = (e) => {
-    fetch("http://192.168.54.153:5000/api/v1/createRelease/releseInfoPost", {
-      method: "POST",
-      crossDomain: true,
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({
-        ReleaseType: ReleaseType,
-        ReleaseTitle: ReleaseTitle,
-        PrimaryArtist: PrimaryArtist,
-        FeaturingArtist: FeaturingArtist,
-        Genre: Genre,
-        SubGenre: SubGenre,
-        LabelName: LabelName,
-        ReleaseDate: ReleaseDate,
-        PLine: PLine,
-        CLine: CLine,
-        UPCEAN: UPCEAN,
-        ImageDocument: ImageDocument,
-      }),
-    })
+
+  // formData.append("fileName", fileName);
+  const handleSubmit = async (e) => {
+    console.log(PrimaryArtist,FeaturingArtist);
+    let formData = new FormData();
+    formData.append("ImageDocument", ImageDocument.data);
+    formData.append("ReleaseType", ReleaseType);
+    formData.append("ReleaseTitle", ReleaseTitle);
+    formData.append("PrimaryArtist", JSON.stringify({PrimaryArtist}));
+    formData.append("FeaturingArtist", JSON.stringify({FeaturingArtist}));
+    formData.append("Genre", Genre);
+    formData.append("SubGenre", SubGenre);
+    formData.append("LabelName", LabelName);
+    formData.append("ReleaseDate", ReleaseDate);
+    formData.append("PLine", PLine);
+    formData.append("CLine", CLine);
+    formData.append("UPCEAN", UPCEAN);
+    const res = await fetch(
+      "http://192.168.1.113:5000/api/v1/createRelease/releseInfoPost",
+      {
+        method: "POST",
+        body: formData,
+      }
+    )
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data, "CreateSuccesfully");
-        if (data.status === "ok") {
+      .then((Data) => {
+        console.log(Data, "CreateSuccesfully");
+        if (Data.status === "ok") {
           alert("Create Successful");
         } else {
           alert("Something went wrong");
         }
       });
+    // console.log("response",res);
+    // if (response) setStatus(response.statusText)
   };
-
+  const handleFileChange = (e) => {
+    console.log("handleFileChange");
+    const img = {
+      preview: URL.createObjectURL(e.target.files[0]),
+      data: e.target.files[0],
+    };
+    setImageDocument(img);
+    // console.log(img,"img");
+  };
   return (
     <div className="mai-nev">
       <Link className="button1" to="/ReleseInfo">
@@ -125,19 +134,28 @@ const ReleseInfo = () => {
           <div>
             <div className="box">
               <img src="pic_trulli.jpg" type="file" alt="Art Work"></img>
-              <div className="fileuploader">
-                <FileUploader
+              <form action="upload.php" method="POST">
+                <input accept="image/*" type="file" name='ImageDocument' onChange={handleFileChange} multiple />
+              </form>
+              {/* <div className="fileuploader"> */}
+              {/* <input type='file' name='ImageDocument' onChange={handleFileChange}></input> */}
+
+              {/* <FileUploader
                   multiple={true}
-                  handleChange={handleChange}
-                  value={ImageDocument}
-                  onChange={(e) => {
-                    setImageDocument(e.target.value);
-                  }}
-                  // onChange={(e) => handleInputChange(e)}
+                  // handleChange={handleChange}
+                  // value={ImageDocument}
+                  // onChange={e => setImageDocument(e.target.files[0])} 
+                  onChange={handleFileChange}
+                  type="file" 
+                  accept="image/*"
+                  // onChange={(e) => {
+                  //   setImageDocument(e.target.value);
+                  // }}
+                  
                   name="file"
                   types={fileTypes}
-                />
-              </div>
+                /> */}
+              {/* </div> */}
             </div>
 
             <div className="GUIDELINES">
@@ -209,7 +227,7 @@ const ReleseInfo = () => {
             {PrimaryArtist.map((data, index) => {
               const { PrimaryArtist } = data;
               return (
-                <div className="row my-3" key={index}>
+                <div className="row my-0" key={index}>
                   <div className="col-sm-8">
                     <input
                       onChange={(evnt) => handleChange(index, evnt)}
@@ -220,9 +238,9 @@ const ReleseInfo = () => {
                     />
                     <button
                       style={{
-                        position: "absolute",
-                        marginTop: "-2%",
-                        marginLeft: "17%",
+                        position: "relative",
+                        marginTop: "-30%",
+                        marginLeft: "105%",
                       }}
                       className="btn btn-outline-success"
                       onClick={addInputField}
@@ -232,7 +250,7 @@ const ReleseInfo = () => {
                   </div>
 
                   <div className="Addclosebutton1">
-                    { PrimaryArtist.length !== 1 ? (
+                    {PrimaryArtist.length !== 1 ? (
                       <button
                         className="btn btn-outline-danger"
                         onClick={removeInputFields}
@@ -264,7 +282,7 @@ const ReleseInfo = () => {
             {FeaturingArtist.map((data, index) => {
               const { FeaturingArtist } = data;
               return (
-                <div className="row my-3" key={index}>
+                <div className="row my-0" key={index}>
                   <div className="col-sm-8">
                     <input
                       value={FeaturingArtist}
@@ -275,9 +293,9 @@ const ReleseInfo = () => {
                     />
                     <button
                       style={{
-                        position: "absolute",
-                        marginTop: "-2%",
-                        marginLeft: "17%",
+                        position: "relative",
+                        marginTop: "-30%",
+                        marginLeft: "105%",
                       }}
                       className="btn btn-outline-success"
                       onClick={addInputField2}
@@ -315,7 +333,7 @@ const ReleseInfo = () => {
               // onChange={(e) => handleInputChange(e)}
             >
               {" "}
-              <option >Genre</option>
+              <option>Genre</option>
               <option value="A">A</option>
               <option value="B">B</option>
             </select>

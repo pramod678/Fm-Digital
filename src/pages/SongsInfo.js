@@ -22,6 +22,8 @@ const SongsInfo = () => {
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadSpeed, setUploadSpeed] = useState(0);
+  const [inputFields, setInputFields] = useState([{PrimaryArtist: ""}]);
+
 
   const handleFileChange = (event) => {
     setSelectedFiles([...event.target.files]);
@@ -75,12 +77,6 @@ const SongsInfo = () => {
   };
 
   //////add songs function
-  const [inputFields, setInputFields] = useState([
-    {
-      PrimaryArtist: "",
-    },
-  ]);
-
   const addInputField = () => {
     setInputFields([
       ...inputFields,
@@ -97,7 +93,7 @@ const SongsInfo = () => {
   };
 
   return (
-    <div className="mai-nevsongs">
+    <div className="mai-nev">
     <Link className="button1" to="/ReleseInfo">
         Release Info
       </Link>
@@ -295,17 +291,25 @@ const SongsInfo = () => {
                   autoFocus
                 />
                 <Form.Label>Primary artist</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Primary artist"
-                  autoFocus
-                />
+                <select
+                className="form-select"
+                // value={this.state.selectValue}
+                // onChange={this.handleChange}
+              >
+                <option >Primary artist</option>
+                <option value="Radish">A</option>
+                <option value="Cherry">B</option>
+              </select>
                 <Form.Label>Featuring Artist</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Featuring Artist"
-                  autoFocus
-                />
+                <select
+                className="form-select"
+                // value={this.state.selectValue}
+                // onChange={this.handleChange}
+              >
+                <option >Featuring Artist</option>
+                <option value="Radish">A</option>
+                <option value="Cherry">B</option>
+              </select>
                 <Form.Label>Author</Form.Label>
                 <Form.Control type="text" placeholder="Author" autoFocus />
                 <Form.Label>Composer</Form.Label>
@@ -315,31 +319,8 @@ const SongsInfo = () => {
                 <Form.Label>Publisher</Form.Label>
                 <Form.Control type="text" placeholder="Publisher" autoFocus />
               </Form.Group>
-              <Form.Label>Have your own ISRC</Form.Label>
-              <div>
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="flexRadioDefault"
-                  id="flexRadioDefault7"
-                />
-                &nbsp;&nbsp;
-                <label class="form-check-label" for="flexRadioDefault1">
-                  Yes
-                </label>
-                &nbsp;&nbsp;
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="flexRadioDefault"
-                  id="flexRadioDefault8"
-                />
-                &nbsp;&nbsp;
-                <label class="form-check-label" for="flexRadioDefault1">
-                  No
-                </label>
-                &nbsp;&nbsp;
-              </div>
+              <Form.Label>Have your own ISRC (Optional)</Form.Label>
+              <Form.Control type="text" placeholder="Publisher" ISRC />
               <Form.Group
                 className="mb-3"
                 controlId="exampleForm.ControlInput1"
@@ -413,40 +394,18 @@ const SongsInfo = () => {
                 <option value="Radish">A</option>
                 <option value="Cherry">B</option>
               </select>
-              <Form.Label>Featuring Artist</Form.Label>
+              {/* <Form.Label>Featuring Artist</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Featuring Artist"
                 autoFocus
-              />
+              /> */}
               <Form.Label>Lyrics</Form.Label>
               <Form.Control type="text" placeholder="Lyrics" autoFocus />
               <Form.Label>Caller Tune Timing</Form.Label>
               <Form.Control type="text" placeholder="hh:mm:ss" autoFocus />
               <Form.Label>Distribute Music video?</Form.Label>
-              <div>
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="flexRadioDefault"
-                  id="flexRadioDefault10"
-                />
-                &nbsp;&nbsp;
-                <label class="form-check-label" for="flexRadioDefault1">
-                  Yes
-                </label>
-                &nbsp;&nbsp;
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="flexRadioDefault"
-                  id="flexRadioDefault11"
-                />
-                &nbsp;&nbsp;
-                <label class="form-check-label" for="flexRadioDefault1">
-                  No
-                </label>
-              </div>
+              <Form.Control type="text" placeholder="Distribute Music video URL" Distribute Music video />
             </Form>
           </Modal.Body>
           <Modal.Footer>
