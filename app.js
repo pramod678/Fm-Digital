@@ -7,7 +7,6 @@ app.use(cors());
 const bcrypt = require("bcryptjs");
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: false }));
-
 const jwt = require("jsonwebtoken");
 var nodemailer = require("nodemailer");
 //new router added

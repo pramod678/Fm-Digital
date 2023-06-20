@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const autoIncrement = require('mongoose-sequence')(mongoose);
 const featuringArtistScehma = new mongoose.Schema(
   {
 
@@ -12,5 +12,5 @@ const featuringArtistScehma = new mongoose.Schema(
     collection: "featuringArtist",
   }
 );
-
+featuringArtistScehma.plugin(autoIncrement, {inc_field: 'featuringArtist_id'});
 module.exports = mongoose.model("featuringArtist", featuringArtistScehma);

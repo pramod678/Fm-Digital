@@ -1,8 +1,9 @@
-const users = require("../model/users.Model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 var nodemailer = require("nodemailer");
-
+const users = require("../model/users.Model");
+const JWT_SECRET =
+  "hvdvay6ert72839289()aiyg8t87qt72393293883uhefiuh78ttq3ifi78272jbkj?[]]pou89ywe";
 
 const register = async (req, res) => {
   const { fname, lname, email, password, userType } = req.body;
@@ -66,7 +67,7 @@ const userData= async (req, res) => {
     }
 
     const useremail = user.email;
-    User.findOne({ email: useremail })
+    users.findOne({ email: useremail })
       .then((data) => {
         res.send({ status: "ok", data: data });
       })

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const autoIncrement = require('mongoose-sequence')(mongoose);
 const usersScehma = new mongoose.Schema(
   {
     fname: String,
@@ -14,5 +14,5 @@ const usersScehma = new mongoose.Schema(
     collection: "users",
   }
 );
-
-mongoose.model("users", usersScehma);
+usersScehma.plugin(autoIncrement, {inc_field: 'users_id'});
+module.exports= mongoose.model("users", usersScehma);

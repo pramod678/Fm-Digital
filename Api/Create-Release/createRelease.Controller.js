@@ -3,6 +3,7 @@ const featuringArtistTable = require("../model/featuringArtist.Model");
 const primaryArtistTable = require("../model/primaryArtist.Model");
 const moment = require( "moment-timezone");
 
+
 const releseInfoPost = async (req, res) => {
   const {ReleaseType,ReleaseTitle,PrimaryArtist,FeaturingArtist,Genre,SubGenre,LabelName,ReleaseDate,PLine,CLine,UPCEAN,ImageDocument} = req.body;
   var currentDate = moment(new Date()).add(5.5, "h").toDate();
@@ -20,7 +21,7 @@ const releseInfoPost = async (req, res) => {
       PLine:PLine,
       CLine:CLine,
       UPCEAN:UPCEAN,
-      ImageDocument:ImageDocument,
+      ImageDocument:req.files["ImageDocument"]?.[0].filename ? "/ImagereleseInfo/" + req.files["ImageDocument"]?.[0].filename : "NULL",
       createdAt:currentDate
     });
     res.send({ status: "ok",Data });
@@ -69,4 +70,13 @@ const releseInfoGetAll= async (req, res) => {
       console.log(error);
     }
   };
-module.exports = { releseInfoPost,primaryArtistPost,featuringArtisttPost,releseInfoGetAll };
+  const primaryArtistGet= async (req, res) => {
+    try {
+      const allUser = await releseInfoTable.findOne({ _id: req.params.id });
+    //   console.log("allUser",allUser);
+      res.send({ status: "ok", data: allUser });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+module.exports = { releseInfoPost,primaryArtistPost,primaryArtistGet,featuringArtisttPost,releseInfoGetAll };

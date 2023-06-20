@@ -1,19 +1,29 @@
 const mongoose = require("mongoose");
+const autoIncrement = require('mongoose-sequence')(mongoose);
 
 const releseInfoScehma = new mongoose.Schema(
   {
-    ReleaseType: String,
-    ReleaseTitle: String,
+    ReleaseType: {type: String,
+      required: true},
+    ReleaseTitle:  {type: String,
+      required: true},
     PrimaryArtist:{ type : [], default: ([]) },
     FeaturingArtist:{ type : [], default: ([]) },
-    Genre:String,
-    SubGenre:String,
-    LabelName:String,
-    ReleaseDate:String,
-    PLine: String,
-    CLine: String,
-    UPCEAN: String,
-    ImageDocument:String,
+    Genre: {type: String,
+      required: false},
+    SubGenre: {type: String,
+      required: true},
+    LabelName: {type: String,
+      required: true},
+    ReleaseDate: {type: String,
+      required: true},
+    PLine:  {type: String,
+      required: true},
+    CLine:  {type: String,
+      required: true},
+    UPCEAN:  {type: String,
+      required: true},
+    ImageDocument: String,
     createdAt: { type : Date, default: Date.now }, 
     updatedAt: { type : Date, },
   },
@@ -22,4 +32,5 @@ const releseInfoScehma = new mongoose.Schema(
   }
 );
 
+releseInfoScehma.plugin(autoIncrement, {inc_field: 'releseInfo_id'});
 module.exports = mongoose.model("releseInfo", releseInfoScehma);
