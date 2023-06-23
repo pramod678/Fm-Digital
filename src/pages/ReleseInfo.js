@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import "./Create-Release.css";
 import { Link } from "react-router-dom";
 import SideBar from "../components/Sidebar/SideBar";
-import { FileUploader } from "react-drag-drop-files";
-import axios from "axios";
+
 
 const ReleseInfo = () => {
   const [UPCEAN, setUPCEAN] = useState(null);
@@ -20,8 +19,6 @@ const ReleseInfo = () => {
   const [ReleaseTitle, setReleaseTitle] = useState(null);
   const [ReleaseType, setReleaseType] = useState(null);
   const [ImageDocument, setImageDocument] = useState({ preview: "", data: "" });
-
-  const fileTypes = ["JPEG", "JPG"];
   // alert(JSON.stringify(inputFields));
   // console.log("PrimaryArtist",PrimaryArtist);
 
@@ -48,6 +45,11 @@ const ReleseInfo = () => {
     list[index][name] = value;
     setPrimaryArtist(list);
   };
+  const removeInputFields = (index) => {
+    const rows = [...PrimaryArtist];
+    rows.splice(index, 1);
+    setPrimaryArtist(rows);
+  };
   const handleChange2 = (index, evnt) => {
     const { name, value } = evnt.target;
     const list2 = [...FeaturingArtist];
@@ -55,11 +57,6 @@ const ReleseInfo = () => {
     setFeaturingArtist(list2);
   };
 
-  const removeInputFields = (index) => {
-    const rows = [...PrimaryArtist];
-    rows.splice(index, 1);
-    setPrimaryArtist(rows);
-  };
   const removeInputFields2 = (index) => {
     const rows = [...FeaturingArtist];
     rows.splice(index, 1);
@@ -68,13 +65,13 @@ const ReleseInfo = () => {
 
   // formData.append("fileName", fileName);
   const handleSubmit = async (e) => {
-    console.log(PrimaryArtist,FeaturingArtist);
+    console.log("DATA------",JSON.stringify(PrimaryArtist),JSON.stringify(FeaturingArtist));
     let formData = new FormData();
     formData.append("ImageDocument", ImageDocument.data);
     formData.append("ReleaseType", ReleaseType);
     formData.append("ReleaseTitle", ReleaseTitle);
-    formData.append("PrimaryArtist", JSON.stringify({PrimaryArtist}));
-    formData.append("FeaturingArtist", JSON.stringify({FeaturingArtist}));
+    formData.append("PrimaryArtist", JSON.stringify(PrimaryArtist));
+    formData.append("FeaturingArtist", JSON.stringify(FeaturingArtist));
     formData.append("Genre", Genre);
     formData.append("SubGenre", SubGenre);
     formData.append("LabelName", LabelName);
@@ -83,7 +80,7 @@ const ReleseInfo = () => {
     formData.append("CLine", CLine);
     formData.append("UPCEAN", UPCEAN);
     const res = await fetch(
-      "http://192.168.1.113:5000/api/v1/createRelease/releseInfoPost",
+      "http://192.168.1.119:5000/api/v1/createRelease/releseInfoPost",
       {
         method: "POST",
         body: formData,
@@ -133,10 +130,10 @@ const ReleseInfo = () => {
         <div className="flex-container">
           <div>
             <div className="box">
-              <img src="pic_trulli.jpg" type="file" alt="Art Work"></img>
-              <form action="upload.php" method="POST">
+              <img src="http://localhost:5000/releseInfo/ImageDocument_1687429659808.jpg" type="file" alt="Art Work"></img>
+              <div className="ImageDocument" >
                 <input accept="image/*" type="file" name='ImageDocument' onChange={handleFileChange} multiple />
-              </form>
+              </div>
               {/* <div className="fileuploader"> */}
               {/* <input type='file' name='ImageDocument' onChange={handleFileChange}></input> */}
 
@@ -209,21 +206,6 @@ const ReleseInfo = () => {
               // onChange={(e) => handleInputChange(e)}
             />
             <label className="lable">Primary Artist*</label>
-
-            {/* <select
-              style={{
-                position: "absolute",
-                width: "297px",
-                marginTop: "16px",
-              }}
-              type="text"
-              className="form-select"
-              placeholder="Primary Artist"
-            >
-              <option value="Select">Primary Artist</option>
-              <option value="Select">A</option>
-              <option value="Select">B</option>
-            </select> */}
             {PrimaryArtist.map((data, index) => {
               const { PrimaryArtist } = data;
               return (

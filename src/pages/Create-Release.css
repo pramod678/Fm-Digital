@@ -339,19 +339,19 @@ h1 {
 
 /* new drowpdown file uplod css */
 
-form{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: -70px;
-  margin-left: -690px;
+.ImageDocument{
+  position: relative;
+  top: 75%;
+  left: 10%;
+  margin-top: 0px;
+  margin-left: -90px;
   width: 300px;
   height: 50px;
   border: 2px dashed #3607f0;
 }
 
-form input{
-  position: absolute;
+.ImageDocument input{
+  position: relative;
   font-size: 70%;
   margin: 0;
   padding: 0;
@@ -360,8 +360,26 @@ form input{
   outline: none;
   opacity: .4;
 }
-
-
+.AudioDocumentsongs{
+  position: relative;
+  top:30%;
+  left: 0%;
+  margin-top: -53px;
+  margin-left: -10px;
+  width: 300px;
+  height: 50px;
+  border: 2px dashed #3607f0;
+}
+.AudioDocumentsongs input{
+  position: relative;
+  font-size: 70%;
+  margin: 0;
+  padding: 0;
+  width: 90%;
+  height: 90%;
+  outline: none;
+  opacity: .4;
+}
 
 
 

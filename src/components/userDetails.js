@@ -8,7 +8,7 @@ export default function UserDetails() {
   const [admin, setAdmin] = useState(false);
 
   useEffect(() => {
-    fetch("http://192.168.1.113:5000/userData", {
+    fetch("http://192.168.1.119:5000/userData", {
       method: "POST",
       crossDomain: true,
       headers: {
