@@ -3,7 +3,6 @@ import "./Create-Release.css";
 import { Link } from "react-router-dom";
 import SideBar from "../components/Sidebar/SideBar";
 
-
 const ReleseInfo = () => {
   const [UPCEAN, setUPCEAN] = useState(null);
   const [CLine, setCLine] = useState(null);
@@ -12,66 +11,65 @@ const ReleseInfo = () => {
   const [LabelName, setLabelName] = useState(null);
   const [SubGenre, setSubGenre] = useState(null);
   const [Genre, setGenre] = useState(null);
-  const [FeaturingArtist, setFeaturingArtist] = useState([
-    { FeaturingArtist: "" },
-  ]);
-  const [PrimaryArtist, setPrimaryArtist] = useState([{ PrimaryArtist: "" }]);
   const [ReleaseTitle, setReleaseTitle] = useState(null);
   const [ReleaseType, setReleaseType] = useState(null);
   const [ImageDocument, setImageDocument] = useState({ preview: "", data: "" });
   // alert(JSON.stringify(inputFields));
   // console.log("PrimaryArtist",PrimaryArtist);
 
+  const [inputFields, setInputFields] = useState([{ PrimaryArtist: "" }]);
   const addInputField = () => {
-    setPrimaryArtist([
-      ...PrimaryArtist,
+    setInputFields([
+      ...inputFields,
       {
         PrimaryArtist: "",
       },
     ]);
   };
+  const removeInputFields = (index) => {
+    const rows = [...inputFields];
+    rows.splice(index, 1);
+    setInputFields(rows);
+  };
+  const handleChange = (index, evnt) => {
+    const { name, value } = evnt.target;
+    const list = [...inputFields];
+    list[index][name] = value;
+    setInputFields(list);
+  };
+
+  const [inputFields2, setInputFields2] = useState([{ FeaturingArtist: "" }]);
   const addInputField2 = () => {
-    setFeaturingArtist([
-      ...FeaturingArtist,
+    setInputFields2([
+      ...inputFields2,
       {
         FeaturingArtist: "",
       },
     ]);
   };
-
-  const handleChange = (index, evnt) => {
-    const { name, value } = evnt.target;
-    const list = [...PrimaryArtist];
-    list[index][name] = value;
-    setPrimaryArtist(list);
-  };
-  const removeInputFields = (index) => {
-    const rows = [...PrimaryArtist];
+  const removeInputFields2 = (index) => {
+    const rows = [...inputFields2];
     rows.splice(index, 1);
-    setPrimaryArtist(rows);
+    setInputFields2(rows);
   };
   const handleChange2 = (index, evnt) => {
     const { name, value } = evnt.target;
-    const list2 = [...FeaturingArtist];
-    list2[index][name] = value;
-    setFeaturingArtist(list2);
+    const list = [...inputFields2];
+    list[index][name] = value;
+    setInputFields2(list);
   };
-
-  const removeInputFields2 = (index) => {
-    const rows = [...FeaturingArtist];
-    rows.splice(index, 1);
-    setFeaturingArtist(rows);
-  };
-
-  // formData.append("fileName", fileName);
   const handleSubmit = async (e) => {
-    console.log("DATA------",JSON.stringify(PrimaryArtist),JSON.stringify(FeaturingArtist));
+    console.log(
+      "DATA------",
+      JSON.stringify(inputFields),
+      JSON.stringify(inputFields2)
+    );
     let formData = new FormData();
     formData.append("ImageDocument", ImageDocument.data);
     formData.append("ReleaseType", ReleaseType);
     formData.append("ReleaseTitle", ReleaseTitle);
-    formData.append("PrimaryArtist", JSON.stringify(PrimaryArtist));
-    formData.append("FeaturingArtist", JSON.stringify(FeaturingArtist));
+    formData.append("PrimaryArtist", JSON.stringify(inputFields));
+    formData.append("FeaturingArtist", JSON.stringify(inputFields2));
     formData.append("Genre", Genre);
     formData.append("SubGenre", SubGenre);
     formData.append("LabelName", LabelName);
@@ -95,8 +93,6 @@ const ReleseInfo = () => {
           alert("Something went wrong");
         }
       });
-    // console.log("response",res);
-    // if (response) setStatus(response.statusText)
   };
   const handleFileChange = (e) => {
     console.log("handleFileChange");
@@ -107,6 +103,7 @@ const ReleseInfo = () => {
     setImageDocument(img);
     // console.log(img,"img");
   };
+
   return (
     <div className="mai-nev">
       <Link className="button1" to="/ReleseInfo">
@@ -130,29 +127,20 @@ const ReleseInfo = () => {
         <div className="flex-container">
           <div>
             <div className="box">
-              <img src="http://localhost:5000/releseInfo/ImageDocument_1687429659808.jpg" type="file" alt="Art Work"></img>
-              <div className="ImageDocument" >
-                <input accept="image/*" type="file" name='ImageDocument' onChange={handleFileChange} multiple />
-              </div>
-              {/* <div className="fileuploader"> */}
-              {/* <input type='file' name='ImageDocument' onChange={handleFileChange}></input> */}
-
-              {/* <FileUploader
-                  multiple={true}
-                  // handleChange={handleChange}
-                  // value={ImageDocument}
-                  // onChange={e => setImageDocument(e.target.files[0])} 
-                  onChange={handleFileChange}
-                  type="file" 
+              <img
+                src="http://localhost:5000/releseInfo/ImageDocument_1687429659808.jpg"
+                type="file"
+                alt="Art Work"
+              ></img>
+              <div className="ImageDocument">
+                <input
                   accept="image/*"
-                  // onChange={(e) => {
-                  //   setImageDocument(e.target.value);
-                  // }}
-                  
-                  name="file"
-                  types={fileTypes}
-                /> */}
-              {/* </div> */}
+                  type="file"
+                  name="ImageDocument"
+                  onChange={handleFileChange}
+                  multiple
+                />
+              </div>
             </div>
 
             <div className="GUIDELINES">
@@ -182,7 +170,6 @@ const ReleseInfo = () => {
                 onChange={(e) => {
                   setReleaseType(e.target.value);
                 }}
-                // onChange={(e) => handleInputChange(e)}
                 multiple
               >
                 <option value="EP">EP</option>
@@ -203,13 +190,12 @@ const ReleseInfo = () => {
               onChange={(e) => {
                 setReleaseTitle(e.target.value);
               }}
-              // onChange={(e) => handleInputChange(e)}
             />
             <label className="lable">Primary Artist*</label>
-            {PrimaryArtist.map((data, index) => {
+            {inputFields.map((data, index) => {
               const { PrimaryArtist } = data;
               return (
-                <div className="row my-0" key={index}>
+                <div className="row my-3" key={index}>
                   <div className="col-sm-8">
                     <input
                       onChange={(evnt) => handleChange(index, evnt)}
@@ -232,7 +218,7 @@ const ReleseInfo = () => {
                   </div>
 
                   <div className="Addclosebutton1">
-                    {PrimaryArtist.length !== 1 ? (
+                    {inputFields.length !== 1 ? (
                       <button
                         className="btn btn-outline-danger"
                         onClick={removeInputFields}
@@ -247,21 +233,7 @@ const ReleseInfo = () => {
               );
             })}
             <label className="lable">Featuring Artist*</label>
-            {/* <select
-              style={{
-                position: "absolute",
-                width: "297px",
-                marginTop: "16px",
-              }}
-              type="text"
-              className="form-select"
-              placeholder="Featuring Artist"
-            >
-              <option value="Select">Featuring Artist</option>
-              <option value="Select">A</option>
-              <option value="Select">B</option>
-            </select> */}
-            {FeaturingArtist.map((data, index) => {
+            {inputFields2.map((data, index) => {
               const { FeaturingArtist } = data;
               return (
                 <div className="row my-0" key={index}>
@@ -287,7 +259,7 @@ const ReleseInfo = () => {
                   </div>
 
                   <div className="Addclosebutton3">
-                    {FeaturingArtist.length !== 1 ? (
+                    {inputFields2.length !== 1 ? (
                       <button
                         className="btn btn-outline-danger"
                         onClick={removeInputFields2}
@@ -312,7 +284,6 @@ const ReleseInfo = () => {
               onChange={(e) => {
                 setGenre(e.target.value);
               }}
-              // onChange={(e) => handleInputChange(e)}
             >
               {" "}
               <option>Genre</option>
@@ -330,7 +301,6 @@ const ReleseInfo = () => {
               onChange={(e) => {
                 setSubGenre(e.target.value);
               }}
-              // onChange={(e) => handleInputChange(e)}
             />
           </div>
           <div className="label">
@@ -345,7 +315,6 @@ const ReleseInfo = () => {
               onChange={(e) => {
                 setLabelName(e.target.value);
               }}
-              // onChange={(e) => handleInputChange(e)}
             />
             <label className="lable">Release Date*</label>
             <input
@@ -358,7 +327,6 @@ const ReleseInfo = () => {
               onChange={(e) => {
                 setReleaseDate(e.target.value);
               }}
-              // onChange={(e) => handleInputChange(e)}
             />
             <label className="lable">PLine*</label>
             <input
@@ -371,7 +339,6 @@ const ReleseInfo = () => {
               onChange={(e) => {
                 setPLine(e.target.value);
               }}
-              // onChange={(e) => handleInputChange(e)}
             />
             <label className="lable">C Line*</label>
             <input
@@ -384,7 +351,6 @@ const ReleseInfo = () => {
               onChange={(e) => {
                 setCLine(e.target.value);
               }}
-              // onChange={(e) => handleInputChange(e)}
             />
             <label className="lable">UPC/EAN*</label>
             <input
@@ -397,7 +363,6 @@ const ReleseInfo = () => {
               onChange={(e) => {
                 setUPCEAN(e.target.value);
               }}
-              // onChange={(e) => handleInputChange(e)}
             />
             <button
               onClick={() => handleSubmit()}
