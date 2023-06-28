@@ -3,6 +3,7 @@ const autoIncrement = require('mongoose-sequence')(mongoose);
 
 const releseInfoScehma = new mongoose.Schema(
   {
+    users_id:{ type: Number, require:true },
     ReleaseType: {type: String,
       required: true},
     ReleaseTitle:  {type: String,

@@ -1,18 +1,18 @@
 const mongoose = require("mongoose");
 
 const autoIncrement = require('mongoose-sequence')(mongoose);
-const primaryArtistScehma = new mongoose.Schema(
+const platformScehma = new mongoose.Schema(
   {
     users_id:{ type: Number, require:true },
-    PrimaryArtist:{ type : [], default: ([]) },
+    submission:{ type : String },
     createdAt: { type : Date, default: Date.now }, 
     updatedAt: { type : Date, },
   },
   {
-    collection: "primaryArtist",
+    collection: "submission",
   }
 );
 // primaryArtistScehma.plugin(autoIncrement);
-primaryArtistScehma.plugin(autoIncrement, {inc_field: 'primaryArtist_id'});
+platformScehma.plugin(autoIncrement, {inc_field: 'platform_id'});
 
-module.exports = mongoose.model("primaryArtist", primaryArtistScehma);
+module.exports = mongoose.model("platform", platformScehma);
