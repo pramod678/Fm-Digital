@@ -35,7 +35,7 @@ const SongsInfo = () => {
   });
   const [AudioDocument, setAudioDocument] = useState({ preview: "", data: "" });
   const handleFileChange = (e) => {
-    console.log("handleFileChange");
+    // console.log("handleFileChange");
     const Audio = {
       preview: URL.createObjectURL(e.target.files[0]),
       data: e.target.files[0],
@@ -66,9 +66,9 @@ const SongsInfo = () => {
     formData.append("Lyrics", formdata.Lyrics);
     formData.append("CallerTuneTiming", formdata.CallerTuneTiming);
     formData.append("DistributeMusicvideo", formdata.DistributeMusicvideo);
-    console.log("formData.Trackversion", formdata.Trackversion);
+    // console.log("formData.Trackversion", formdata.Trackversion);
     const res = await fetch(
-      "http://192.168.1.119:5000/api/v1/createRelease/songsInfoPost",
+      "http://192.168.54.153:5000/api/v1/createRelease/songsInfoPost",
       {
         method: "POST",
         body: formData,

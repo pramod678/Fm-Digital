@@ -2,13 +2,14 @@ import React, {  useEffect, useState } from "react";
 import AdminHome from "./adminHome";
 
 import Dashboard from "./DashboardHome";
+import ReleseInfo from "../pages/ReleseInfo";
 
 export default function UserDetails() {
   const [userData, setUserData] = useState("");
   const [admin, setAdmin] = useState(false);
 
   useEffect(() => {
-    fetch("http://192.168.1.119:5000/userData", {
+    fetch("http://192.168.54.153:5000/api/v1/user/userData", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -17,7 +18,7 @@ export default function UserDetails() {
         "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify({
-        token: window.localStorage.getItem("token"),
+        token: localStorage.getItem("token"),
       }),
     })
       .then((res) => res.json())
@@ -28,7 +29,6 @@ export default function UserDetails() {
         }
 
         setUserData(data.data);
-
         if (data.data === "token expired") {
           alert("Token expired login again");
           window.localStorage.clear();

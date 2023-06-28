@@ -4,10 +4,12 @@ import "../index.css";
 import { Link } from "react-router-dom";
 // import MenuBar from "./Sidebar/SidebarMenu";
 export default function UserHome({ userData }) {
+  // console.log("userData",userData);
   const logOut = () => {
     window.localStorage.clear();
     window.location.href = "./sign-in";
   };
+  console.log("userData.fname",userData.fname);
   return (
     <div className="auth-wrapper">
     <div style={{position:'absolute',marginTop:'0px'}} ><SideBar/></div>

@@ -29,21 +29,21 @@
 .adioTable{
   position: relative;
   margin-top: 1%;
-  width:180%;
+  width:320%;
   margin-left: 45%;
   text-align: left;
 }
 .adioTable1{
   position: relative;
   margin-top: 1%;
-  width: 180%;
+  width: 320%;
   margin-left: 45%;
   text-align: left;
 }
 .adioTable2{
   position: relative;
   margin-top: 1%;
-  width: 180%;
+  width: 320%;
   margin-left:45%;
   text-align: left;
 }
@@ -336,7 +336,6 @@ h1 {
   margin-left:380px;
 }
 
-
 /* new drowpdown file uplod css */
 
 .ImageDocument{
@@ -372,7 +371,7 @@ h1 {
 }
 .AudioDocumentsongs input{
   position: relative;
-  font-size: 70%;
+  font-size: 120%;
   margin: 0;
   padding: 0;
   width: 90%;

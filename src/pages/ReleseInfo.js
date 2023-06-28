@@ -1,23 +1,24 @@
-import React, { useState } from "react";
+import React, {useEffect, useState } from "react";
 import "./Create-Release.css";
 import { Link } from "react-router-dom";
 import SideBar from "../components/Sidebar/SideBar";
 
 const ReleseInfo = () => {
-  const [UPCEAN, setUPCEAN] = useState(null);
-  const [CLine, setCLine] = useState(null);
-  const [PLine, setPLine] = useState(null);
-  const [ReleaseDate, setReleaseDate] = useState(null);
-  const [LabelName, setLabelName] = useState(null);
-  const [SubGenre, setSubGenre] = useState(null);
-  const [Genre, setGenre] = useState(null);
-  const [ReleaseTitle, setReleaseTitle] = useState(null);
-  const [ReleaseType, setReleaseType] = useState(null);
+  const [UPCEAN, setUPCEAN] = useState("");
+  const [CLine, setCLine] = useState("");
+  const [PLine, setPLine] = useState("");
+  const [ReleaseDate, setReleaseDate] = useState("");
+  const [LabelName, setLabelName] = useState("");
+  const [SubGenre, setSubGenre] = useState("");
+  const [Genre, setGenre] = useState("");
+  const [ReleaseTitle, setReleaseTitle] = useState("");
+  const [ReleaseType, setReleaseType] = useState("");
   const [ImageDocument, setImageDocument] = useState({ preview: "", data: "" });
   // alert(JSON.stringify(inputFields));
   // console.log("PrimaryArtist",PrimaryArtist);
 
   const [inputFields, setInputFields] = useState([{ PrimaryArtist: "" }]);
+  // console.log("userData2",userData);
   const addInputField = () => {
     setInputFields([
       ...inputFields,
@@ -58,12 +59,44 @@ const ReleseInfo = () => {
     list[index][name] = value;
     setInputFields2(list);
   };
+  const [userData, setUserData] = useState("");
+  const [primaryArtistGet, setprimaryArtistGet] = useState("");
+  console.log("primaryArtistGet",primaryArtistGet);
+  console.log("userData",userData.users_id);
+  useEffect(() => {
+    fetch("http://192.168.54.153:5000/api/v1/user/userData", {
+      method: "POST",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        token: localStorage.getItem("token"),
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUserData(data.data);
+        if (data.data === "token expired") {
+          alert("Token expired login again");
+          localStorage.clear();
+          window.location.href = "./sign-in";
+        }
+      });
+  }, []);
+  ////getuser
+  function handleArtistGet() {
+    fetch("http://192.168.54.153:5000/api/v1/createRelease/primaryArtistGet/2", {
+      method: "GET",
+  }).then((res) => res.json()).then((data) => {
+      console.log("Data",data)
+      setprimaryArtistGet(data.Data)
+  })
+  };
+  
   const handleSubmit = async (e) => {
-    console.log(
-      "DATA------",
-      JSON.stringify(inputFields),
-      JSON.stringify(inputFields2)
-    );
     let formData = new FormData();
     formData.append("ImageDocument", ImageDocument.data);
     formData.append("ReleaseType", ReleaseType);
@@ -77,8 +110,9 @@ const ReleseInfo = () => {
     formData.append("PLine", PLine);
     formData.append("CLine", CLine);
     formData.append("UPCEAN", UPCEAN);
+    formData.append("users_id",parseInt(userData.users_id));
     const res = await fetch(
-      "http://192.168.1.119:5000/api/v1/createRelease/releseInfoPost",
+      "http://192.168.54.153:5000/api/v1/createRelease/releseInfoPost",
       {
         method: "POST",
         body: formData,
@@ -95,7 +129,7 @@ const ReleseInfo = () => {
       });
   };
   const handleFileChange = (e) => {
-    console.log("handleFileChange");
+    // console.log("handleFileChange");
     const img = {
       preview: URL.createObjectURL(e.target.files[0]),
       data: e.target.files[0],
@@ -103,6 +137,7 @@ const ReleseInfo = () => {
     setImageDocument(img);
     // console.log(img,"img");
   };
+
 
   return (
     <div className="mai-nev">
@@ -198,6 +233,7 @@ const ReleseInfo = () => {
                 <div className="row my-3" key={index}>
                   <div className="col-sm-8">
                     <input
+                    onClick={handleArtistGet}
                       onChange={(evnt) => handleChange(index, evnt)}
                       value={PrimaryArtist}
                       name="PrimaryArtist"
