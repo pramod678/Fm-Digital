@@ -3,13 +3,15 @@ const autoIncrement = require('mongoose-sequence')(mongoose);
 
 const releseInfoScehma = new mongoose.Schema(
   {
-    users_id:{ type: Number, require:true },
+    users_id:{ type: Number, require:true,unqiue : true },
     ReleaseType: {type: String,
       required: true},
     ReleaseTitle:  {type: String,
       required: true},
-    PrimaryArtist:{ type : [], default: ([]) },
-    FeaturingArtist:{ type : [], default: ([]) },
+    PrimaryArtist:{type: String,
+      required: true},
+    FeaturingArtist:{type: String,
+      required: true},
     Genre: {type: String,
       required: false},
     SubGenre: {type: String,

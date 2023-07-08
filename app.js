@@ -12,6 +12,9 @@ var nodemailer = require("nodemailer");
 //new router added
 var v1Routes =require("./Api/index.js")
 app.use("/api/v1",v1Routes)
+var path = require('path');
+
+app.use('/',express.static('public'));
 
 const JWT_SECRET =
   "hvdvay6ert72839289()aiyg8t87qt72393293883uhefiuh78ttq3ifi78272jbkj?[]]pou89ywe";

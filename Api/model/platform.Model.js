@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const autoIncrement = require('mongoose-sequence')(mongoose);
 const platformScehma = new mongoose.Schema(
   {
-    users_id:{ type: Number, require:true },
+    users_id:{ type: Number, require:true,unqiue : true },
     Audio:{ type : [], default: ([]) },
     CRBT:{ type : [], default: ([]) },
     VideoPlatform:{ type : [], default: ([]) },

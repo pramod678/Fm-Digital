@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const autoIncrement = require('mongoose-sequence')(mongoose);
 const platformScehma = new mongoose.Schema(
   {
-    users_id:{ type: Number, require:true },
+    users_id:{ type: Number, require:true,unqiue : true },
     submission:{ type : String },
     createdAt: { type : Date, default: Date.now }, 
     updatedAt: { type : Date, },

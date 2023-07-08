@@ -3,7 +3,7 @@ const multer  = require('multer')
 
 const imageStorage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, "D:/FmDigital-Node_React/Fm-Digital -Backend/image/ImageDocument");
+      cb(null, "D:/FmDigital-Node_React/Fm-Digital -Backend/public/ImageDocument");
     },
     filename: function (req, file, cb) {
       cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));
@@ -22,7 +22,7 @@ const imageStorage = multer.diskStorage({
 
   const audioStorage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, "D:/FmDigital-Node_React/Fm-Digital -Backend/image/AudioDocument");
+      cb(null, "D:/FmDigital-Node_React/Fm-Digital -Backend/public/AudioDocument");
     },
     filename: function (req, file, cb) {
       cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const autoIncrement = require('mongoose-sequence')(mongoose);
 const songsInfoScehma = new mongoose.Schema(
   {
-    users_id:{ type: Number, require:true },
+    users_id:{ type: Number, require:true,unqiue : true },
     AudioDocument: { type : [], default: ([]) },
     Trackversion: {type: String,
       required: true},

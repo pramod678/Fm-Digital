@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const autoIncrement = require('mongoose-sequence')(mongoose);
 const youtubeClaimsScehma = new mongoose.Schema(
   {
-    users_id:{ type: Number, require:true },
+    users_id:{ type: Number, require:true,unqiue : true },
     Selectrelease: { type: String, require:true },
     SelectAudio: { type: String, require:true },
     Selectplatform: { type: String, require:true },

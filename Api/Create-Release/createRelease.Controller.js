@@ -3,6 +3,8 @@ const featuringArtistTable = require("../model/featuringArtist.Model");
 const primaryArtistTable = require("../model/primaryArtist.Model");
 const songsInfoTable = require("../model/songsInfo.Model");
 const platformTable = require("../model/platform.Model");
+const genreTable = require("../model/genre.Model");
+const languageTable = require("../model/language.Model");
 const moment = require("moment-timezone");
 
 const releseInfoPost = async (req, res) => {
@@ -24,7 +26,54 @@ const releseInfoPost = async (req, res) => {
   var currentDate = moment(new Date()).add(5.5, "h").toDate();
   // console.log("PrimaryArtist",PrimaryArtist);
   try {
-    const Data = await releseInfoTable.create({
+    // const allUser = await releseInfoTable.findOne({
+    //   users_id: users_id,
+    // });
+    // if (allUser) {
+    //   const data = await releseInfoTable.updateOne(
+    //     { users_id: users_id },
+    //     {
+    //       users_id: users_id,
+    //       ReleaseType: ReleaseType,
+    //       ReleaseTitle: ReleaseTitle,
+    //       PrimaryArtist: PrimaryArtist,
+    //       FeaturingArtist: FeaturingArtist,
+    //       Genre: Genre,
+    //       SubGenre: SubGenre,
+    //       LabelName: LabelName,
+    //       ReleaseDate: ReleaseDate,
+    //       PLine: PLine,
+    //       CLine: CLine,
+    //       UPCEAN: UPCEAN,
+    //       ImageDocument: req.files["ImageDocument"]?.[0].filename
+    //         ? "/ImageDocument/" + req.files["ImageDocument"]?.[0].filename
+    //         : "NULL",
+    //       createdAt: currentDate,
+    //     }
+    //   );
+    //   return res.send({ status: "Update", data });
+    // } else {
+    //   const data = await releseInfoTable.create({
+    //     users_id: users_id,
+    //     ReleaseType: ReleaseType,
+    //     ReleaseTitle: ReleaseTitle,
+    //     PrimaryArtist: PrimaryArtist,
+    //     FeaturingArtist: FeaturingArtist,
+    //     Genre: Genre,
+    //     SubGenre: SubGenre,
+    //     LabelName: LabelName,
+    //     ReleaseDate: ReleaseDate,
+    //     PLine: PLine,
+    //     CLine: CLine,
+    //     UPCEAN: UPCEAN,
+    //     ImageDocument: req.files["ImageDocument"]?.[0].filename
+    //       ? "/ImageDocument/" + req.files["ImageDocument"]?.[0].filename
+    //       : "NULL",
+    //     createdAt: currentDate,
+    //   });
+    //   return res.send({ status: "Create", data });
+    // }
+    const data = await releseInfoTable.create({
       users_id: users_id,
       ReleaseType: ReleaseType,
       ReleaseTitle: ReleaseTitle,
@@ -38,11 +87,11 @@ const releseInfoPost = async (req, res) => {
       CLine: CLine,
       UPCEAN: UPCEAN,
       ImageDocument: req.files["ImageDocument"]?.[0].filename
-        ? "/releseInfo/" + req.files["ImageDocument"]?.[0].filename
+        ? "/ImageDocument/" + req.files["ImageDocument"]?.[0].filename
         : "NULL",
       createdAt: currentDate,
     });
-    return res.send({ status: "ok", Data });
+    return res.send({ status: "ok", data });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -80,7 +129,7 @@ const songsInfoPost = async (req, res) => {
     const Data = await songsInfoTable.create({
       users_id: users_id,
       AudioDocument: req.files["AudioDocument"]?.[0].filename
-        ? "/songsInfo/" + req.files["AudioDocument"]?.[0].filename
+        ? "/AudioDocument/" + req.files["AudioDocument"]?.[0].filename
         : "NULL",
       Trackversion: Trackversion,
       Instrumental: Instrumental,
@@ -112,12 +161,14 @@ const songsInfoPost = async (req, res) => {
   }
 };
 const primaryArtistPost = async (req, res) => {
-  const { users_id, PrimaryArtist } = req.body;
+  const { users_id, PrimaryArtist, SpotifyId, AppleId } = req.body;
   var currentDate = moment(new Date()).add(5.5, "h").toDate();
   console.log("currentDate", currentDate);
   try {
     const Data = await primaryArtistTable.create({
       users_id: users_id,
+      AppleId: AppleId,
+      SpotifyId: SpotifyId,
       PrimaryArtist: PrimaryArtist,
       createdAt: currentDate,
     });
@@ -151,13 +202,15 @@ const platformPost = async (req, res) => {
   }
 };
 const featuringArtisttPost = async (req, res) => {
-  const { users_id, FeaturingArtist } = req.body;
+  const { users_id, FeaturingArtist, SpotifyId, AppleId } = req.body;
 
   var currentDate = moment(new Date()).add(5.5, "h").toDate();
   console.log("currentDate", currentDate);
   try {
     const Data = await featuringArtistTable.create({
       users_id: users_id,
+      AppleId: AppleId,
+      SpotifyId: SpotifyId,
       FeaturingArtist: FeaturingArtist,
       createdAt: currentDate,
     });
@@ -180,13 +233,27 @@ const releseInfoGetAll = async (req, res) => {
     });
   }
 };
-const primaryArtistGet = async (req, res) => {
+const releseInfoGetOne = async (req, res) => {
   try {
     const allUser = await releseInfoTable.findOne({
       users_id: req.params.users_id,
     });
+    //   console.log("allUser",allUser);
+    return res.send({ status: "ok", data: allUser });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: error.message || "Error occurred while fetching all data",
+    });
+  }
+};
+const primaryArtistGet = async (req, res) => {
+  try {
+    const allUser = await primaryArtistTable.find({
+      users_id: req.params.users_id,
+    });
     // console.log("allUser",allUser);
-    return res.send({ status: "ok", Data: JSON.parse(allUser.PrimaryArtist) });
+    return res.send({ status: "ok", data: allUser });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -196,13 +263,119 @@ const primaryArtistGet = async (req, res) => {
 };
 const featuringArtisttGet = async (req, res) => {
   try {
-    const allUser = await releseInfoTable.findOne({
+    const allUser = await featuringArtistTable.find({
       users_id: req.params.users_id,
     });
     // console.log("allUser",allUser);
     return res.send({
       status: "ok",
-      Data: JSON.parse(allUser.FeaturingArtist),
+      data: allUser,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: error.message || "Error occurred while fetching all data",
+    });
+  }
+};
+const submissionGet = async (req, res) => {
+  try {
+    const relese = await releseInfoTable.findOne({
+      users_id: req.params.users_id,
+    });
+    console.log("relese",relese);
+    const songs = await songsInfoTable.find({
+      users_id: req.params.users_id,
+    });
+    // console.log("allUser", songs);
+    return res.send({
+      status: "ok",
+      data: {
+        users_id: relese?.users_id,
+        Title: relese?.ReleaseTitle,
+        Artist: relese?.PrimaryArtist,
+        Label: relese?.LabelName,
+        Genre: relese?.Genre,
+        SubGenre: relese?.SubGenre,
+        Songs: songs?.length,
+        AudioDocument:relese?.ImageDocument
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: error.message || "Error occurred while fetching all data",
+    });
+  }
+};
+const catalogsGet = async (req, res) => {
+  try {
+    
+    const relese = await releseInfoTable.find({
+      users_id: req.params.users_id,
+    });
+    console.log("relese",relese);
+    const songs = await songsInfoTable.find({
+      users_id: req.params.users_id,
+    });
+   const result = []
+    for (let i = 0; i < relese.length; i++) {
+      // for (let i = 0; i < songs.length; i++) {
+      result.push({
+        _id:relese[i]?._id,
+        users_id: relese[i]?.users_id,
+        Title: relese[i]?.ReleaseTitle,
+        ArtistName: relese[i]?.PrimaryArtist,
+        Label: relese[i]?.LabelName,
+        Genre: relese[i]?.Genre,
+        SubGenre: relese[i]?.SubGenre,
+        // Songs: songs[i]?.length,
+        AudioDocument:relese[i]?.ImageDocument,
+        createdAt:relese[i]?.createdAt
+      })
+      
+      }
+    // }
+    // console.log("allUser", result);
+    return res.send({
+      status: "ok",result});
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: error.message || "Error occurred while fetching all data",
+    });
+  }
+};
+const genreGet = async (req, res) => {
+  try {
+    const data = await genreTable.find({
+     
+    });
+ 
+ 
+    // console.log("allUser", songs);
+    return res.send({
+      status: "ok",
+      data
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: error.message || "Error occurred while fetching all data",
+    });
+  }
+};
+const languageGet = async (req, res) => {
+  try {
+    const data = await languageTable.find({
+     
+    });
+ 
+ 
+    // console.log("allUser", songs);
+    return res.send({
+      status: "ok",
+      data
     });
   } catch (error) {
     console.log(error);
@@ -218,7 +391,12 @@ module.exports = {
   featuringArtisttGet,
   primaryArtistGet,
   featuringArtisttPost,
+  releseInfoGetOne,
   releseInfoGetAll,
   songsInfoPost,
   platformPost,
+  submissionGet,
+  catalogsGet,
+  genreGet,
+  languageGet
 };

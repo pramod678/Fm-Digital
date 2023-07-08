@@ -15,5 +15,5 @@ const usersScehma = new mongoose.Schema(
     collection: "users",
   }
 );
-usersScehma.plugin(autoIncrement, {inc_field: 'users_id'});
+usersScehma.plugin(autoIncrement, {inc_field: 'users_id',unqiue : true});
 module.exports= mongoose.model("users", usersScehma);
