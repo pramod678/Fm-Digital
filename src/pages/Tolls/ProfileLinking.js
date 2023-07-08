@@ -33,7 +33,7 @@ const ProfileLinking = () => {
   ];
   // console.log("formData", formData);
   const handleSubmit = async (e) => {
-    fetch("http://192.168.54.153:5000/api/v1/tools/profileLinkingPost", {
+    fetch("http://192.168.237.153:5000/api/v1/tools/profileLinkingPost", {
       method: "POST",
       crossDomain: true,
       headers: {

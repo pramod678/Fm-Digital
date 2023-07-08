@@ -11,6 +11,7 @@ const SongsInfo = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [inputFields, setInputFields] = useState([{ PrimaryArtist: "" }]);
+  const [userData, setUserData] = useState("");
   const [formdata, setFormdata] = useState({
     AudioDocument:'',
     Trackversion: '',
@@ -44,6 +45,29 @@ const SongsInfo = () => {
     // console.log(img,"img");
   };
 // console.log("AudioDocument.data",AudioDocument.data);
+useEffect(() => {
+  fetch("http://192.168.237.153:5000/api/v1/user/userData", {
+    method: "POST",
+    crossDomain: true,
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    body: JSON.stringify({
+      token: localStorage.getItem("token"),
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      setUserData(data.data);
+      if (data.data === "token expired") {
+        alert("Token expired login again");
+        localStorage.clear();
+        window.location.href = "./sign-in";
+      }
+    });
+}, []);
   const handleSubmit = async (event) => {
     let formData = new FormData();
     formData.append("AudioDocument", AudioDocument.data);
@@ -66,9 +90,10 @@ const SongsInfo = () => {
     formData.append("Lyrics", formdata.Lyrics);
     formData.append("CallerTuneTiming", formdata.CallerTuneTiming);
     formData.append("DistributeMusicvideo", formdata.DistributeMusicvideo);
+    formData.append("users_id",parseInt(userData.users_id));
     // console.log("formData.Trackversion", formdata.Trackversion);
     const res = await fetch(
-      "http://192.168.54.153:5000/api/v1/createRelease/songsInfoPost",
+      "http://192.168.237.153:5000/api/v1/createRelease/songsInfoPost",
       {
         method: "POST",
         body: formData,

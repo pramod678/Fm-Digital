@@ -6,24 +6,55 @@ import Button from 'react-bootstrap/Button';
 import SideBar from "../components/Sidebar/SideBar";
 
 const Submission = () => {
-//   const [platform, setPlatform] = useState("");
-const data = [
-  {
-    company1: "MX Player",
-    company2: "HungamA",
-    company3: "Amazon",
-    company4: "Tidal",
-    company5: "Apple music",
-  },
-  {
-    company1: "Boomplay",
-    company2: "VI",
-    company3: "Tencent",
-    company4: "Facebook PMV",
-    company5: "Vimeo",
-  },
+  // const [userData, setUserData] = useState("");
+  const [submissionGet, setsubmissionGet] = useState("");
+  console.log("userData",submissionGet);
+  useEffect(() => {
+    
+    fetch("http://192.168.237.153:5000/api/v1/user/userData", {
+      method: "POST",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        token: localStorage.getItem("token"),
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // setUserData(data.data);
+        handlesubmissionGet(data.data)
+        if (data.data === "token expired") {
+          alert("Token expired login again");
+          localStorage.clear();
+          window.location.href = "./sign-in";
+        }
+        console.log("data.data",data.data);
+      });
+  }, []);
+  ////getuser
+  function handlesubmissionGet(userData) {
+    console.log(">>>>>>",userData);
+    fetch(
+      `http://192.168.237.153:5000/api/v1/createRelease/submissionGet/${userData.users_id}`,
+      {
+        method: "GET",
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
 
-];
+        // console.log("releseInfoGetOne ---------", data.data);
+        setsubmissionGet(data.data);
+      });
+    }
+    // console.log("releseInfoGetOne",releseInfoGetOne?.ImageDocument);
+    const handleSubmit = async (e) => {
+       <Link to="/"></Link>
+    }
   return (
     <div className="mai-nev">
       <Link className="button1" to="/ReleseInfo">
@@ -38,48 +69,40 @@ const data = [
       <Link className="button1" to="/Submission">
         Submission
       </Link>
-      <div>
-      <div style={{position:'absolute',marginTop:'-70px'}} ><SideBar/></div>
-        <h2 style={{marginTop:'40px',marginRight:'1090px'}}>Release Information</h2>
-        <table border = "1" width = "100%">
-         
-         <tr>
-            <td>
-               <table border = "1" width = "100%">
+      
+      <div style={{position:'absolute',marginTop:'-30px'}} ><SideBar/></div>
+        <h2 style={{marginTop:'35px',marginRight:'600px'}}>Release Information</h2>
+               <table width="70%" style={{marginLeft:"25%",marginTop:'40px', textAlign:"left"}} >
               
                   <tr>
-                     <td><h6>Titale1</h6>Ramesh Raman</td>
-                     <td><h6>Titale2</h6>5000</td>
+                     <td><h6>Titale:&nbsp;&nbsp;&nbsp;&nbsp;{`${submissionGet.Title}`}</h6></td>
+                     <td><h6>Genre:&nbsp;&nbsp;&nbsp;&nbsp;{`${submissionGet.Genre}`}</h6></td>
+                  </tr>
+                  
+                  <tr>
+                     <td><h6>Artist:&nbsp;&nbsp;&nbsp;&nbsp;{`${submissionGet.Artist}`}</h6></td>
+                     <td><h6>SubGenre:&nbsp;&nbsp;&nbsp;&nbsp;{`${submissionGet.SubGenre}`}</h6></td>
                   </tr>
                   <tr>
-                     <td><h6>Tital3</h6>Shabbir Hussein</td>
-                     <td><h6>Tital4</h6>7000</td>
+                     <td><h6>Label:&nbsp;&nbsp;&nbsp;&nbsp;{`${submissionGet.Label}`}</h6></td>
+                     <td><h6># Songs:&nbsp;&nbsp;&nbsp;&nbsp;{`${submissionGet.Songs}`}</h6></td>
                   </tr>
                </table>
-            </td>
-         </tr>
-         
-      </table>
-        {/* <div style={{marginTop:'40px'}}>
-        <lable style={{marginRight:'1260px'}} >Titale:shjsj</lable>
-        <lable >Genre:hdsghgs</lable>
-        </div> */}
-        {/* <div>
-        <lable style={{marginRight:'1230px'}}>Artist:bsjsss</lable>
-        <lable>SubGenre:snsnjks</lable>
-        </div> */}
-        {/* <div>
-        <lable style={{marginRight:'1280px'}}>Lable:sjjsaj</lable>
-        <lable>songs:snjjsj</lable>
-        </div> */}
-       
-        <input style={{marginRight:'20px'}} type="checkbox"></input>
+               <div className="box2">
+              <img style={{ height:146, width:145}}
+                src={`http://localhost:5000/${submissionGet?.AudioDocument}`}
+                type="file"
+                alt="Art Work"
+              ></img>
+        
+            </div>
+        <input style={{marginRight:'20px',marginTop:"5%"}} type="checkbox"></input>
         <label>I understand and agree to the</label>
         <div>
-        <Button style={{marginTop:'20px'}} variant="dark">Submit</Button>
+        <Button style={{marginTop:'20px'}} onClick={() => handleSubmit()} variant="dark">Submit</Button>
         </div>
       </div>
-    </div>
+  
     
   );
 };

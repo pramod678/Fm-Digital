@@ -1,4 +1,18 @@
 /* nevtab-button */
+.primaryArtist2{
+  position: relative;
+  margin-top: 30%;
+}
+.primaryArtist2 select{
+  position: relative;
+  font-size: 70%;
+  margin: 0;
+  padding: 0;
+  width: 40%;
+  height: 90%;
+  outline: none;
+  opacity: .4;
+}
 .youtubemain{
   margin-left: 10%;
 }
@@ -240,8 +254,17 @@ button1.selected {
   font-size: 15px;
 }
 .box {
+  position: relative;
   margin-left: 170px;
   margin-top: 50px;
+  width: 150px;
+  height: 150px;
+  border: 3px solid #555;
+}
+.box2 {
+  position: relative;
+  margin-left: 1210px;
+  margin-top: -90px;
   width: 150px;
   height: 150px;
   border: 3px solid #555;
@@ -339,18 +362,18 @@ h1 {
 /* new drowpdown file uplod css */
 
 .ImageDocument{
-  position: relative;
-  top: 75%;
-  left: 10%;
-  margin-top: 0px;
-  margin-left: -90px;
+  position: absolute;
+  top: 65%;
+  left: 0%;
+  margin-top: 60px;
+  margin-left: -80px;
   width: 300px;
   height: 50px;
   border: 2px dashed #3607f0;
 }
 
 .ImageDocument input{
-  position: relative;
+  position: absolute;
   font-size: 70%;
   margin: 0;
   padding: 0;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState } from "react";
 import "./Create-Release.css";
 import { Link } from "react-router-dom";
 import SideBar from "../components/Sidebar/SideBar";
@@ -6,6 +6,7 @@ import Label from "./Label";
 
 const PlatForm = () => {
   // const [UPCEAN, setUPCEAN] = useState(null);
+  const [userData, setUserData] = useState("");
   const [formData, setformData] = useState({
     Audio: "",
     CRBT: "",
@@ -79,12 +80,36 @@ const PlatForm = () => {
       company5: "Vimeo",
     },
   ];
-  console.log(formData);
+  // console.log(formData);
+ 
+  useEffect(() => {
+    fetch("http://192.168.237.153:5000/api/v1/user/userData", {
+      method: "POST",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        token: localStorage.getItem("token"),
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUserData(data.data);
+        if (data.data === "token expired") {
+          alert("Token expired login again");
+          localStorage.clear();
+          window.location.href = "./sign-in";
+        }
+      });
+  }, []);
   const handleSubmit = async (e) => {
     // console.log("DATAUser",data,
     //   data1,
     //   data2);
-    fetch("http://192.168.54.153:5000/api/v1/createRelease/platformPost", {
+    fetch("http://192.168.237.153:5000/api/v1/createRelease/platformPost", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -96,6 +121,7 @@ const PlatForm = () => {
         Audio: data,
         CRBT: data1,
         VideoPlatform: data2,
+        users_id:parseInt(userData.users_id),
       }),
     })
       .then((res) => res.json())

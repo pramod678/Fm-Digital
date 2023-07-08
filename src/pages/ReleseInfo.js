@@ -1,70 +1,45 @@
-import React, {useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Create-Release.css";
 import { Link } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
 import SideBar from "../components/Sidebar/SideBar";
 
 const ReleseInfo = () => {
-  const [UPCEAN, setUPCEAN] = useState("");
-  const [CLine, setCLine] = useState("");
-  const [PLine, setPLine] = useState("");
-  const [ReleaseDate, setReleaseDate] = useState("");
-  const [LabelName, setLabelName] = useState("");
-  const [SubGenre, setSubGenre] = useState("");
-  const [Genre, setGenre] = useState("");
-  const [ReleaseTitle, setReleaseTitle] = useState("");
-  const [ReleaseType, setReleaseType] = useState("");
-  const [ImageDocument, setImageDocument] = useState({ preview: "", data: "" });
-  // alert(JSON.stringify(inputFields));
-  // console.log("PrimaryArtist",PrimaryArtist);
-
-  const [inputFields, setInputFields] = useState([{ PrimaryArtist: "" }]);
-  // console.log("userData2",userData);
-  const addInputField = () => {
-    setInputFields([
-      ...inputFields,
-      {
-        PrimaryArtist: "",
-      },
-    ]);
-  };
-  const removeInputFields = (index) => {
-    const rows = [...inputFields];
-    rows.splice(index, 1);
-    setInputFields(rows);
-  };
-  const handleChange = (index, evnt) => {
-    const { name, value } = evnt.target;
-    const list = [...inputFields];
-    list[index][name] = value;
-    setInputFields(list);
-  };
-
-  const [inputFields2, setInputFields2] = useState([{ FeaturingArtist: "" }]);
-  const addInputField2 = () => {
-    setInputFields2([
-      ...inputFields2,
-      {
-        FeaturingArtist: "",
-      },
-    ]);
-  };
-  const removeInputFields2 = (index) => {
-    const rows = [...inputFields2];
-    rows.splice(index, 1);
-    setInputFields2(rows);
-  };
-  const handleChange2 = (index, evnt) => {
-    const { name, value } = evnt.target;
-    const list = [...inputFields2];
-    list[index][name] = value;
-    setInputFields2(list);
-  };
+  const [show1, setShow1] = useState(false);
+  const [show2, setShow2] = useState(false);
+  const handleClose1 = () => setShow1(false);
+  const handleClose2 = () => setShow2(false);
+  const handleShow1 = () => setShow1(true);
+  const handleShow2 = () => setShow2(true);
+  const [genreGet, setgenreGet] = useState([]);
+  const [releseInfoGetOne, setReleseInfoGetOne] = useState([]);
+  const [primaryArtistGet, setprimaryArtistGet] = useState([]);
+  const [featuringArtistGet, setfeaturingArtistGet] = useState([]);
   const [userData, setUserData] = useState("");
-  const [primaryArtistGet, setprimaryArtistGet] = useState("");
-  console.log("primaryArtistGet",primaryArtistGet);
-  console.log("userData",userData.users_id);
+  const [ImageDocument, setImageDocument] = useState({ preview: "", data: "" });
+  const [releseInfoformData, setReleseInfosetformData] = useState({
+    PrimaryArtist: "",
+    FeaturingArtist: "",
+    UPCEAN: "",
+    CLine: "",
+    PLine: "",
+    ReleaseDate: "",
+    LabelName: "",
+    SubGenre: "",
+    Genre: "",
+    ReleaseTitle: "",
+    ReleaseType: "",
+    SpotifyId: "",
+    AppleId: "",
+  });
+  console.log("genreGet",genreGet);
+// console.log("userData",userData);
+//   console.log("formData", releseInfoformData);
+//   console.log("primaryArtistGet", primaryArtistGet);
   useEffect(() => {
-    fetch("http://192.168.54.153:5000/api/v1/user/userData", {
+    fetch("http://192.168.237.153:5000/api/v1/user/userData", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -79,6 +54,8 @@ const ReleseInfo = () => {
       .then((res) => res.json())
       .then((data) => {
         setUserData(data.data);
+        handlereleseInfoGetOne(data.data)
+        handlegenregGet()
         if (data.data === "token expired") {
           alert("Token expired login again");
           localStorage.clear();
@@ -87,41 +64,145 @@ const ReleseInfo = () => {
       });
   }, []);
   ////getuser
+  function handlegenregGet() {
+    fetch(
+      `http://192.168.237.153:5000/api/v1/createRelease/genreGet`,
+      {
+        method: "GET",
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log("genere ---------", data.data);
+        setgenreGet(data.data);
+      });
+  }
+  function handlereleseInfoGetOne(userData) {
+    fetch(
+      `http://192.168.237.153:5000/api/v1/createRelease/releseInfoGetOne/${userData.users_id}`,
+      {
+        method: "GET",
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+
+        // console.log("releseInfoGetOne ---------", data.data);
+        setReleseInfoGetOne(data.data);
+      });
+    }
+    console.log("releseInfoGetOne",releseInfoGetOne?.ImageDocument);
+
   function handleArtistGet() {
-    fetch("http://192.168.54.153:5000/api/v1/createRelease/primaryArtistGet/2", {
-      method: "GET",
-  }).then((res) => res.json()).then((data) => {
-      console.log("Data",data)
-      setprimaryArtistGet(data.Data)
-  })
+    fetch(
+      `http://192.168.237.153:5000/api/v1/createRelease/primaryArtistGet/${userData.users_id}`,
+      {
+        method: "GET",
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log("Data ---------", data.data);
+        setprimaryArtistGet(data.data);
+      });
+  }
+  function handleFeacturingGet() {
+    fetch(
+      `http://192.168.237.153:5000/api/v1/createRelease/featuringArtisttGet/${userData.users_id}`,
+      {
+        method: "GET",
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log("Data ---------", data.data);
+        setfeaturingArtistGet(data.data);
+        // let items =[]
+      });
+  }
+  // console.log("Genre", Genre);
+  // console.log("inputFields", inputFields[0].PrimaryArtist);
+  const handleSubmit1 = async (e) => {
+    fetch("http://192.168.237.153:5000/api/v1/createRelease/primaryArtistPost", {
+      method: "POST",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        SpotifyId: releseInfoformData.SpotifyId,
+        AppleId: releseInfoformData.AppleId,
+        PrimaryArtist: releseInfoformData.PrimaryArtist,
+        users_id: parseInt(userData.users_id),
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "CreateSuccesfully");
+        if (data.status === "ok") {
+          alert("Create Successful");
+        } else {
+          alert("Something went wrong");
+        }
+      });
   };
-  
+  const handleSubmit2 = async (e) => {
+    fetch(
+      "http://192.168.237.153:5000/api/v1/createRelease/featuringArtisttPost",
+      {
+        method: "POST",
+        crossDomain: true,
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+          SpotifyId: releseInfoformData.SpotifyId,
+          AppleId: releseInfoformData.AppleId,
+          FeaturingArtist: releseInfoformData.FeaturingArtist,
+          users_id: parseInt(userData.users_id),
+        }),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "CreateSuccesfully");
+        if (data.status === "ok") {
+          alert("Create Successful");
+        } else {
+          alert("Something went wrong");
+        }
+      });
+  };
   const handleSubmit = async (e) => {
     let formData = new FormData();
     formData.append("ImageDocument", ImageDocument.data);
-    formData.append("ReleaseType", ReleaseType);
-    formData.append("ReleaseTitle", ReleaseTitle);
-    formData.append("PrimaryArtist", JSON.stringify(inputFields));
-    formData.append("FeaturingArtist", JSON.stringify(inputFields2));
-    formData.append("Genre", Genre);
-    formData.append("SubGenre", SubGenre);
-    formData.append("LabelName", LabelName);
-    formData.append("ReleaseDate", ReleaseDate);
-    formData.append("PLine", PLine);
-    formData.append("CLine", CLine);
-    formData.append("UPCEAN", UPCEAN);
-    formData.append("users_id",parseInt(userData.users_id));
+    formData.append("ReleaseType", releseInfoformData.ReleaseType);
+    formData.append("ReleaseTitle", releseInfoformData.ReleaseTitle);
+    formData.append("PrimaryArtist", releseInfoformData.PrimaryArtist);
+    formData.append("FeaturingArtist", releseInfoformData.FeaturingArtist);
+    formData.append("Genre", releseInfoformData.Genre);
+    formData.append("SubGenre", releseInfoformData.SubGenre);
+    formData.append("LabelName", releseInfoformData.LabelName);
+    formData.append("ReleaseDate", releseInfoformData.ReleaseDate);
+    formData.append("PLine", releseInfoformData.PLine);
+    formData.append("CLine", releseInfoformData.CLine);
+    formData.append("UPCEAN", releseInfoformData.UPCEAN);
+    formData.append("users_id", parseInt(userData.users_id));
     const res = await fetch(
-      "http://192.168.54.153:5000/api/v1/createRelease/releseInfoPost",
+      "http://192.168.237.153:5000/api/v1/createRelease/releseInfoPost",
       {
         method: "POST",
         body: formData,
       }
     )
       .then((res) => res.json())
-      .then((Data) => {
-        console.log(Data, "CreateSuccesfully");
-        if (Data.status === "ok") {
+      .then((data) => {
+        console.log(data, "CreateSuccesfully");
+        if (data.status === "Create" || data.status === "Update") {
           alert("Create Successful");
         } else {
           alert("Something went wrong");
@@ -137,7 +218,6 @@ const ReleseInfo = () => {
     setImageDocument(img);
     // console.log(img,"img");
   };
-
 
   return (
     <div className="mai-nev">
@@ -162,8 +242,8 @@ const ReleseInfo = () => {
         <div className="flex-container">
           <div>
             <div className="box">
-              <img
-                src="http://localhost:5000/releseInfo/ImageDocument_1687429659808.jpg"
+              <img style={{ height:146, width:145}}
+                src={`http://localhost:5000/${releseInfoGetOne?.ImageDocument}`}
                 type="file"
                 alt="Art Work"
               ></img>
@@ -202,9 +282,12 @@ const ReleseInfo = () => {
                 name="work_days"
                 id="id_work_days"
                 // value={ReleaseType}
-                onChange={(e) => {
-                  setReleaseType(e.target.value);
-                }}
+                onChange={(event) =>
+                  setReleseInfosetformData((prev) => ({
+                    ...prev,
+                    ReleaseType: event.target.value,
+                  }))
+                }
                 multiple
               >
                 <option value="EP">EP</option>
@@ -221,94 +304,222 @@ const ReleseInfo = () => {
               className="form-control"
               placeholder="Release Title"
               id="ReleaseTitle"
-              value={ReleaseTitle}
-              onChange={(e) => {
-                setReleaseTitle(e.target.value);
-              }}
+              value={releseInfoformData.ReleaseTitle}
+              onChange={(event) =>
+                setReleseInfosetformData((prev) => ({
+                  ...prev,
+                  ReleaseTitle: event.target.value,
+                }))
+              }
             />
-            <label className="lable">Primary Artist*</label>
-            {inputFields.map((data, index) => {
-              const { PrimaryArtist } = data;
-              return (
-                <div className="row my-3" key={index}>
-                  <div className="col-sm-8">
-                    <input
-                    onClick={handleArtistGet}
-                      onChange={(evnt) => handleChange(index, evnt)}
-                      value={PrimaryArtist}
-                      name="PrimaryArtist"
-                      className="form-select"
-                      placeholder="Primary Artist"
-                    />
-                    <button
-                      style={{
-                        position: "relative",
-                        marginTop: "-30%",
-                        marginLeft: "105%",
-                      }}
-                      className="btn btn-outline-success"
-                      onClick={addInputField}
-                    >
-                      +
-                    </button>
-                  </div>
 
-                  <div className="Addclosebutton1">
-                    {inputFields.length !== 1 ? (
-                      <button
-                        className="btn btn-outline-danger"
-                        onClick={removeInputFields}
-                      >
-                        x
-                      </button>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-            <label className="lable">Featuring Artist*</label>
-            {inputFields2.map((data, index) => {
-              const { FeaturingArtist } = data;
-              return (
-                <div className="row my-0" key={index}>
-                  <div className="col-sm-8">
-                    <input
-                      value={FeaturingArtist}
-                      onChange={(evnt) => handleChange2(index, evnt)}
-                      name="FeaturingArtist"
-                      className="form-select"
-                      placeholder="FeaturingArtist"
+            <label className="lable">PrimaryArtist*</label>
+            <div className="col-sm-10">
+              {/* <input
+                type="text"
+                required="true"
+                className="form-select"
+                placeholder="Release Title"
+                id="ReleaseTitle"
+                value={PrimaryArtist}
+                onClick={handleArtistGet}
+                onChange={(e) => {
+                  setPrimaryArtist(e.target.value);
+                }}
+              /> */}
+              <select
+                className="form-select"
+                onClick={handleArtistGet}
+                onChange={(event) =>
+                  setReleseInfosetformData((prev) => ({
+                    ...prev,
+                    PrimaryArtist: event.target.value,
+                  }))
+                }
+              >
+                <option value="">Select an option</option>
+                {primaryArtistGet?.map((option) => (
+                  <option key={option?._id} value={option?.PrimaryArtist}>
+                    {option?.PrimaryArtist}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <>
+              <Modal show={show1} onHide={handleClose1}>
+                <Modal.Header closeButton>
+                  {/* <Modal.Title>PrimaryArtist</Modal.Title> */}
+                </Modal.Header>
+                <Modal.Body>
+                  <Form>
+                    <Form.Label>Primary Artist Name</Form.Label>
+                    <Form.Control
+                      value={releseInfoformData.PrimaryArtist}
+                      onChange={(event) =>
+                        setReleseInfosetformData((prev) => ({
+                          ...prev,
+                          PrimaryArtist: event.target.value,
+                        }))
+                      }
+                      type="text"
+                      placeholder="Primary Artist Name"
+                      autoFocus
                     />
-                    <button
-                      style={{
-                        position: "relative",
-                        marginTop: "-30%",
-                        marginLeft: "105%",
-                      }}
-                      className="btn btn-outline-success"
-                      onClick={addInputField2}
-                    >
-                      +
-                    </button>
-                  </div>
-
-                  <div className="Addclosebutton3">
-                    {inputFields2.length !== 1 ? (
-                      <button
-                        className="btn btn-outline-danger"
-                        onClick={removeInputFields2}
-                      >
-                        x
-                      </button>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                </div>
-              );
-            })}
+                    <Form.Label>Primary Artist Apple Id</Form.Label>
+                    &nbsp;&nbsp;
+                    <Form.Control
+                      value={releseInfoformData.AppleId}
+                      onChange={(event) =>
+                        setReleseInfosetformData((prev) => ({
+                          ...prev,
+                          AppleId: event.target.value,
+                        }))
+                      }
+                      type="text"
+                      placeholder="Primary Artist Apple Id"
+                      autoFocus
+                    />
+                    <Form.Label>Primary Artist Spotify Id</Form.Label>
+                    &nbsp;&nbsp;
+                    <Form.Control
+                      value={releseInfoformData.SpotifyId}
+                      onChange={(event) =>
+                        setReleseInfosetformData((prev) => ({
+                          ...prev,
+                          SpotifyId: event.target.value,
+                        }))
+                      }
+                      type="text"
+                      placeholder="Primary Artist Spotify Id"
+                      autoFocus
+                    />
+                    &nbsp;&nbsp;
+                  </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose1}>
+                    Close
+                  </Button>
+                  <Button variant="primary" onClick={handleSubmit1}>
+                    Save Changes
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+            </>
+            <button
+              style={{
+                position: "absolute",
+                marginTop: "-38px",
+                marginLeft: "26%",
+              }}
+              className="btn btn-outline-success"
+              onClick={handleShow1}
+              // onClick={addInputField}
+            >
+              +
+            </button>
+            <label className="lable">FeaturingArtist*</label>
+            <div className="col-sm-10">
+              {/* <input
+                type="text"
+                required="true"
+                className="form-select"
+                placeholder="Release Title"
+                id="ReleaseTitle"
+                value={FeaturingArtist}
+                onChange={(e) => {
+                  setFeaturingArtist(e.target.value);
+                }}
+              /> */}
+              <select
+                className="form-select"
+                onClick={handleFeacturingGet}
+                onChange={(event) =>
+                  setReleseInfosetformData((prev) => ({
+                    ...prev,
+                    FeaturingArtist: event.target.value,
+                  }))
+                }
+              >
+                <option value="">Select an option</option>
+                {featuringArtistGet?.map((option) => (
+                  <option key={option?._id} value={option?.FeaturingArtist}>
+                    {option?.FeaturingArtist}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <>
+              <Modal show={show2} onHide={handleClose2}>
+                <Modal.Header closeButton>
+                  {/* <Modal.Title>Add songs Details</Modal.Title> */}
+                </Modal.Header>
+                <Modal.Body>
+                  <Form>
+                    <Form.Label>Featuring Artist Name</Form.Label>
+                    <Form.Control
+                      value={releseInfoformData.FeaturingArtist}
+                      onChange={(event) =>
+                        setReleseInfosetformData((prev) => ({
+                          ...prev,
+                          FeaturingArtist: event.target.value,
+                        }))
+                      }
+                      type="text"
+                      placeholder="Featuring Artist Name"
+                      autoFocus
+                    />
+                    <Form.Label>Featuring Artist Apple Id</Form.Label>
+                    &nbsp;&nbsp;
+                    <Form.Control
+                      value={releseInfoformData.AppleId}
+                      onChange={(event) =>
+                        setReleseInfosetformData((prev) => ({
+                          ...prev,
+                          AppleId: event.target.value,
+                        }))
+                      }
+                      type="text"
+                      placeholder="Featuring Artist Apple Id"
+                      autoFocus
+                    />
+                    <Form.Label>Featuring Artist Spotify Id</Form.Label>
+                    &nbsp;&nbsp;
+                    <Form.Control
+                      value={releseInfoformData.SpotifyId}
+                      onChange={(event) =>
+                        setReleseInfosetformData((prev) => ({
+                          ...prev,
+                          SpotifyId: event.target.value,
+                        }))
+                      }
+                      type="text"
+                      placeholder="Primary Artist Spotify Id"
+                      autoFocus
+                    />
+                  </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose2}>
+                    Close
+                  </Button>
+                  <Button variant="primary" onClick={handleSubmit2}>
+                    Save Changes
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+            </>
+            <button
+              style={{
+                position: "absolute",
+                marginTop: "-38px",
+                marginLeft: "26%",
+              }}
+              className="btn btn-outline-success"
+              onClick={handleShow2}
+            >
+              +
+            </button>
             <label className="lable">Genre*</label>
             <select
               type="text"
@@ -317,14 +528,19 @@ const ReleseInfo = () => {
               placeholder="Genre"
               id="Genre"
               // value={Genre}
-              onChange={(e) => {
-                setGenre(e.target.value);
-              }}
+              onChange={(event) =>
+                setReleseInfosetformData((prev) => ({
+                  ...prev,
+                  Genre: event.target.value,
+                }))
+              }
             >
-              {" "}
-              <option>Genre</option>
-              <option value="A">A</option>
-              <option value="B">B</option>
+                  <option value="">Select an option</option>
+                {genreGet?.map((option) => (
+                  <option key={option?._id} value={option?.genre}>
+                    {option?.genre}
+                  </option>
+                ))}
             </select>
             <label className="lable">Sub Genre*</label>
             <input
@@ -333,10 +549,13 @@ const ReleseInfo = () => {
               className="form-control"
               placeholder="Sub Genre"
               id="SubGenre"
-              value={SubGenre}
-              onChange={(e) => {
-                setSubGenre(e.target.value);
-              }}
+              value={releseInfoformData.SubGenre}
+              onChange={(event) =>
+                setReleseInfosetformData((prev) => ({
+                  ...prev,
+                  SubGenre: event.target.value,
+                }))
+              }
             />
           </div>
           <div className="label">
@@ -347,10 +566,13 @@ const ReleseInfo = () => {
               className="form-control"
               placeholder="Label Name"
               id="LabelName"
-              value={LabelName}
-              onChange={(e) => {
-                setLabelName(e.target.value);
-              }}
+              value={releseInfoformData.LabelName}
+              onChange={(event) =>
+                setReleseInfosetformData((prev) => ({
+                  ...prev,
+                  LabelName: event.target.value,
+                }))
+              }
             />
             <label className="lable">Release Date*</label>
             <input
@@ -359,10 +581,13 @@ const ReleseInfo = () => {
               className="form-control"
               placeholder="Release Date"
               id="ReleaseDate"
-              value={ReleaseDate}
-              onChange={(e) => {
-                setReleaseDate(e.target.value);
-              }}
+              value={releseInfoformData.ReleaseDate}
+              onChange={(event) =>
+                setReleseInfosetformData((prev) => ({
+                  ...prev,
+                  ReleaseDate: event.target.value,
+                }))
+              }
             />
             <label className="lable">PLine*</label>
             <input
@@ -371,10 +596,13 @@ const ReleseInfo = () => {
               className="form-control"
               placeholder="P line"
               id="PLine"
-              value={PLine}
-              onChange={(e) => {
-                setPLine(e.target.value);
-              }}
+              value={releseInfoformData.PLine}
+              onChange={(event) =>
+                setReleseInfosetformData((prev) => ({
+                  ...prev,
+                  PLine: event.target.value,
+                }))
+              }
             />
             <label className="lable">C Line*</label>
             <input
@@ -383,10 +611,13 @@ const ReleseInfo = () => {
               className="form-control"
               placeholder="C line"
               id="CLine"
-              value={CLine}
-              onChange={(e) => {
-                setCLine(e.target.value);
-              }}
+              value={releseInfoformData.CLine}
+              onChange={(event) =>
+                setReleseInfosetformData((prev) => ({
+                  ...prev,
+                  CLine: event.target.value,
+                }))
+              }
             />
             <label className="lable">UPC/EAN*</label>
             <input
@@ -395,10 +626,13 @@ const ReleseInfo = () => {
               className="form-control"
               placeholder="000000000001"
               id="UPCEAN"
-              value={UPCEAN}
-              onChange={(e) => {
-                setUPCEAN(e.target.value);
-              }}
+              value={releseInfoformData.UPCEAN}
+              onChange={(event) =>
+                setReleseInfosetformData((prev) => ({
+                  ...prev,
+                  UPCEAN: event.target.value,
+                }))
+              }
             />
             <button
               onClick={() => handleSubmit()}

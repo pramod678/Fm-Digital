@@ -30,7 +30,7 @@ const YoutubeClaims = () => {
   ];
   // console.log("formData",formData);
   const handleSubmit = async (e) => {
-    fetch("http://192.168.54.153:5000/api/v1/tools/youtubeClaimsPost", {
+    fetch("http://192.168.237.153:5000/api/v1/tools/youtubeClaimsPost", {
       method: "POST",
       crossDomain: true,
       headers: {

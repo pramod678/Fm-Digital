@@ -6,52 +6,96 @@ import SideBar from "../components/Sidebar/SideBar";
 // import { Dropdown } from 'semantic-ui-react'
 
 const Catalogs = () => {
-  const data = [
-    {
-      id: 1,
-      Status: "true",
-      AlbumArtwork: 25,
-      Title: "john@example.com",
-      ArtistName: "eytteyeyu",
-      Genre: "yuewueu",
-      Label: "hgdhg",
-      OfTracks: "dghjkh",
-      RelaseDate: "2325-2023",
-    },
-    {
-      id: 2,
-      Status: "Jane Smith",
-      AlbumArtwork: 30,
-      Title: "jane@example.com",
-      ArtistName: "eytteyeyu",
-      Genre: "yuewueu",
-      Label: "hgdhg",
-      OfTracks: "dghjkh",
-      RelaseDate: "2325-2023",
-    },
-    {
-      id: 3,
-      Status: "Bob Johnson",
-      AlbumArtwork: 35,
-      Title: "bob@example.com",
-      ArtistName: "eytteyeyu",
-      Genre: "yuewueu",
-      Label: "hgdhg",
-      OfTracks: "dghjkh",
-      RelaseDate: "2325-2023",
-    },
-    {
-      id: 4,
-      Status: "Alice Williams",
-      AlbumArtwork: 28,
-      Title: "alice@example.com",
-      ArtistName: "eytteyeyu",
-      Genre: "yuewueu",
-      Label: "hgdhg",
-      OfTracks: "dghjkh",
-      RelaseDate: "2325-2023",
-    },
-  ];
+  // const data = [
+  //   {
+  //     id: 1,
+  //     Status: "true",
+  //     AlbumArtwork: 25,
+  //     Title: "john@example.com",
+  //     ArtistName: "eytteyeyu",
+  //     Genre: "yuewueu",
+  //     Label: "hgdhg",
+  //     OfTracks: "dghjkh",
+  //     RelaseDate: "2325-2023",
+  //   },
+  //   {
+  //     id: 2,
+  //     Status: "Jane Smith",
+  //     AlbumArtwork: 30,
+  //     Title: "jane@example.com",
+  //     ArtistName: "eytteyeyu",
+  //     Genre: "yuewueu",
+  //     Label: "hgdhg",
+  //     OfTracks: "dghjkh",
+  //     RelaseDate: "2325-2023",
+  //   },
+  //   {
+  //     id: 3,
+  //     Status: "Bob Johnson",
+  //     AlbumArtwork: 35,
+  //     Title: "bob@example.com",
+  //     ArtistName: "eytteyeyu",
+  //     Genre: "yuewueu",
+  //     Label: "hgdhg",
+  //     OfTracks: "dghjkh",
+  //     RelaseDate: "2325-2023",
+  //   },
+  //   {
+  //     id: 4,
+  //     Status: "Alice Williams",
+  //     AlbumArtwork: 28,
+  //     Title: "alice@example.com",
+  //     ArtistName: "eytteyeyu",
+  //     Genre: "yuewueu",
+  //     Label: "hgdhg",
+  //     OfTracks: "dghjkh",
+  //     RelaseDate: "2325-2023",
+  //   },
+  // ];
+  const [catalogsGet, setcatalogsGet] = useState([]);
+  const [userData, setUserData] = useState("");
+  console.log("catalogsGet",catalogsGet);
+  useEffect(() => {
+    fetch("http://192.168.237.153:5000/api/v1/user/userData", {
+      method: "POST",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        token: localStorage.getItem("token"),
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // setUserData(data.data);
+        handlecatalogsGet(data.data)
+        // handlegenregGet()
+        console.log(data.data);
+        if (data.data === "token expired") {
+          alert("Token expired login again");
+          localStorage.clear();
+          window.location.href = "./sign-in";
+        }
+      });
+  }, []);
+  ////getuser
+  function handlecatalogsGet(userData) {
+    console.log("userData>>>",userData);
+    fetch(
+      `http://192.168.237.153:5000/api/v1/createRelease/catalogsGet/${userData.users_id}`,
+      {
+        method: "GET",
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("genere ---------", data.result);
+        setcatalogsGet(data.result);
+      });
+  }
 
   //   const [platform, setPlatform] = useState("");
   return (
@@ -119,8 +163,8 @@ const Catalogs = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map((item) => (
-            <tr key={item.id}>
+          {catalogsGet.map((item) => (
+            <tr key={item._id}>
               <td>{item.id}</td>
               <td><input type="checkbox"></input></td>
               <td>{item.AlbumArtwork}</td>
@@ -128,8 +172,8 @@ const Catalogs = () => {
               <td>{item.ArtistName}</td>
               <td>{item.Genre}</td>
               <td>{item.Label}</td>
-              <td>{item.OfTracks}</td>
-              <td>{item.RelaseDate}</td>
+              <td>{item.OfTr4acks}</td>
+              <td>{item.createdAt}</td>
               <td>
                 <button type="submit" className="btn btn-primary">
                   Stores
