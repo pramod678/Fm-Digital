@@ -1,10 +1,11 @@
 import React, {useEffect, useState } from "react";
 import "./Create-Release.css";
-import { Link } from "react-router-dom";
+import { Link,useNavigate} from "react-router-dom";
 import SideBar from "../components/Sidebar/SideBar";
 import Label from "./Label";
 
 const PlatForm = () => {
+  const navigate = useNavigate();
   // const [UPCEAN, setUPCEAN] = useState(null);
   const [userData, setUserData] = useState("");
   const [formData, setformData] = useState({
@@ -83,7 +84,7 @@ const PlatForm = () => {
   // console.log(formData);
  
   useEffect(() => {
-    fetch("http://192.168.237.153:5000/api/v1/user/userData", {
+    fetch("http://192.168.0.108:5000/api/v1/user/userData", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -109,7 +110,7 @@ const PlatForm = () => {
     // console.log("DATAUser",data,
     //   data1,
     //   data2);
-    fetch("http://192.168.237.153:5000/api/v1/createRelease/platformPost", {
+    fetch("http://192.168.0.108:5000/api/v1/createRelease/platformPost", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -129,6 +130,7 @@ const PlatForm = () => {
         console.log(Data, "CreateSuccesfully");
         if (Data.status === "ok") {
           alert("Create Successful");
+          navigate('/Submission')
         } else {
           alert("Something went wrong");
         }

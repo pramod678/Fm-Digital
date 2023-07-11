@@ -1,62 +1,21 @@
 import React, { useEffect, useState } from "react";
 import "./Create-Release.css";
+import { BsCheckCircle,BsClock } from "react-icons/bs";
+import { FcCancel } from "react-icons/fc";
+import { RiDraftFill } from "react-icons/ri";
+import { VscGitPullRequestNewChanges } from "react-icons/vsc";
 // import { Link } from "react-router-dom";
 // import Button from "react-bootstrap/Button";
 import SideBar from "../components/Sidebar/SideBar";
+import { BiCheck } from "react-icons/bi";
 // import { Dropdown } from 'semantic-ui-react'
 
 const Catalogs = () => {
-  // const data = [
-  //   {
-  //     id: 1,
-  //     Status: "true",
-  //     AlbumArtwork: 25,
-  //     Title: "john@example.com",
-  //     ArtistName: "eytteyeyu",
-  //     Genre: "yuewueu",
-  //     Label: "hgdhg",
-  //     OfTracks: "dghjkh",
-  //     RelaseDate: "2325-2023",
-  //   },
-  //   {
-  //     id: 2,
-  //     Status: "Jane Smith",
-  //     AlbumArtwork: 30,
-  //     Title: "jane@example.com",
-  //     ArtistName: "eytteyeyu",
-  //     Genre: "yuewueu",
-  //     Label: "hgdhg",
-  //     OfTracks: "dghjkh",
-  //     RelaseDate: "2325-2023",
-  //   },
-  //   {
-  //     id: 3,
-  //     Status: "Bob Johnson",
-  //     AlbumArtwork: 35,
-  //     Title: "bob@example.com",
-  //     ArtistName: "eytteyeyu",
-  //     Genre: "yuewueu",
-  //     Label: "hgdhg",
-  //     OfTracks: "dghjkh",
-  //     RelaseDate: "2325-2023",
-  //   },
-  //   {
-  //     id: 4,
-  //     Status: "Alice Williams",
-  //     AlbumArtwork: 28,
-  //     Title: "alice@example.com",
-  //     ArtistName: "eytteyeyu",
-  //     Genre: "yuewueu",
-  //     Label: "hgdhg",
-  //     OfTracks: "dghjkh",
-  //     RelaseDate: "2325-2023",
-  //   },
-  // ];
   const [catalogsGet, setcatalogsGet] = useState([]);
   const [userData, setUserData] = useState("");
   console.log("catalogsGet",catalogsGet);
   useEffect(() => {
-    fetch("http://192.168.237.153:5000/api/v1/user/userData", {
+    fetch("http://192.168.0.108:5000/api/v1/user/userData", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -85,7 +44,7 @@ const Catalogs = () => {
   function handlecatalogsGet(userData) {
     console.log("userData>>>",userData);
     fetch(
-      `http://192.168.237.153:5000/api/v1/createRelease/catalogsGet/${userData.users_id}`,
+      `http://192.168.0.108:5000/api/v1/createRelease/catalogsGet/${userData.users_id}`,
       {
         method: "GET",
       }
@@ -96,6 +55,23 @@ const Catalogs = () => {
         setcatalogsGet(data.result);
       });
   }
+  
+  const iconSelector = (status) => {
+    switch (status) {
+      case 0:
+        return <p style={{color:"brown"}}><RiDraftFill/></p>
+      case 1:
+        return <p style={{color:"#808080"}}><BsClock/></p>
+      case 2:
+        return <p style={{color:"#add8e6"}}><FcCancel/></p>
+      case 3:
+        return <p style={{color:"#0000cd"}}><VscGitPullRequestNewChanges/></p>
+      case 4:
+        return <p style={{color:"green"}}><BsCheckCircle/></p>
+      default:
+        return <></>;
+    }
+  }
 
   //   const [platform, setPlatform] = useState("");
   return (
@@ -105,15 +81,6 @@ const Catalogs = () => {
       </div>
       <h3 className="catalogs">Catalog</h3>
       <div style={{position:'absolute',marginLeft:'15%', marginTop:'5%',fontSize:'150%'}}>
-      {/* <input  type="text" placeholder="Search hear"></input> */}
-      {/* <select style={{position:'absolute',marginLeft:'2%',fontSize:'130%'}}
-        // value={this.state.selectValue} 
-        // onChange={this.handleChange} 
-      >
-       <option value="Orange">All</option>
-        <option value="Radish">A</option>
-        <option value="Cherry">B</option>
-      </select> */}
       <div className="mb-3">
         <input
           type="text"
@@ -143,7 +110,7 @@ const Catalogs = () => {
         </select>
       </div>
 
-      <h4 style={{position:'absolute',marginLeft:'500%',marginTop:'-12%',fontSize:'130%'}}>Total&nbsp;Releases:46</h4>
+      <h4 style={{position:'relative',marginLeft:'350%',marginTop:'-12%',fontSize:'130%'}}>Total&nbsp;Releases:46</h4>
       {/* <p>{message}</p> */}
       
       </div>
@@ -157,7 +124,7 @@ const Catalogs = () => {
             <th>Artist Name</th>
             <th>Genre</th>
             <th>Label</th>
-            <th>Of Tracks</th>
+            <th>Tracks</th>
             <th>Relase Date</th>
             <th>Action</th>
           </tr>
@@ -165,18 +132,26 @@ const Catalogs = () => {
         <tbody>
           {catalogsGet.map((item) => (
             <tr key={item._id}>
-              <td>{item.id}</td>
-              <td><input type="checkbox"></input></td>
-              <td>{item.AlbumArtwork}</td>
+              <td>{item.releseInfo_id}</td>
+              <td>{iconSelector(item?.Status)}</td>
+              {/* <td> <button style={{borderRadius:"50%",fontSize:"10px",}} type="submit" className="btn btn-success">
+                
+                </button></td> */}
+              <td>  <img style={{ height:60, width:80}}
+                src={`http://localhost:5000/${item?.ImageDocument}`}
+                type="file"
+                alt="Art Work"
+              ></img></td>
               <td>{item.Title}</td>
               <td>{item.ArtistName}</td>
               <td>{item.Genre}</td>
               <td>{item.Label}</td>
-              <td>{item.OfTr4acks}</td>
+              <td>{item.Tracks}</td>
               <td>{item.createdAt}</td>
               <td>
-                <button type="submit" className="btn btn-primary">
-                  Stores
+                <button type="submit" className="btn btn-secondary">
+                Draft
+                {/* {item.action} */}
                 </button>
               </td>
             </tr>

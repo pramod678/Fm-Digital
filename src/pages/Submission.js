@@ -8,10 +8,10 @@ import SideBar from "../components/Sidebar/SideBar";
 const Submission = () => {
   // const [userData, setUserData] = useState("");
   const [submissionGet, setsubmissionGet] = useState("");
-  console.log("userData",submissionGet);
+  console.log("submissionGet",submissionGet);
   useEffect(() => {
     
-    fetch("http://192.168.237.153:5000/api/v1/user/userData", {
+    fetch("http://192.168.0.108:5000/api/v1/user/userData", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -32,14 +32,14 @@ const Submission = () => {
           localStorage.clear();
           window.location.href = "./sign-in";
         }
-        console.log("data.data",data.data);
+        // console.log("data.data",data.data);
       });
   }, []);
   ////getuser
   function handlesubmissionGet(userData) {
     console.log(">>>>>>",userData);
     fetch(
-      `http://192.168.237.153:5000/api/v1/createRelease/submissionGet/${userData.users_id}`,
+      `http://192.168.0.108:5000/api/v1/createRelease/submissionGet/${userData.users_id}`,
       {
         method: "GET",
       }
@@ -53,7 +53,32 @@ const Submission = () => {
     }
     // console.log("releseInfoGetOne",releseInfoGetOne?.ImageDocument);
     const handleSubmit = async (e) => {
-       <Link to="/"></Link>
+      fetch(
+        "http://192.168.0.108:5000/api/v1/createRelease/submissionPost",
+        {
+          method: "POST",
+          crossDomain: true,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+          body: JSON.stringify({
+            releseInfo_id: submissionGet.releseInfo_id,
+            Status: 1,
+            users_id: parseInt(submissionGet.users_id),
+          }),
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data, "CreateSuccesfully");
+          if (data.status === "ok") {
+            alert("Create Successful");
+          } else {
+            alert("Something went wrong");
+          }
+        });
     }
   return (
     <div className="mai-nev">
@@ -97,9 +122,9 @@ const Submission = () => {
         
             </div>
         <input style={{marginRight:'20px',marginTop:"5%"}} type="checkbox"></input>
-        <label>I understand and agree to the</label>
+        <label>I understand and agree to the </label> <a href="/">FM Digital Distribution Terms & Privacy Policy.</a>
         <div>
-        <Button style={{marginTop:'20px'}} onClick={() => handleSubmit()} variant="dark">Submit</Button>
+        <Button style={{marginTop:'20px'}} onClick={() => handleSubmit()}  variant="btn btn-dark">Submit</Button>
         </div>
       </div>
   

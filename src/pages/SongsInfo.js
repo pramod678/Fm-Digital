@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
 import "./Create-Release.css";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import SideBar from "../components/Sidebar/SideBar";
 
 const SongsInfo = () => {
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [inputFields, setInputFields] = useState([{ PrimaryArtist: "" }]);
+  const [genreGet, setgenreGet] = useState([]);
+  const [primaryArtistGet, setprimaryArtistGet] = useState([]);
+  const [featuringArtistGet, setfeaturingArtistGet] = useState([]);
+  const [languageGet, setLanguageGet] = useState([]);
   const [userData, setUserData] = useState("");
   const [formdata, setFormdata] = useState({
     AudioDocument:'',
@@ -46,7 +51,7 @@ const SongsInfo = () => {
   };
 // console.log("AudioDocument.data",AudioDocument.data);
 useEffect(() => {
-  fetch("http://192.168.237.153:5000/api/v1/user/userData", {
+  fetch("http://192.168.0.108:5000/api/v1/user/userData", {
     method: "POST",
     crossDomain: true,
     headers: {
@@ -61,6 +66,8 @@ useEffect(() => {
     .then((res) => res.json())
     .then((data) => {
       setUserData(data.data);
+      handlegenregGet()
+      handleLanguageGet()
       if (data.data === "token expired") {
         alert("Token expired login again");
         localStorage.clear();
@@ -68,6 +75,59 @@ useEffect(() => {
       }
     });
 }, []);
+function handleArtistGet() {
+  fetch(
+    `http://192.168.0.108:5000/api/v1/createRelease/primaryArtistGet/${userData.users_id}`,
+    {
+      method: "GET",
+    }
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      // console.log("Data ---------", data.data);
+      setprimaryArtistGet(data.data);
+    });
+}
+function handleFeacturingGet() {
+  fetch(
+    `http://192.168.0.108:5000/api/v1/createRelease/featuringArtisttGet/${userData.users_id}`,
+    {
+      method: "GET",
+    }
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      // console.log("Data ---------", data.data);
+      setfeaturingArtistGet(data.data);
+      // let items =[]
+    });
+}
+function handlegenregGet() {
+  fetch(
+    `http://192.168.0.108:5000/api/v1/createRelease/genreGet`,
+    {
+      method: "GET",
+    }
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      // console.log("genere ---------", data.data);
+      setgenreGet(data.data);
+    });
+}
+function handleLanguageGet() {
+  fetch(
+    `http://192.168.0.108:5000/api/v1/createRelease/languageGet`,
+    {
+      method: "GET",
+    }
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      // console.log("genere ---------", data.data);
+      setLanguageGet(data.data);
+    });
+}
   const handleSubmit = async (event) => {
     let formData = new FormData();
     formData.append("AudioDocument", AudioDocument.data);
@@ -93,7 +153,7 @@ useEffect(() => {
     formData.append("users_id",parseInt(userData.users_id));
     // console.log("formData.Trackversion", formdata.Trackversion);
     const res = await fetch(
-      "http://192.168.237.153:5000/api/v1/createRelease/songsInfoPost",
+      "http://192.168.0.108:5000/api/v1/createRelease/songsInfoPost",
       {
         method: "POST",
         body: formData,
@@ -104,8 +164,10 @@ useEffect(() => {
         console.log(Data, "CreateSuccesfully");
         if (Data.status === "ok") {
           alert("Create Successful");
+          navigate('/Platform')
         } else {
           alert("Something went wrong");
+          // console.log("Something went wrong");
         }
       });
   };
@@ -125,7 +187,7 @@ useEffect(() => {
     rows.splice(index, 1);
     setInputFields(rows);
   };
-
+console.log(languageGet,"remove");
   return (
     <div className="mai-nev">
       <Link className="button1" to="/ReleseInfo">
@@ -224,11 +286,11 @@ useEffect(() => {
 
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Add songs Details</Modal.Title>
+            <Modal.Title style={{marginTop:"10px"}}>Add songs Details</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form>
-              <Form.Label>Track version</Form.Label>
+              <Form.Label>Track version*</Form.Label>
               <div>
                 <input
                   class="form-check-input"
@@ -237,6 +299,7 @@ useEffect(() => {
                   onChange={(event) => setFormdata(prev => ({...prev, Trackversion: event.target.value }))}
                   name="flexRadioDefault"
                   id="flexRadioDefault"
+                  required
                 />
                 &nbsp;&nbsp;
                 <label class="form-check-label" for="flexRadioDefault1">
@@ -282,7 +345,7 @@ useEffect(() => {
                   Cover
                 </label>
               </div>
-              <Form.Label>Instrumental</Form.Label>
+              <Form.Label>Instrumental*</Form.Label>
               <div>
                 <input
                   class="form-check-input"
@@ -291,6 +354,7 @@ useEffect(() => {
                   onChange={(event) => setFormdata(prev => ({...prev, Instrumental: event.target.value }))}
                   name="flexSwitchCheckDefault"
                   id="flexSwitchCheckDefault"
+                  required
                 />
                 &nbsp;&nbsp;
                 <label class="form-check-label" for="flexRadioDefault1">
@@ -314,11 +378,11 @@ useEffect(() => {
                 className="mb-3"
                 controlId="exampleForm.ControlInput1"
               >
-                <Form.Label>Title</Form.Label>
+                <Form.Label>Title*</Form.Label>
                 <Form.Control 
                 value={formdata.Title}
                 onChange={(event) => setFormdata(prev => ({...prev, Title: event.target.value }))}
-                type="text" placeholder="Title" autoFocus />
+                type="text" placeholder="Title" autoFocus required/>
                 <Form.Label>Version/Subtitle</Form.Label>
                 <Form.Control 
                 value={formdata.VersionSubtitle}
@@ -326,63 +390,75 @@ useEffect(() => {
                   type="text"
                   placeholder="Version Subtitle"
                   autoFocus
+                  
                 />
-                <Form.Label>Primary artist</Form.Label>
+                <Form.Label>Primary artist*</Form.Label>
                 <select
                   className="form-select"
+                  onClick={handleArtistGet}
                   onChange={(event) => setFormdata(prev => ({...prev, Primaryartist: event.target.value }))}
-                >
-                  <option>Primary artist</option>
-                  <option value="A">A</option>
-                  <option value="B">B</option>
+                  required >
+                    <option value="">Select an option</option>
+                {primaryArtistGet?.map((option) => (
+                  <option key={option?._id} value={option?.PrimaryArtist}>
+                    {option?.PrimaryArtist}
+                  </option>
+                ))}
                 </select>
                 <Form.Label>Featuring Artist</Form.Label>
                 <select
                   className="form-select"
+                  onClick={handleFeacturingGet}
                   onChange={(event) => setFormdata(prev => ({...prev, FeaturingArtist: event.target.value }))}
                 >
-                  <option>Featuring Artist</option>
-                  <option value="A">A</option>
-                  <option value="B">B</option>
+                       <option value="">Select an option</option>
+                {featuringArtistGet?.map((option) => (
+                  <option key={option?._id} value={option?.FeaturingArtist}>
+                    {option?.FeaturingArtist}
+                  </option>
+                ))}
                 </select>
-                <Form.Label>Author</Form.Label>
+                <Form.Label>Author*</Form.Label>
                 <Form.Control 
                 value={formdata.Author}
                 onChange={(event) => setFormdata(prev => ({...prev, Author: event.target.value }))}
-                type="text" placeholder="Author" autoFocus />
-                <Form.Label>Composer</Form.Label>
+                type="text" placeholder="Author" autoFocus required/>
+                <Form.Label>Composer*</Form.Label>
                 <Form.Control 
                 value={formdata.Composer}
                 onChange={(event) => setFormdata(prev => ({...prev, Composer: event.target.value }))}
-                type="text" placeholder="Composer" autoFocus />
-                <Form.Label>Producer</Form.Label>
+                type="text" placeholder="Composer" autoFocus required/>
+                <Form.Label>Producer*</Form.Label>
                 <Form.Control 
                 value={formdata.Producer}
                 onChange={(event) => setFormdata(prev => ({...prev, Producer: event.target.value }))}
-                type="text" placeholder="Producer" autoFocus />
-                <Form.Label>Publisher</Form.Label>
+                type="text" placeholder="Producer" autoFocus required/>
+                <Form.Label>Publisher*</Form.Label>
                 <Form.Control 
                 value={formdata.Publisher}
                 onChange={(event) => setFormdata(prev => ({...prev, Publisher: event.target.value }))}
-                type="text" placeholder="Publisher" autoFocus />
+                type="text" placeholder="Publisher" autoFocus required/>
               </Form.Group>
               <Form.Label>Have your own ISRC (Optional)</Form.Label>
               <Form.Control 
               value={formdata.ISRC} 
               onChange={(event) => setFormdata(prev => ({...prev, ISRC: event.target.value }))}
-              type="text" placeholder="Publisher" ISRC />
+              type="text" placeholder="ISRC" ISRC />
               <Form.Group
                 className="mb-3"
                 controlId="exampleForm.ControlInput1"
               >
-                <Form.Label>Genre</Form.Label>
+                <Form.Label>Genre*</Form.Label>
                 <select
                   className="form-select"
                   onChange={(event) => setFormdata(prev => ({...prev, Genre: event.target.value }))}
-                >
-                  <option>Select Genre</option>
-                  <option value="A">A</option>
-                  <option value="B">B</option>
+                  required >
+                        <option value="">Select an option</option>
+                {genreGet?.map((option) => (
+                  <option key={option?._id} value={option?.genre}>
+                    {option?.genre}
+                  </option>
+                ))}
                 </select>
 
                 <Form.Label>Sub genre</Form.Label>
@@ -390,7 +466,7 @@ useEffect(() => {
                 value={formdata.Subgenre}
                 onChange={(event) => setFormdata(prev => ({...prev, Subgenre: event.target.value }))}
                 type="text" placeholder="Sub genre" autoFocus />
-                <Form.Label>Explicit Version</Form.Label>
+                <Form.Label>Explicit Version*</Form.Label>
                 <div>
                   <input
                     class="form-check-input"
@@ -399,7 +475,7 @@ useEffect(() => {
                     onChange={(event) => setFormdata(prev => ({...prev, ExplicitVersion: event.target.value }))}
                     name="btn-check"
                     id="btn-check"
-                  />
+                    required/>
                   &nbsp;&nbsp;
                   <label class="form-check-label" for="flexRadioDefault1">
                     Yes
@@ -432,23 +508,29 @@ useEffect(() => {
                   </label>
                 </div>
               </Form.Group>
-              <Form.Label>Track Title Language</Form.Label>
+              <Form.Label>Track Title Language*</Form.Label>
               <select
                 className="form-select"
                 onChange={(event) => setFormdata(prev => ({...prev, TrackTitleLanguage: event.target.value }))}
-              >
-                <option >Select TrackT-itle Language</option>
-                <option value="Enlish">Enlish</option>
-                <option value="Hindi">Hindi</option>
+                required >
+                        <option value="">Select an option</option>
+                {languageGet?.map((option) => (
+                  <option key={option?._id} value={option?.language}>
+                    {option?.language}
+                  </option>
+                ))}
               </select>
               <Form.Label>Lyrics Language</Form.Label>
               <select
                 className="form-select"
                 onChange={(event) => setFormdata(prev => ({...prev, LyricsLanguage: event.target.value }))}
               >
-                <option >Select Lyrics Language</option>
-                <option value="A">A</option>
-                <option value="B">B</option>
+                            <option value="">Select an option</option>
+                {languageGet?.map((option) => (
+                  <option key={option?._id} value={option?.language}>
+                    {option?.language}
+                  </option>
+                ))}
               </select>
               <Form.Label>Lyrics</Form.Label>
               <Form.Control 
@@ -459,7 +541,7 @@ useEffect(() => {
               <Form.Control 
               value={formdata.CallerTuneTiming}
               onChange={(event) => setFormdata(prev => ({...prev, CallerTuneTiming: event.target.value }))}
-              type="text" placeholder="hh:mm:ss" autoFocus />
+              type="time" placeholder="hh:mm:ss" autoFocus />
               <Form.Label>Distribute Music video?</Form.Label>
               <Form.Control
               value={formdata.DistributeMusicvideo}

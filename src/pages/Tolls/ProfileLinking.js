@@ -11,6 +11,9 @@ const ProfileLinking = () => {
     InstagramLink: "",
     createdAt: "",
   });
+  const [releseInfoGetOne, setReleseInfoGetOne] = useState("");
+  const [userData, setUserData] = useState("");
+  console.log("releseInfoGetOne",releseInfoGetOne);
   const data = [
     {
       id: 1,
@@ -31,9 +34,49 @@ const ProfileLinking = () => {
       URLs: "hgdhg",
     },
   ];
+  useEffect(() => {
+    fetch("http://192.168.0.108:5000/api/v1/user/userData", {
+      method: "POST",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        token: localStorage.getItem("token"),
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUserData(data.data);
+        handlereleseInfoGetOne(data.data)
+        // console.log("dgd",data.data);
+        if (data.data === "token expired") {
+          alert("Token expired login again");
+          localStorage.clear();
+          window.location.href = "./sign-in";
+        }
+      });
+  }, []);
+  ////getuser
+  function handlereleseInfoGetOne(userData) {
+    fetch(
+      `http://192.168.0.108:5000/api/v1/createRelease/releseInfoGetOne/${userData.users_id}`,
+      {
+        method: "GET",
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+
+        // console.log("releseInfoGetOne ---------", data.data);
+        setReleseInfoGetOne(data.data);
+      });
+    }
   // console.log("formData", formData);
   const handleSubmit = async (e) => {
-    fetch("http://192.168.237.153:5000/api/v1/tools/profileLinkingPost", {
+    fetch("http://192.168.0.108:5000/api/v1/tools/profileLinkingPost", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -79,8 +122,8 @@ const ProfileLinking = () => {
               }))
             }
           >
-            <option>Select release</option>
-            <option value="dynamic">dynamic</option>
+                  <option value="">Select an option</option>
+                  <option value={releseInfoGetOne.ReleaseTitle}>{releseInfoGetOne.ReleaseTitle}</option>
           </select>
           <label className="lable">Select platform*</label>
 

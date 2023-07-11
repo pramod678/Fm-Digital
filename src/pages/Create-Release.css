@@ -69,7 +69,7 @@ table, tr, td,th {
 .catalogs{
   position:absolute;
    margin-top:20px;
-   margin-left:280px;
+   margin-left:200px;
    text-align:left;
    background-color:black;
    color:white;
@@ -136,27 +136,30 @@ button1.selected {
   width: 500;
   border: none;
   overflow: hidden;
+  
 }
 .optiontype::-moz-focus-inner {
   border: 0;
+  
 }
 .optiontype:focus {
   outline: none;
+  
 }
 .optiontype option {
   width: auto;
   position: relative;
   height: auto;
-  font-size: 1em;
+  font-size: .8em;
   padding: 0px 0;
   text-align: center;
   margin-right: 40px;
   display: inline-block;
   text-emphasis-color: black;
   cursor: pointer;
-  border: rgb(8, 6, 6) solid 1px;
+  border: rgb(0, 29, 102) solid 1px;
   border-radius: 5px;
-  color: black(249, 249, 242, 0.504);
+  color: black(13, 13, 3, 0.504);
 }
 
 .ReleaseType {
