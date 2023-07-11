@@ -1,5 +1,6 @@
 const releseInfoTable = require("../model/releseInfo.Model");
 const featuringArtistTable = require("../model/featuringArtist.Model");
+const subMissionTable = require("../model/submission.Model");
 const primaryArtistTable = require("../model/primaryArtist.Model");
 const songsInfoTable = require("../model/songsInfo.Model");
 const platformTable = require("../model/platform.Model");
@@ -22,6 +23,7 @@ const releseInfoPost = async (req, res) => {
     CLine,
     UPCEAN,
     ImageDocument,
+    Status,
   } = req.body;
   var currentDate = moment(new Date()).add(5.5, "h").toDate();
   // console.log("PrimaryArtist",PrimaryArtist);
@@ -90,6 +92,7 @@ const releseInfoPost = async (req, res) => {
         ? "/ImageDocument/" + req.files["ImageDocument"]?.[0].filename
         : "NULL",
       createdAt: currentDate,
+      Status: Number(Status),
     });
     return res.send({ status: "ok", data });
   } catch (error) {
@@ -221,6 +224,52 @@ const featuringArtisttPost = async (req, res) => {
     });
   }
 };
+const submissionPost = async (req, res) => {
+  const { users_id, releseInfo_id, Status } = req.body;
+
+  var currentDate = moment(new Date()).add(5.5, "h").toDate();
+  console.log("currentDate", currentDate);
+  try {
+    if (Status == 0) {
+      var data = "Draft";
+    }
+    if (Status == 1) {
+      var data = "Pending";
+    }
+    if (Status == 2) {
+      var data = "Rejected";
+    }
+    if (Status == 3) {
+      var data = "Correction";
+    }
+    if (Status == 4) {
+      var data = "Approved";
+    }
+    const subMission = await subMissionTable.findOne({
+      users_id: users_id,
+    });
+    const releseInfo = await releseInfoTable.findOne({
+      users_id: users_id,
+      releseInfo_id: releseInfo_id,
+    });
+    if (releseInfo) {
+      var data = await releseInfoTable.update(
+        { users_id: users_id,releseInfo_id: releseInfo_id, },
+        {
+          users_id: users_id,
+          submission: data,
+          createdAt: currentDate,
+          Status: Number(Status),
+        }
+      );
+    }
+    return res.send({ status: "ok", data:releseInfo });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message || "Error occurred while fetching all data",
+    });
+  }
+};
 const releseInfoGetAll = async (req, res) => {
   try {
     const allUser = await releseInfoTable.find({});
@@ -282,8 +331,8 @@ const submissionGet = async (req, res) => {
   try {
     const relese = await releseInfoTable.findOne({
       users_id: req.params.users_id,
-    });
-    console.log("relese",relese);
+    }).sort({ _id: -1}) ;
+    console.log("relese", relese);
     const songs = await songsInfoTable.find({
       users_id: req.params.users_id,
     });
@@ -298,7 +347,8 @@ const submissionGet = async (req, res) => {
         Genre: relese?.Genre,
         SubGenre: relese?.SubGenre,
         Songs: songs?.length,
-        AudioDocument:relese?.ImageDocument
+        releseInfo_id: relese?.releseInfo_id,
+        AudioDocument: relese?.ImageDocument,
       },
     });
   } catch (error) {
@@ -310,35 +360,44 @@ const submissionGet = async (req, res) => {
 };
 const catalogsGet = async (req, res) => {
   try {
-    
     const relese = await releseInfoTable.find({
       users_id: req.params.users_id,
     });
-    console.log("relese",relese);
+    console.log("relese", relese.createdAt);
     const songs = await songsInfoTable.find({
       users_id: req.params.users_id,
     });
-   const result = []
+    // console.log("songs",songs);
+    // const subMission = await subMissionTable.findOne({
+    //   users_id: req.params.users_id,
+    // });
+    const result = [];
     for (let i = 0; i < relese.length; i++) {
+      var date = relese[i]?.createdAt;
+      console.log(String(date).slice(3, 15));
       // for (let i = 0; i < songs.length; i++) {
       result.push({
-        _id:relese[i]?._id,
+        _id: relese[i]?._id,
         users_id: relese[i]?.users_id,
         Title: relese[i]?.ReleaseTitle,
         ArtistName: relese[i]?.PrimaryArtist,
         Label: relese[i]?.LabelName,
         Genre: relese[i]?.Genre,
         SubGenre: relese[i]?.SubGenre,
-        // Songs: songs[i]?.length,
-        AudioDocument:relese[i]?.ImageDocument,
-        createdAt:relese[i]?.createdAt
-      })
-      
-      }
+        releseInfo_id: relese[i]?.releseInfo_id,
+        Tracks: songs.length,
+        ImageDocument: relese[i]?.ImageDocument,
+        action: relese[i]?.submission,
+        Status: relese[i]?.Status,
+        createdAt: String(date).slice(3, 15),
+      });
+    }
     // }
     // console.log("allUser", result);
     return res.send({
-      status: "ok",result});
+      status: "ok",
+      result,
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -348,15 +407,12 @@ const catalogsGet = async (req, res) => {
 };
 const genreGet = async (req, res) => {
   try {
-    const data = await genreTable.find({
-     
-    });
- 
- 
+    const data = await genreTable.find({});
+
     // console.log("allUser", songs);
     return res.send({
       status: "ok",
-      data
+      data,
     });
   } catch (error) {
     console.log(error);
@@ -367,15 +423,12 @@ const genreGet = async (req, res) => {
 };
 const languageGet = async (req, res) => {
   try {
-    const data = await languageTable.find({
-     
-    });
- 
- 
+    const data = await languageTable.find({});
+
     // console.log("allUser", songs);
     return res.send({
       status: "ok",
-      data
+      data,
     });
   } catch (error) {
     console.log(error);
@@ -388,6 +441,7 @@ const languageGet = async (req, res) => {
 module.exports = {
   releseInfoPost,
   primaryArtistPost,
+  submissionPost,
   featuringArtisttGet,
   primaryArtistGet,
   featuringArtisttPost,
@@ -398,5 +452,5 @@ module.exports = {
   submissionGet,
   catalogsGet,
   genreGet,
-  languageGet
+  languageGet,
 };
