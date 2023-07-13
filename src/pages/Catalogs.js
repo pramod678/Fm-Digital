@@ -72,6 +72,22 @@ const Catalogs = () => {
         return <></>;
     }
   }
+  const actionStatus = (status) => {
+    switch (status) {
+      case 0:
+        return <p style={{color:"white"}}>Draft</p>
+      case 1:
+        return <p style={{color:"white"}}>Stors</p>
+        case 2:
+        return <p style={{color:"white"}}>Stors</p>
+      case 3:
+        return <p style={{color:"white"}}>Stors</p>
+        case 4:
+        return <p style={{color:"white"}}>Stors</p>
+      default:
+        return <></>;
+    }
+  }
 
   //   const [platform, setPlatform] = useState("");
   return (
@@ -150,8 +166,8 @@ const Catalogs = () => {
               <td>{item.createdAt}</td>
               <td>
                 <button type="submit" className="btn btn-secondary">
-                Draft
-                {/* {item.action} */}
+                {/* Draft */}
+                {actionStatus(item?.Status)}
                 </button>
               </td>
             </tr>

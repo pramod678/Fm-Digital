@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./Create-Release.css";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import SideBar from "../components/Sidebar/SideBar";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ReleseInfo = () => {
   const navigate = useNavigate();
@@ -36,10 +37,36 @@ const ReleseInfo = () => {
     SpotifyId: "",
     AppleId: "",
   });
-  console.log("genreGet",genreGet);
-// console.log("userData",userData);
-//   console.log("formData", releseInfoformData);
-//   console.log("primaryArtistGet", primaryArtistGet);
+  console.log("genreGet", genreGet);
+  // console.log("userData",userData);
+  //   console.log("formData", releseInfoformData);
+  //   console.log("primaryArtistGet", primaryArtistGet);
+  const showToastMessageSucess = () => {
+    toast.success("Success Message !", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
+  const showToastMessageError = () => {
+    toast.error("Error Message !", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+    //   toast.success('Success Notification !', {
+    //     position: toast.POSITION.TOP_RIGHT
+    // });
+    // toast.warning('Warning Notification !', {
+    //     position: toast.POSITION.TOP_LEFT
+    // });
+    // toast.info('Information Notification !', {
+    //     position: toast.POSITION.BOTTOM_CENTER
+    // });
+    // toast('Default Notification !', {
+    //     position: toast.POSITION.BOTTOM_LEFT
+    // });
+    // toast('Custom Style Notification with css class!', {
+    //      position: toast.POSITION.BOTTOM_RIGHT,
+    // className: 'foo-bar'
+    // });
+  };
   useEffect(() => {
     fetch("http://192.168.0.108:5000/api/v1/user/userData", {
       method: "POST",
@@ -56,8 +83,8 @@ const ReleseInfo = () => {
       .then((res) => res.json())
       .then((data) => {
         setUserData(data.data);
-        handlereleseInfoGetOne(data.data)
-        handlegenregGet()
+        handlereleseInfoGetOne(data.data);
+        handlegenregGet();
         if (data.data === "token expired") {
           alert("Token expired login again");
           localStorage.clear();
@@ -67,12 +94,9 @@ const ReleseInfo = () => {
   }, []);
   ////getuser
   function handlegenregGet() {
-    fetch(
-      `http://192.168.0.108:5000/api/v1/createRelease/genreGet`,
-      {
-        method: "GET",
-      }
-    )
+    fetch(`http://192.168.0.108:5000/api/v1/createRelease/genreGet`, {
+      method: "GET",
+    })
       .then((res) => res.json())
       .then((data) => {
         // console.log("genere ---------", data.data);
@@ -88,12 +112,11 @@ const ReleseInfo = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-
         // console.log("releseInfoGetOne ---------", data.data);
         setReleseInfoGetOne(data.data);
       });
-    }
-    console.log("releseInfoGetOne",releseInfoGetOne?.ImageDocument);
+  }
+  console.log("releseInfoGetOne", releseInfoGetOne?.ImageDocument);
 
   function handleArtistGet() {
     fetch(
@@ -144,9 +167,11 @@ const ReleseInfo = () => {
       .then((data) => {
         console.log(data, "CreateSuccesfully");
         if (data.status === "ok") {
-          alert("Create Successful");
+          showToastMessageSucess();
+          // alert("Create Successful");
         } else {
-          alert("Something went wrong");
+          showToastMessageError();
+          // alert("Something went wrong");
         }
       });
   };
@@ -173,9 +198,11 @@ const ReleseInfo = () => {
       .then((data) => {
         console.log(data, "CreateSuccesfully");
         if (data.status === "ok") {
-          alert("Create Successful");
+          showToastMessageSucess();
+          // alert("Create Successful");
         } else {
-          alert("Something went wrong");
+          showToastMessageError();
+          // alert("Something went wrong");
         }
       });
   };
@@ -207,12 +234,13 @@ const ReleseInfo = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data, "CreateSuccesfully");
-        if (data.status === "ok" ) {
-          
-          alert("Create Successful");
-          navigate('/Songsinfo');
+        if (data.status === "ok") {
+          showToastMessageSucess();
+          // alert("Create Successful");
+          navigate("/Songsinfo");
         } else {
-          alert("Something went wrong");
+          // alert("Something went wrong");
+          showToastMessageError();
         }
       });
   };
@@ -249,7 +277,8 @@ const ReleseInfo = () => {
         <div className="flex-container">
           <div>
             <div className="box">
-              <img style={{ height:146, width:145}}
+              <img
+                style={{ height: 146, width: 145 }}
                 src={`http://localhost:5000/${releseInfoGetOne?.ImageDocument}`}
                 type="file"
                 alt="Art Work"
@@ -260,7 +289,7 @@ const ReleseInfo = () => {
                   type="file"
                   name="ImageDocument"
                   onChange={handleFileChange}
-                  multiple
+                  required="true" 
                 />
               </div>
             </div>
@@ -288,6 +317,7 @@ const ReleseInfo = () => {
                 className="optiontype"
                 name="work_days"
                 id="id_work_days"
+                required="true"
                 // value={ReleaseType}
                 onChange={(event) =>
                   setReleseInfosetformData((prev) => ({
@@ -305,7 +335,7 @@ const ReleseInfo = () => {
             </div>
 
             <label className="lable">Release Title*</label>
-            <input 
+            <input
               type="text"
               required="true"
               className="form-control"
@@ -318,14 +348,14 @@ const ReleseInfo = () => {
                   ReleaseTitle: event.target.value,
                 }))
               }
-               />
+            />
 
             <label className="lable">PrimaryArtist*</label>
             <div className="col-sm-10">
-      
               <select
                 className="form-select"
                 onClick={handleArtistGet}
+                required="true"
                 onChange={(event) =>
                   setReleseInfosetformData((prev) => ({
                     ...prev,
@@ -351,6 +381,7 @@ const ReleseInfo = () => {
                     <Form.Label>Primary Artist Name</Form.Label>
                     <Form.Control
                       value={releseInfoformData.PrimaryArtist}
+                      required="true"
                       onChange={(event) =>
                         setReleseInfosetformData((prev) => ({
                           ...prev,
@@ -365,6 +396,7 @@ const ReleseInfo = () => {
                     &nbsp;&nbsp;
                     <Form.Control
                       value={releseInfoformData.AppleId}
+                      required="true"
                       onChange={(event) =>
                         setReleseInfosetformData((prev) => ({
                           ...prev,
@@ -379,6 +411,7 @@ const ReleseInfo = () => {
                     &nbsp;&nbsp;
                     <Form.Control
                       value={releseInfoformData.SpotifyId}
+                      required="true"
                       onChange={(event) =>
                         setReleseInfosetformData((prev) => ({
                           ...prev,
@@ -416,19 +449,9 @@ const ReleseInfo = () => {
             </button>
             <label className="lable">FeaturingArtist*</label>
             <div className="col-sm-10">
-              {/* <input
-                type="text"
-                required="true"
-                className="form-select"
-                placeholder="Release Title"
-                id="ReleaseTitle"
-                value={FeaturingArtist}
-                onChange={(e) => {
-                  setFeaturingArtist(e.target.value);
-                }}
-              /> */}
               <select
                 className="form-select"
+                required="true"
                 onClick={handleFeacturingGet}
                 onChange={(event) =>
                   setReleseInfosetformData((prev) => ({
@@ -455,6 +478,7 @@ const ReleseInfo = () => {
                     <Form.Label>Featuring Artist Name</Form.Label>
                     <Form.Control
                       value={releseInfoformData.FeaturingArtist}
+                      required="true"
                       onChange={(event) =>
                         setReleseInfosetformData((prev) => ({
                           ...prev,
@@ -469,6 +493,7 @@ const ReleseInfo = () => {
                     &nbsp;&nbsp;
                     <Form.Control
                       value={releseInfoformData.AppleId}
+                      required="true"
                       onChange={(event) =>
                         setReleseInfosetformData((prev) => ({
                           ...prev,
@@ -483,6 +508,7 @@ const ReleseInfo = () => {
                     &nbsp;&nbsp;
                     <Form.Control
                       value={releseInfoformData.SpotifyId}
+                      required="true"
                       onChange={(event) =>
                         setReleseInfosetformData((prev) => ({
                           ...prev,
@@ -531,12 +557,12 @@ const ReleseInfo = () => {
                 }))
               }
             >
-                  <option value="">Select an option</option>
-                {genreGet?.map((option) => (
-                  <option key={option?._id} value={option?.genre}>
-                    {option?.genre}
-                  </option>
-                ))}
+              <option value="">Select an option</option>
+              {genreGet?.map((option) => (
+                <option key={option?._id} value={option?.genre}>
+                  {option?.genre}
+                </option>
+              ))}
             </select>
             <label className="lable">Sub Genre*</label>
             <input
@@ -630,14 +656,14 @@ const ReleseInfo = () => {
                 }))
               }
             />
-            <button 
+            <button
               onClick={() => handleSubmit()}
               type="submit"
               className="btn btn-primary"
-            >Save
-            {/* <Link  style={{color:"white"}}  to="/Songsinfo">Save</Link> */}
+            >
+              Save
             </button>
-            
+            <ToastContainer />
           </div>
         </div>
       </div>

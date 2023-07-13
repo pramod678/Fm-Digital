@@ -5,6 +5,8 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import SideBar from "../components/Sidebar/SideBar";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SongsInfo = () => {
   const navigate = useNavigate();
@@ -164,8 +166,10 @@ function handleLanguageGet() {
         console.log(Data, "CreateSuccesfully");
         if (Data.status === "ok") {
           alert("Create Successful");
-          navigate('/Platform')
+          handleClose()
+          // navigate('/Songsinfo')
         } else {
+          // navigate('/Songsinfo')
           alert("Something went wrong");
           // console.log("Something went wrong");
         }
@@ -284,7 +288,7 @@ console.log(languageGet,"remove");
         </Modal.Title>
         {/* <h5 style={{marginRight:'560px',color:'blue',marginTop:'150px',position:'relative'}}>AUDIO FILE GUDELINES</h5> */}
 
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={show } onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title style={{marginTop:"10px"}}>Add songs Details</Modal.Title>
           </Modal.Header>
@@ -382,15 +386,13 @@ console.log(languageGet,"remove");
                 <Form.Control 
                 value={formdata.Title}
                 onChange={(event) => setFormdata(prev => ({...prev, Title: event.target.value }))}
-                type="text" placeholder="Title" autoFocus required/>
+                type="text" placeholder="Title"  required/>
                 <Form.Label>Version/Subtitle</Form.Label>
                 <Form.Control 
                 value={formdata.VersionSubtitle}
                 onChange={(event) => setFormdata(prev => ({...prev, VersionSubtitle: event.target.value }))}
                   type="text"
                   placeholder="Version Subtitle"
-                  autoFocus
-                  
                 />
                 <Form.Label>Primary artist*</Form.Label>
                 <select
@@ -422,22 +424,22 @@ console.log(languageGet,"remove");
                 <Form.Control 
                 value={formdata.Author}
                 onChange={(event) => setFormdata(prev => ({...prev, Author: event.target.value }))}
-                type="text" placeholder="Author" autoFocus required/>
+                type="text" placeholder="Author"  required/>
                 <Form.Label>Composer*</Form.Label>
                 <Form.Control 
                 value={formdata.Composer}
                 onChange={(event) => setFormdata(prev => ({...prev, Composer: event.target.value }))}
-                type="text" placeholder="Composer" autoFocus required/>
+                type="text" placeholder="Composer"  required/>
                 <Form.Label>Producer*</Form.Label>
                 <Form.Control 
                 value={formdata.Producer}
                 onChange={(event) => setFormdata(prev => ({...prev, Producer: event.target.value }))}
-                type="text" placeholder="Producer" autoFocus required/>
+                type="text" placeholder="Producer"  required/>
                 <Form.Label>Publisher*</Form.Label>
                 <Form.Control 
                 value={formdata.Publisher}
                 onChange={(event) => setFormdata(prev => ({...prev, Publisher: event.target.value }))}
-                type="text" placeholder="Publisher" autoFocus required/>
+                type="text" placeholder="Publisher"  required/>
               </Form.Group>
               <Form.Label>Have your own ISRC (Optional)</Form.Label>
               <Form.Control 
@@ -465,7 +467,7 @@ console.log(languageGet,"remove");
                 <Form.Control 
                 value={formdata.Subgenre}
                 onChange={(event) => setFormdata(prev => ({...prev, Subgenre: event.target.value }))}
-                type="text" placeholder="Sub genre" autoFocus />
+                type="text" placeholder="Sub genre"  />
                 <Form.Label>Explicit Version*</Form.Label>
                 <div>
                   <input
@@ -536,12 +538,12 @@ console.log(languageGet,"remove");
               <Form.Control 
               value={formdata.Lyrics}
                   onChange={(event) => setFormdata(prev => ({...prev, Lyrics: event.target.value }))}
-              type="text" placeholder="Lyrics" autoFocus />
+              type="text" placeholder="Lyrics"  />
               <Form.Label>Caller Tune Timing</Form.Label>
               <Form.Control 
               value={formdata.CallerTuneTiming}
               onChange={(event) => setFormdata(prev => ({...prev, CallerTuneTiming: event.target.value }))}
-              type="time" placeholder="hh:mm:ss" autoFocus />
+              type="time" placeholder="hh:mm:ss"  />
               <Form.Label>Distribute Music video?</Form.Label>
               <Form.Control
               value={formdata.DistributeMusicvideo}
@@ -559,13 +561,18 @@ console.log(languageGet,"remove");
               Close
             </Button>
             <Button variant="primary" onClick={handleSubmit}>
-              Save Changes
+              Save
             </Button>
           </Modal.Footer>
         </Modal>
       </>
+      <Button variant="primary" >
+              Save Changes
+            </Button>
     </div>
+    
   );
+  
 };
 
 export default SongsInfo;
