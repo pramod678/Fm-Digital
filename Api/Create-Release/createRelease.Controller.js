@@ -88,9 +88,7 @@ const releseInfoPost = async (req, res) => {
       PLine: PLine,
       CLine: CLine,
       UPCEAN: UPCEAN,
-      ImageDocument: req.files["ImageDocument"]?.[0].filename
-        ? "/ImageDocument/" + req.files["ImageDocument"]?.[0].filename
-        : "NULL",
+      ImageDocument: req.files["ImageDocument"]?.[0].filename,
       createdAt: currentDate,
       Status: Number(Status),
     });
